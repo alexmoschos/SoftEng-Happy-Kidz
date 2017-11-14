@@ -12,3 +12,5 @@ Zarkadas Ioannis 03113040 yanniszarkadas@gmail.com
 Alexandros Moschos 03113027 alexgmoschos@gmail.com
 <br>
 Alexandros Kalomoiros 03113514 kalomiros7@gmail.com
+<br>
+Kandiros Anthimos Vardis 03113028 vkandiros@yahoo.gr
