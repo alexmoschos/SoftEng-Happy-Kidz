@@ -6,3 +6,5 @@ Velegkas Grigorios 03113011 gvelegkas41@gmail.com
 Lotidis Kyriakos 03113033 klotidis@yahoo.gr  
 <br>
 Probonas Panagiotis 03113554 pprobonas22@gmail.com  
+<br>
+Zarkadas Ioannis 03113040 yanniszarkadas@gmail.com
