@@ -1,5 +1,7 @@
-<div style="text-align:center"><img src ="https://slack-imgs.com/?c=1&url=https%3A%2F%2Fi.imgur.com%2FS1OwcCM.jpg" width="500" height="200" /></div>
-
+# Ανάλυση Απαιτήσεων - Happy Kidz
+<p align="center">
+  <img src ="https://slack-imgs.com/?c=1&url=https%3A%2F%2Fi.imgur.com%2FS1OwcCM.jpg" width="500" height="200" />
+</p>
 
 ## Σκοπός του συστήματος
 
