@@ -175,3 +175,17 @@
  * **Επαναφορά κωδικού και διαγραφή χρηστών**
 
 Μέσω ειδικού interface που συνδέεται με τη βάση μας, θα υπάρχουν κουμπιά που θα επιτελούν όλες τις διαχειριστικές λειτουργίες.
+
+## UML Διαγράμματα
+
+Τα διαγράμματα UML βελτιώνουν την κατανόηση του συστήματος τόσο από τρίτους όσο και από εμάς. Μέσω της οπτικής αναπαράστασης γίνονται φανερά τα χαρακτηριστικά της αρχιτεκτονικής μας, τα πλεονεκτήματα και τα μειονεκτήματά της. Για τη συγκεκριμένη περίπτωση, θεωρήσαμε χρήσιμο να κατασκευάσουμε τα διαγράμματα UML τύπου Class Diagram, Component Diagram και Deployment Diagram.
+
+
+### Class Diagram
+![uml class diagram](UML%20Diagrams/UML%20Class%20Diagram.jpeg)
+
+### Component Diagram
+![uml component diagram](UML%20Diagrams/UML%20Component%20Diagram.png)
+
+### Deployment Diagram
+![uml deployment diagram](UML%20Diagrams/UML%20Deployment%20Diagram.jpg)
