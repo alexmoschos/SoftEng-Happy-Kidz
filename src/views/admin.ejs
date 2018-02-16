@@ -149,18 +149,18 @@ crossorigin="anonymous"></script>
                     </tr>
                   </thead>
                   <tbody>
-                    <% obj.forEach(function(it) { %>
+                    <% user.forEach(function(it) { %>
                     <tr>
-                      <td><a href="/admin_users/<%=it.userName%>"><%= it.userName %></a></td>
-                      <td><a href="/admin_users/<%=it.userName%>"><%= it.userEmail %></a></td>
+                      <td><a href="/admin_users/<%=it.parentId%>"><%= it.name %></a></td>
+                      <td><a href="/admin_users/<%=it.parentId%>"><%= it.email %></a></td>
                       <td>
-                      <form role="form" action="/admin/deleteUserAccount/<%=it.userName%>" method="POST">
-                        <input type="submit" class="btn btn-primary" name="delete" value="<%=it.userName%>">
+                      <form role="form" action="/admin/deleteUserAccount/<%=it.parentId%>" method="POST">
+                        <input type="submit" class="btn btn-primary" name="delete" value="<%=it.name%>">
                       </form>
                       </td>
                       <td>
-                      <form role="form" action="/admin/resetUserPassword/<%=it.userName%>" method="POST">
-                        <input type="submit" class="btn btn-primary " name="reset" value="<%=it.userName%>">
+                      <form role="form" action="/admin/resetUserPassword/<%=it.parentId%>" method="POST">
+                        <input type="submit" class="btn btn-primary " name="reset" value="<%=it.name%>">
                       </form>
                       </td>
 
@@ -201,19 +201,19 @@ crossorigin="anonymous"></script>
                     </tr>
                   </thead>
                   <tbody>
-                    <% obj.forEach(function(it) { %>
+                    <% provider.forEach(function(it) { %>
                     <tr>
-                      <td><a href="/admin_events/<%=it.providerName%>"><%= it.providerName %></a></td>
-                      <td><a href="/admin_events/<%=it.providerName%>"><%= it.providerEmail %></a></td>
-                      <td><%= it.providerStatus%></td>
+                      <td><a href="/admin_providers/<%=it.organizerId%>"><%= it.name %></a></td>
+                      <td><a href="/admin_providers/<%=it.organizerId%>"><%= it.email %></a></td>
+                      <td><%= it.isVerified%></td>
                       <td>
-                      <form role="form" action="/admin/deleteProviderAccount/<%=it.providerName%>" method="POST">
-                        <input type="submit" class="btn btn-primary" name="delete" value="<%=it.providerName%>">
+                      <form role="form" action="/admin/deleteProviderAccount/<%=it.organizerId%>" method="POST">
+                        <input type="submit" class="btn btn-primary" name="delete" value="<%=it.name%>">
                       </form>
                       </td>
                       <td>
-                      <form role="form" action="/admin/resetProviderPassword/<%=it.providerName%>" method="POST">
-                        <input type="submit" class="btn btn-primary " name="reset" value="<%=it.providerName%>">
+                      <form role="form" action="/admin/resetProviderPassword/<%=it.organizerId%>" method="POST">
+                        <input type="submit" class="btn btn-primary " name="reset" value="<%=it.name%>">
                       </form>
                       </td>
 
@@ -243,7 +243,6 @@ crossorigin="anonymous"></script>
                   <thead>
                     <tr>
                       <th>Τίτλος Εκδήλωσης</th>
-                      <th>Πάροχος</th>
                       <th>Ημερομηνία</th>
                       <!-- <th>Age</th>
                       <th>Start date</th>
@@ -251,11 +250,10 @@ crossorigin="anonymous"></script>
                     </tr>
                   </thead>
                   <tbody>
-                    <% obj.forEach(function(it) { %>
+                    <% event.forEach(function(it) { %>
                     <tr>
-                      <td><a href="https://localhost:3000/admin_events/<%=it.providerName%>"><%= it.title %></a></td>
-                      <td><a href="https://localhost:3000/admin_events/<%=it.providerName%>"><%= it.providerName %></a></td>
-                      <td><%= it.date %></td>
+                      <td><a href="/admin_events/<%=it.eventId%>"><%= it.title %></a></td>
+                      <td><%= it.startTime %></td>
                       <!-- <td>61</td>
                       <td>2011/04/25</td>
                       <td>$320,800</td> -->
