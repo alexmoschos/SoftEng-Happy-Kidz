@@ -20,7 +20,7 @@ router.post('/', function(req, res, next) {
           console.error(err);
           return next(err);
         }
-        if (user.type == 'admin')
+        if (user.type === 'admin')
           return res.redirect('/admin');
         return res.redirect('/');
       });

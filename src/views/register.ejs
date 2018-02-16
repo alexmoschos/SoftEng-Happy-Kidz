@@ -1,4 +1,4 @@
-<% //include partials/header %>
+<%- //include partials/header %>
 
   <img id="joinUsLogo" src="/joinlogo2.png" alt="join_logo"> 
   <div class="container well">
@@ -7,7 +7,7 @@
         <!-- Nav tabs -->                          
         <ul class="nav nav-tabs " role="tablist">
           <li role="presentation" class="active" id="personal-tab" ><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab"><span><i class="fa fa-user"></i></span>Προσωπικός Λογαριασμός</a></li>
-          <li role="presentation" id="business-tab"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab"><span><i class="fa fa-briefcase"></i></span>Επιχειρισακός Λογαριασμός</a></li>
+          <li role="presentation" id="business-tab"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab"><span><i class="fa fa-briefcase"></i></span>Επιχειρισιακός Λογαριασμός</a></li>
         </ul>                     
         <!-- Tab panes -->
         <div class="tab-content tabs">
@@ -45,7 +45,8 @@
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane fade" id="Section2">                                  
+          <div role="tabpanel" class="tab-pane fade" id="Section2">
+            <!-- Provider Form   -->                                
             <div class="col-lg-12 my-form-business">                   
               <div class="row">
                 <form id="business-account-form" action="/register/provider" method="post">

@@ -65,6 +65,10 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
+        isVerified: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
+        },
         clickNumber: {
             type: DataTypes.INTEGER,
             allowNull: false,

@@ -3,14 +3,14 @@ var router = express.Router();
 var passport = require('../apis/passport');
 
 /* GET create event page. */
-router.get('/', function(req, res, next) {
+router.get('', function(req, res, next) {
     res.render('register', {});
 });
 
 
 router.post('/:type', function(req, res, next) {
     var type = req.params.type;
-    if (type == 'user') {
+    if (type === 'user') {
 
       // Do some checks here (all form fields have to be valid)
 
@@ -30,7 +30,7 @@ router.post('/:type', function(req, res, next) {
         });
       })(req, res, next);
 
-    } else if (type == 'provider') {
+    } else if (type === 'provider') {
 
       // Do some checks here (all form fields have to be valid)
 

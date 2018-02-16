@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var db = require('../models/db');
+
 var ratings= [
     {name: "John", content:"It sucks", rating:2},
     {name: "John", content:"It sucks", rating:3},
@@ -10,6 +12,11 @@ var ratings= [
 ]
 
 router.get('/', function(req, res, next) {
+
+    db.Parent.findAll()
+    .then( (parents) => parents.forEach( (parent) => console.log(parent.name) )
+    );
+
     obj=[
         {
         title: "Alex Kalom",

@@ -5,7 +5,7 @@ var LocalStrategy = require('passport-local').Strategy;
 
 
 function validatePassword(pas1, pas2) {
-    return pas1 == pas2;
+    return pas1 === pas2;
 }
 
 /**
@@ -31,7 +31,7 @@ passport.deserializeUser(function(obj, done) {
 });
 
 /**
- *Strategies
+ * Strategies
 */
 //---------------------------Local Strategy-------------------------------------
 
