@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>HappyKidz - Search</title>
+    <meta charset="UTF-8">
+
+</head>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified CSS -->
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/stylesheets/styles_search.css">
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-fixed-top navbar-custom" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                        aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">
+                        <span>
+                            <img src="icon2.png" alt="Party" height="25" width="27">
+                        </span> HappyKidz
+                    </a>
+
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="/">Home</a>
+                        </li>
+                        <li>
+                            <a href="/search">Events</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </nav>
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <h3><center>Φίλτρα αναζήτησης</center></h3>
+            <div class="container-fluid">
+                <a id="menu-toggle-side" href="#" class="btn-menu toggle" style="width:100%">
+                    <button class="btn btn-default btn-block">Close Filters</button>
+                </a>
+                <hr>
+                <div class="search-filters">
+                    <form class="navbar-form" role="search" method="get" action="/search">
+                        <div class="input-group">
+                            <label for="Activity">Δραστηριότητα</label>
+                            <input type="text" class="form-control" placeholder="Search" name="q" <%= activity%> >
+                        </div>
+                        <div class="input-group">
+                            <label for="Location">Τοποθεσία</label>
+                            <input type="text" class="form-control" placeholder="Location" name="location"  <%= location %> >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="AgeGroup">Ηλικιακή Ομάδα</label>
+                            <select class="form-control " name="AgeGroup" id="age">
+                                <option value="one">3-5</option>
+                                <option value="two">6-8</option>
+                                <option value="three">9-12</option>
+                                <option value="four">>12</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                        <label for="PriceRange">Τιμή</label>
+                            <input type="number" class="form-control" placeholder="Minimum Price" name="startPrice" <%= startPrice %> >
+                            <input type="number" class="form-control" placeholder="Maximum Price" name="endPrice" <%= endPrice %> >
+                        </div>
+
+                        <div class="input-group">
+                        <label for="Date">Εύρος ημερομηνιών</label>
+                            <input type="date" class="form-control" placeholder="Start Date" name="startDate" <%= startDate %> >
+                            <input type="date" class="form-control" placeholder="End Date " name="endDate" <%= endDate %> >
+                        </div>
+                        <div class="input-group" style="display: none;">
+                        <label for="Date">Page</label>
+                            <input type="number" class="form-control" name="page" id="page-changer" value=<%= page %>>
+                        </div>
+                        <button class="btn btn-success btn-block" style="margin-top:10px" type="submit" id="filter-apply">Go!</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Page content -->
+        <div id="page-content-wrapper">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="col-md-7 col-lg-7">
+                            <div class="btn-group" style="margin-bottom:20px; margin-left: 10px;">
+                                <div class="row">
+                                    <a id="menu-toggle" href="#" class="btn-menu toggle">
+                                        <button class="btn filter-btn btn-lg">
+                                            <span><i class="glyphicon glyphicon-list"></i></span>
+                                            <span>Φίλτρα</span>
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="pull-right" style="margin-bottom:20px">
+                            <a id="menu-toggle" href="#" class="btn-group pull-right">
+                                <a id="prev-page">
+                                <button class="btn btn-default" type="submit">
+                                    Προηγούμενη σελίδα
+                                </button>
+                                </a>
+                                Σελίδα <%= page %>
+                                <a id="next-page">
+                                <button class="btn btn-default" type="submit">
+                                    Επομενη σελίδα
+                                </button>
+                                </a>
+                            </a>
+                            </div>
+
+                            <!-- <hr> -->
+                            <!-- <div class="container" style="border:1px solid #29335c; border-radius:1px; backround-color: #ffffff;"> -->
+                                <% if(obj.length > 0) {%>
+                                    <div id = "eventList" class="row">
+                                        <% var coordinates = []; %>
+                                        <% obj.forEach(function(it, index){ %>
+                                            <% coordinates.push({geolon: it.geolon, geolat: it.geolat, address: it.address}); %>
+                                            <div id = <%= 'event' + index %> class="col-12 col-xs-12 col-sm-5 col-md-12 col-lg-12 myClass" style="border:1px solid #e0e0e0; margin-bottom:20px; border-radius:20px;">
+                                                    <!-- <center>     -->
+                                                    <div class="row" style="height: 170px; margin-top: 15px">
+                                                                <div class="col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                                                    <img src="<%= it.images[0] %>" alt="" style="width:100%; height: 150px;">
+                                                                </div>
+                                                                <div id="info-container" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                                                                        <div class="row">
+
+                                                                            <div class="col-12 col-xs-12">
+                                                                                <h3><a href="/events/<%=it.title%> " style="color: #29335c"><%= it.title %></a></h3>
+                                                                            </div>
+                                                                                <div class="col-12 col-xs-12">
+                                                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                                                            <span>Ημερομηνία: </span>
+                                                                                            <span id="date-data" class="result-data"><%=it.date%>,</span>
+                                                                                            &nbsp;
+                                                                                            <span class="glyphicon glyphicon-time"></span>
+                                                                                            <span >Ώρα: </span>
+                                                                                            <span id="time-data" class="result-data"><%=it.time%>,</span>
+                                                                                            &nbsp;
+                                                                                            <span class="glyphicon glyphicon-map-marker"></span>
+                                                                                            <span>Διεύθυνση: </span>
+                                                                                            <span id="adress-data" class="result-data"><%=it.address%>,</span>
+                                                                                            &nbsp;
+                                                                                            <span class="glyphicon glyphicon-briefcase"></span>
+                                                                                            <span >Πάροχος: </span>
+                                                                                            <span id="provider-data" class="result-data"><a href="/provider_page/"><%= it.providerName %></a>,</span>
+                                                                                            &nbsp;
+                                                                                            <span class="glyphicon glyphicon-signal"></span>
+                                                                                            <span >Ηλικίες: </span>
+                                                                                            <span id="age-data" class="result-data"><%=it.agegroups%>,</span>
+                                                                                            &nbsp;
+                                                                                            <!-- <span class="glyphicon glyphicon-euro"></span>
+                                                                                            <span>Τιμή: </span>
+                                                                                            <span id="price-data" class="result-data">10,</span>
+                                                                                            &nbsp; -->
+                                                                                            <span class="glyphicon glyphicon-earphone"></span>
+                                                                                            <span>Τηλέφωνο Επικοινωνίας: </span>
+                                                                                            <span id="phone-data" class="result-data"><%=it.phone%></span>
+                                                                                </div>
+                                                                                <div class="col-xs-12">
+                                                                                    <hr>
+                                                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                                                        <span>Αρχική Τιμή: </span>
+                                                                                        <span id="price-data" class="result-data"><%=it.startingPrice%></span>
+                                                                                        &nbsp;
+                                                                                        <span class="glyphicon glyphicon-ok"></span>
+                                                                                        <span>Τιμή HappyKidz: </span>
+                                                                                        <span id="price-data" class="result-data"><%=it.finalPrice%></span>
+                                                                                        <!-- <br> -->
+                                                                                </div>
+
+                                                                                <!-- <div class="col-xs-10">
+                                                                                    <p>20€</p>
+                                                                                </div> -->
+                                                                            </div>
+                                                                    </div>
+                                                        </div>
+                                                    <!-- </center> -->
+                                                </div>
+                                                <div class="col-sm-1"></div>
+                                        <% }); %>
+                                    </div>
+                        </div>
+
+                            <div class="col-md-5 col-lg-5">
+                                <div class="affix" style="min-width: 30%;">
+                                    <div>
+                                        <h3>Χάρτης</h3>
+                                        <div id="map" style="border:1px solid #29335c; border-radius:1px;"></div>
+                                        <script>
+                                            // var map;
+                                            var markers = [];
+                                            
+
+                                            function initMap() {
+                                                var myObject = <%- JSON.stringify(coordinates)%>;
+                                                // var myObject = ['{"geolon:13']
+                                                var place = {lat: myObject[0].geolat, lng: myObject[0].geolon};
+
+                                                var map = new google.maps.Map(document.getElementById('map'), {
+                                                                zoom: 4,
+                                                                center: place
+                                                });
+
+                                                for (let x in myObject){
+                                                    if (myObject.hasOwnProperty(x)){
+                                                        var place = {lat: myObject[x].geolat, lng: myObject[x].geolon};
+                                                        let marker = new google.maps.Marker({
+                                                            position: place,
+                                                            icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+                                                            map: map
+                                                        });
+                                                        let infowindow = new google.maps.InfoWindow();
+                                                        marker.addListener('click', function() {
+                                                            infowindow.setContent(myObject[x].address);
+                                                            infowindow.open(map, marker);
+                                                        });
+                                                        markers.push(marker);
+                                                    }
+
+                                                }
+                                                createHandlers();
+
+                                            }
+
+                                        
+                                            function createHandlers(){
+                                                for (let i = 0; i < markers.length; i++){
+                                                    $("#event" + i).hover(function (){
+                                                        markers[i].setAnimation(null);
+                                                        markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+                                                    },
+                                                    function(){
+                                                            markers[i].setAnimation(null);
+                                                            markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+                                                    });
+                                                }
+                                            }
+
+                                        </script>
+                                        <script async defer
+                                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSz5x7fN6a-k9UJATld1uvuc_Fv1xBDCg&callback=initMap">
+                                        </script>
+                                    </div>
+                                    <!-- <img src="1.jpg" alt="..."  class="img-responsive"> -->
+                                </div>
+                                <!-- <div class="panel panel-success">
+                                    <div class="panel-heading">
+                                        Panel 1
+                                    </div>
+                                    <div class="panel-body">
+                                        content body
+                                    </div>
+                                </div> -->
+                            </div>
+                        <% }
+                        else{ %>
+                            <p>ERROR</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $("#age").val("<%= ageGroup %>").change();
+    var page = <%= page %>;
+    // if(page == 0) {
+    //     $("#prev-page").disabled=true;
+    // }
+    $("#next-page").click(function(e){
+        $("#page-changer").val(page+1).change();
+        $("#filter-apply").click();
+    });
+    $("#prev-page").click(function(e){
+        if(page == 0) return;
+        $("#page-changer").val(page-1).change();
+        $("#filter-apply").click();
+    });
+    /*Menu-toggle*/
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("active");
+        // alert(1);
+    });
+    $("#menu-toggle-side").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("active");
+        // alert(1);
+    });
+
+    </script>
+
+</html>

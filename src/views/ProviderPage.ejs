@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+    
+    
+<script src="https://use.fontawesome.com/899071ec86.js"></script>
+
+<title>HappyKidz - Register Page</title>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+				crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js">
+					</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+<!-- Latest compiled and minified CSS -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/stylesheets/styles.css">
+
+<nav class="navbar navbar-custom" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+            <span>
+                <img src="icon2.png" alt="Party" height="25" width="27">
+            </span> HappyKidz
+        </a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li>  <!--  it was active -->
+                <a href="#">Home</a>
+            </li>
+            <li>
+                <a href="#">Events</a>
+            </li>
+        </ul>
+        <div class="col-sm-5 col-md-5">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q">
+                    <span class="input-group-addon">@</span>
+                    <input type="text" class="form-control" placeholder="Location" name="l">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="#">Register</a>
+            </li>
+            <li>
+                <a href="#">Login</a>
+            </li>
+        </ul>
+    </div>
+</div>
+    <!-- /.navbar-collapse -->
+</nav>
+
+
+
+<body>
+    
+        
+<div id="my-main-row" class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-lg-8 col-sm-8">
+                
+                
+                <div class="card hovercard">
+
+                   
+										 <a id="NewEvent-btn" class="btn btn-primary" href="/event_create">New Event</a>
+                   	<a id="Papers" class="btn btn-primary" href="/upload_files" style="float: right;">Submit deko</a>
+                        <!-- <button id="subscribe-btn" type="button" class="btn btn-primary">Subscribe</button> -->
+<!--                         
+                    <div class="card-background">
+                        <img class="card-bkimg" alt="provider-logo" src="happy.png">
+                       
+                    </div>
+                    <div class="useravatar">
+                        <img id="circle-logo" alt="provider-logo" src="happy2.png">
+                    </div>
+                    <div class="card-info"> <span class="card-title">Όνομα παρόχου</span>
+            
+                    </div> -->
+
+
+
+                   
+                </div>
+                
+                <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
+                        <button type="button" id="about-btn" class="btn btn-primary"  data-toggle="tab" href="search/#tab1"><i class="fa fa-info-circle" aria-hidden="true"></i>
+                            
+                            <div class="hidden-xs">Γενικές πληροφορίες</div>
+                        </button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" id="events-btn" class="btn btn-default" href="search/#tab2" data-toggle="tab"><i class="fa fa-history" aria-hidden="true"></i>
+                            
+                            <div class="hidden-xs">Προηγούμενα Events</div>
+                        </button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" id="running-events-btn" class="btn btn-default" href="search/#tab3" data-toggle="tab"><i class="fa fa-star" aria-hidden="true"></i>
+                            
+                            <div class="hidden-xs">Τρέχοντα Events</div>
+                        </button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" id="analytics-btn" class="btn btn-default" href="search/#tab4" data-toggle="tab"><i class="fa fa-bar-chart" aria-hidden="true"></i>
+                            
+                            <div class="hidden-xs">Στατιστικά Στοιχεία</div>
+                        </button>
+                    </div>
+                </div>
+            
+             
+
+                    <div class="">
+                  <div class="tab-content">
+                    <div  class="tab-pane fade in active well main-well" id="tab1">
+
+                        <div class="general-info">
+
+
+                      <!-- <h3>This is tab 1</h3> -->
+
+                        
+                        <h3><%= PersonalInfo.ProviderName %></h3>
+                        <p><%= PersonalInfo.ProviderText %> </p>
+
+
+
+<div class="personal-info">
+                        <span id="provider-email">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>                                
+                                <a href="mailto:gvelegas41@gmail.gr"><%= PersonalInfo.ProviderEmail %></a>
+                            </span>
+<br>
+                            <span id="provider-site">
+                                    <i class="fa fa-internet-explorer" aria-hidden="true"></i>
+                                    
+                                    <a href="https://www.google.gr/"><%= PersonalInfo.ProviderPage %></a>
+                                </span>
+                                <br>
+                                <span id="provider-telephone">
+                                        <i class="fa fa-phone" aria-hidden="true"></i>
+                                        <%= PersonalInfo.ProviderPhoneNumber %>
+                                    </span>
+                                    <br>
+                                    <span id="provider-address">
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            <%= PersonalInfo.ProviderAddress %>
+                                        </span>
+                                    </div>
+                                </div>
+
+                    </div>
+
+                   
+                    
+
+
+
+
+
+
+                    <div  class="tab-pane fade in well main-well" id="tab2">
+
+
+
+                            <div class="previus-events ">
+
+
+
+
+
+
+
+
+                                    <div class="row">
+																						<% PastEventsList.forEach(function(event){ %>
+																									
+                                            <div class="col-12 col-xs-12 col-sm-5 col-md-12 col-lg-12" style="border:1px solid #e0e0e0; margin-bottom:20px; border-radius:20px;">
+                                                <!-- <center>     -->
+                                                <div class="row" style="height: 170px; margin-top: 15px">
+                                                            <div class="col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                                                <img src="<%=event.ImgUrl %>" alt="" style="width:100%; height: 150px;">
+                                                            </div>
+                                                            <div id="info-container" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">   
+                                                                    <div class="row">                            
+                                                                            
+                                                                        <div class="col-12 col-xs-12">
+                                                                            <h3><%= event.Title %></h3>
+                                                                        </div>
+                                                                            <div class="col-12 col-xs-12">
+                                                                                        <span class="glyphicon glyphicon-calendar"></span> 
+                                                                                        <span>Ημερομηνία: </span>
+                                                                                        <span id="date-data" class="result-data"><%= event.Date %>,</span>
+                                                                                        &nbsp;
+                                                                                        <span class="glyphicon glyphicon-time"></span> 
+                                                                                        <span >Ώρα: </span>
+                                                                                        <span id="time-data" class="result-data"><%= event.Hours %>,</span> 
+                                                                                        &nbsp;
+                                                                                        <span class="glyphicon glyphicon-map-marker"></span> 
+                                                                                        <span>Διεύθυνση: </span>
+                                                                                        <span id="adress-data" class="result-data"><%= event.Address %>,</span>
+                                                                                        &nbsp;
+                                                                                        <span class="glyphicon glyphicon-briefcase"></span>
+                                                                                        <span >Πάροχος: </span>
+                                                                                        <span id="provider-data" class="result-data"><%= event.Provider %>,</span> 
+                                                                                        &nbsp;
+                                                                                        <span class="glyphicon glyphicon-signal"></span>
+                                                                                        <span >Ηλικίες: </span>
+                                                                                        <span id="age-data" class="result-data"><%= event.Ages %>,</span> 
+                                                                                        &nbsp;
+                                                                                        <!-- <span class="glyphicon glyphicon-euro"></span> 
+                                                                                        <span>Τιμή: </span>
+                                                                                        <span id="price-data" class="result-data">10,</span>
+                                                                                        &nbsp; -->
+                                                                                        <span class="glyphicon glyphicon-earphone"></span> 
+                                                                                        <span>Τηλέφωνο Επικοινωνίας: </span>
+                                                                                        <span id="phone-data" class="result-data"><%= event.PhoneNumber %></span>                                         
+                                                                            </div>
+                                                                            <div class="col-xs-12">
+                                                                                <hr>
+                                                                                    <span class="glyphicon glyphicon-remove"></span> 
+                                                                                    <span>Αρχική Τιμή: </span>
+                                                                                    <span id="price-data" class="result-data"><%= event.InitialPrice %></span>
+                                                                                    &nbsp;
+                                                                                    <span class="glyphicon glyphicon-ok"></span> 
+                                                                                    <span>Τιμή HappyKidz: </span>
+                                                                                    <span id="price-data" class="result-data"><%= event.FinalPrice %></span>
+                                                                                    <!-- <br> -->
+                                                                            </div>
+                                                                            <!-- <div class="col-xs-10">
+                                                                                <p>20€</p>
+                                                                            </div> -->
+                                                                        </div>
+                                                                </div>
+                                                    </div>
+                                                <!-- </center> -->
+                                            </div>
+                                            <div class="col-sm-1"></div>
+																						<% }) %>
+                                            <!-- &nbsp; -->
+                                            
+                                            
+                                            
+
+
+
+
+
+
+
+
+                                   
+                                          </div>                        
+                    
+                    
+                    								</div>
+										</div>
+                    <div class="tab-pane fade in well main-well" id="tab3">
+											<% CurrentEventsList.forEach(function(event){ %>
+                      <div class="col-12 col-xs-12 col-sm-5 col-md-12 col-lg-12" style="border:1px solid #e0e0e0; margin-bottom:20px; border-radius:20px;">
+                                                        <div class="row" style="height: 170px; margin-top: 15px">
+                                                                <div class="col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="text-align: center;">
+                                                                    <img src="<%=event.ImgUrl %>" alt="" style="width:100%; height: 150px;">
+                                                                </div>
+                                                                <div id="info-container" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">   
+                                                                        <div class="row">                            
+                                                                                
+                                                                            <div class="col-12 col-xs-12">
+                                                                                <h3><%= event.Title %></h3>
+                                                                            </div>
+                                                                                <div class="col-12 col-xs-12">
+                                                        
+                                                                                            <span class="glyphicon glyphicon-calendar"></span> 
+                                                                                            <span >Ημερομηνία: &nbsp;</span>
+                                                                                            <span id="date-data" class="result-data"><%= event.Date %>,</span>
+                                                        
+                                                                                            <span class="glyphicon glyphicon-time"></span> 
+                                                                                            <span >Ώρα: &nbsp;</span>
+                                                                                            <span id="time-data" class="result-data"><%= event.Hours %>,</span> 
+                                                        
+                                                                                            <span class="glyphicon glyphicon-map-marker"></span> 
+                                                                                            <span>Διεύθυνση: &nbsp;</span>
+                                                                                            <span id="adress-data" class="result-data"><%= event.Address %>,</span>
+                                                        
+                                                                                            <span class="glyphicon glyphicon-briefcase"></span>
+                                                                                            <span >Πάροχος: &nbsp;</span>
+                                                                                            <span id="provider-data" class="result-data"><%= event.Provider %>,</span> 
+                                                        
+                                                                                            <span class="glyphicon glyphicon-signal"></span>
+                                                                                            <span >Ηλικίες: &nbsp;</span>
+                                                                                            <span id="age-data" class="result-data"><%= event.Ages %>,</span> 
+                                                        
+                                                                                            <span class="glyphicon glyphicon-earphone"></span> 
+                                                                                            <span>Τηλέφωνο Επικοινωνίας: &nbsp;</span>
+                                                                                            <span id="phone-data" class="result-data"><%= event.PhoneNumber %></span>                                         
+                                                                                </div>
+                                                                                <div class="col-xs-12">
+                                                                                        <hr>
+                                                                                            <span class="glyphicon glyphicon-remove"></span> 
+                                                                                            <span>Αρχική Τιμή: </span>
+                                                                                            <span id="price-data" class="result-data"><%= event.InitialPrice %></span>
+                                                                                            &nbsp;
+                                                                                            <span class="glyphicon glyphicon-ok"></span> 
+                                                                                            <span>Τιμή HappyKidz: </span>
+                                                                                            <span id="price-data" class="result-data"><%= event.FinalPrice %></span>
+                                                                                    </div>
+
+                                                                                 	<div class="col-xs-12">
+                                                                                 		<div id = "<%= event.BarchartID %>"  style = " height: 40px;"></div>
+                                                                                    </div>
+                                                                            </div>
+                                                                    </div>
+                                                        </div>
+                                                </div>
+											<% }) %>
+
+                       
+                    </div>
+                    <div class="tab-pane fade in well main-well col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12"  id="tab4">  
+                    	<div class="panel-body">
+                    		<form action = "/AgeBounds" method="POST">
+                    	
+                    			<div class="form-group col-md-6 col-sm-6">
+	    		        			<label for="event-name">Από:  </label>
+    	        					<input type="date" name = "from" class="form-control input-sm" id="from-date" >
+    							</div>
+    							<div class="form-group col-md-6 col-sm-6">
+	    		        			<label for="event-name">Έως: </label>
+    	        					<input type="date" name = "to" class="form-control input-sm" id="to-date" >
+    							</div>
+    							<button  class="btn btn-default">Εφαρμογή </button>
+    						
+                    		</form>
+                    	</div>
+                    	         	
+                    	<div  id="piechart"  style = " height: 500px;"></div>	
+                    	<div  id="piechart2"  style = " height: 500px;"></div>
+                    </div>
+                  </div>
+                </div>
+                
+
+
+
+           
+
+
+
+
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
+            
+                
+</body>
+
+
+<script>
+$(document).ready(function() {
+$(".btn-pref .btn").click(function () {
+    $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
+
+    //  $(".tab").addClass("active"); // instead of this do the below 
+    $(this).removeClass("btn-default").addClass("btn-primary");   
+
+
+    if (this.id == "about-btn"){
+        $("#tab1").addClass("active");
+        $("#tab2").removeClass("active");
+        $("#tab3").removeClass("active");
+        $("#tab4").removeClass("active");
+        
+    }
+    else if (this.id == "events-btn"){
+        $("#tab2").addClass("active");
+        $("#tab1").removeClass("active");
+        $("#tab3").removeClass("active");
+        $("#tab4").removeClass("active");
+        
+    }
+    else if (this.id == "running-events-btn"){
+        $("#tab3").addClass("active");
+        $("#tab1").removeClass("active");
+        $("#tab2").removeClass("active");
+        $("#tab4").removeClass("active");
+        
+    }
+    else if(this.id == "analytics-btn"){
+    	$("#tab4").addClass("active");
+    	$("#tab3").removeClass("active");
+        $("#tab1").removeClass("active");
+        $("#tab2").removeClass("active");
+
+    }
+		var charts = [], datas = [], ops = [];
+    		$.getJSON("/booked_seats",function(response){
+			CurrentEventsList = response.CurrentEventsList;
+			google.charts.load('current', {'packages':['corechart']});
+      			google.charts.setOnLoadCallback(drawChart);
+			function drawChart() {
+				CurrentEventsList.forEach(function(event){
+					var data = google.visualization.arrayToDataTable(event.ChartData);
+					var options = event.ChartOptions;
+					datas.push(data);
+					ops.push(options);
+					var chart = new google.visualization.BarChart(document.getElementById(event.BarchartID));
+					chart.draw(data, options);
+					charts.push(chart);
+				});
+			}
+			window.addEventListener('resize', function() {
+				for(var i=0;i<charts.length;i++){
+                                        charts[i].draw(datas[i],ops[i]);
+                                }
+			},false);
+			});
+				
+			
+			$.getJSON("/chart_data",function(response){
+								
+        var data = google.visualization.arrayToDataTable(response.TopicChart.Data);
+	 var data2 = google.visualization.arrayToDataTable(response.AgesChart.Data);
+        var width = .6 * window.innerWidth;
+    	var height = .8 * window.innerHeight;
+    	var options = response.TopicChart.Options;
+	var options2 = response.AgesChart.Options;
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        var chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
+        chart.draw(data, options);
+        chart2.draw(data2, options2);
+        window.addEventListener('resize', function() {
+        chart.draw(data, options);
+        chart2.draw(data2,options2);
+
+
+    }, false);
+
+       window.onresize = drawChart;
+								});
+      
+
+
+});
+});
+
+
+
+
+
+
+
+ 
+</script>
+
+
+</html>

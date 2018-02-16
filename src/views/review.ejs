@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HappyKidz</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified CSS -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/stylesheets/styles_review.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="http://getbootstrap.com.vn/examples/equal-height-columns/equal-height-columns.css"> -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script src="jquery.matchHeight.js" type="text/javascript"></script>
+</head>
+<body>
+    <nav id="my-navbar" class="navbar navbar-custom" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <span>
+                    <img src="icon2.png" alt="Party" height="25" width="27">
+                </span> HappyKidz
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="#">Home</a>
+                </li>
+                <li>
+                    <a href="#">Events</a>
+                </li>
+            </ul>
+            <div class="col-sm-5 col-md-5">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q">
+                        <span class="input-group-addon">@</span>
+                        <input type="text" class="form-control" placeholder="Location" name="l">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#">Register</a>
+                </li>
+                <li>
+                    <a href="#">Login</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+    <div class="container">
+        <h2>Αξιολόγηση Εκδήλωσης "<%= title%>"</h2>                
+        <div class="row">
+            <br>
+            <div class="col-sm-3 col-md-3 col-lg-3"></div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <form class="form-horizontal" action="http://localhost:3000/review" method = "POST" style="padding: 10px; max-width:600px;" >            
+                    <!-- Name input-->
+                    <div class="form-group">
+                        <label class="control-label" for="name">Όνομα Χρήστη</label>
+                        <input id="name" name="name" type="text" placeholder="" class="form-control">
+                    </div>
+            
+                    <!-- Email input-->
+                    <div class="form-group">
+                        <label class="control-label" for="email">E-mail</label>
+                        <input id="email" name="email" type="text" placeholder="" class="form-control">
+                    </div>
+            
+                    <!-- Message body -->
+                    <div class="form-group">
+                        <label class="control-label" for="description">Περιγραφή</label>
+                        <textarea class="form-control" id="description" name="description" placeholder="" rows="5"></textarea>
+                    </div>
+        
+        
+                    <!-- Rating -->
+                    <div class="form-group">
+                        <label class="control-label" for="stars">Αξιολόγηση</label>
+                        
+                        <div style="padding-top: 5px;">
+                                <div class="container">
+                                        <div class="row lead evaluation">
+                                            <div id="colorstar" class="starrr ratable" ></div>
+                                            <!-- <span id="count">0</span> star(s) - <span id="meaning"> </span>   -->
+                                        </div>    
+                                </div>
+                        </div>
+                        <input type="hidden" id="stars" name="rating" value="0">                        
+                    </div>
+                    
+                    
+                    <!-- Form actions -->
+                    <div class="form-group">
+                    <div class="col-md-12 col-lg-12 text-center">
+                        <center>
+                            <button type="submit" class="btn my-btn btn-lg" style="padding-left: 20px;">
+                                    <div class="row">
+                                            <p style="margin: auto auto;">Υποβολή</p>   
+                                            </div>
+                            </button>
+                        </center>
+                        <!-- <button type="reset" class="btn btn-default btn-md">Clear</button> -->
+                    </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-3 col-md-3 col-lg-3"></div>
+        </div>
+    </div>                 
+</body>
+
+<script>
+
+(function($, window) {
+  var Starrr;
+
+  Starrr = (function() {
+    Starrr.prototype.defaults = {
+      rating: void 0,
+      numStars: 5,
+      change: function(e, value) {}
+    };
+
+    function Starrr($el, options) {
+      var i, _, _ref,
+        _this = this;
+
+      this.options = $.extend({}, this.defaults, options);
+      this.$el = $el;
+      _ref = this.defaults;
+      for (i in _ref) {
+        _ = _ref[i];
+        if (this.$el.data(i) != null) {
+          this.options[i] = this.$el.data(i);
+        }
+      }
+      this.createStars();
+      this.syncRating();
+      this.$el.on('mouseover.starrr', 'span', function(e) {
+        return _this.syncRating(_this.$el.find('span').index(e.currentTarget) + 1);
+      });
+      this.$el.on('mouseout.starrr', function() {
+        return _this.syncRating();
+      });
+      this.$el.on('click.starrr', 'span', function(e) {
+        return _this.setRating(_this.$el.find('span').index(e.currentTarget) + 1);
+      });
+      this.$el.on('starrr:change', this.options.change);
+    }
+
+    Starrr.prototype.createStars = function() {
+      var _i, _ref, _results;
+
+      _results = [];
+      for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
+        _results.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty'></span>"));
+      }
+      return _results;
+    };
+
+    Starrr.prototype.setRating = function(rating) {
+      if (this.options.rating === rating) {
+        rating = void 0;
+      }
+      this.options.rating = rating;
+      this.syncRating();
+      return this.$el.trigger('starrr:change', rating);
+    };
+
+    Starrr.prototype.syncRating = function(rating) {
+      var i, _i, _j, _ref;
+
+      rating || (rating = this.options.rating);
+      if (rating) {
+        for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+          this.$el.find('span').eq(i).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+        }
+      }
+      if (rating && rating < 5) {
+        for (i = _j = rating; rating <= 4 ? _j <= 4 : _j >= 4; i = rating <= 4 ? ++_j : --_j) {
+          this.$el.find('span').eq(i).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+        }
+      }
+      if (!rating) {
+        return this.$el.find('span').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+      }
+    };
+
+    return Starrr;
+
+  })();
+  return $.fn.extend({
+    starrr: function() {
+      var args, option;
+
+      option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      return this.each(function() {
+        var data;
+
+        data = $(this).data('star-rating');
+        if (!data) {
+          $(this).data('star-rating', (data = new Starrr($(this), option)));
+        }
+        if (typeof option === 'string') {
+          return data[option].apply(data, args);
+        }
+      });
+    }
+  });
+})(window.jQuery, window);
+
+$(function() {
+  return $(".starrr").starrr();
+});
+
+$( document ).ready(function() {      
+  $('.ratable').on('starrr:change', function(e, value){
+    $("#stars").val(value);
+     $(this).closest('.evaluation').children('#count').html(value);
+    //  $(this).closest('.evaluation').children('#meaning').html(correspondence[value]);
+     
+     var currentval=  $(this).closest('.evaluation').children('#count').html();
+  }); 
+    
+});
+</script>
+</html>

@@ -1,0 +1,132 @@
+<% //include partials/header %>
+
+  <img id="joinUsLogo" src="/joinlogo2.png" alt="join_logo"> 
+  <div class="container well">
+    <div class="row">
+      <div class="tab" role="tabpanel">
+        <!-- Nav tabs -->                          
+        <ul class="nav nav-tabs " role="tablist">
+          <li role="presentation" class="active" id="personal-tab" ><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab"><span><i class="fa fa-user"></i></span>Προσωπικός Λογαριασμός</a></li>
+          <li role="presentation" id="business-tab"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab"><span><i class="fa fa-briefcase"></i></span>Επιχειρισακός Λογαριασμός</a></li>
+        </ul>                     
+        <!-- Tab panes -->
+        <div class="tab-content tabs">
+          <div role="tabpanel" class="tab-pane fade in active" id="Section1">                                    
+            <div class="col-lg-12 my-form-personal">
+              <div class="row">
+                <form id="personal-account-form" action="/register/user" method="post">
+                  <div class="col-sm-12 ">
+                    
+                    <div class="row">
+                      <div class="col-sm-6 form-group">
+                        <label>Όνομα</label>
+                        <input type="text" name="firstName" placeholder="Όνομα" class="form-control">
+                      </div>
+                      <div class="col-sm-6 form-group">
+                        <label>Επώνυμο</label>
+                        <input type="text" name="lastName" placeholder="Επώνυμο" class="form-control">
+                      </div>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label>Διεύθυνση ηλεκτρονικού ταχυδρομίου</label>
+                      <input type="text" name="email" placeholder="Διεύθυνση ηλεκτρονικού ταχυδρομίου" class="form-control">
+                    </div>     
+                    <div class="form-group">
+                      <label class="password">Κωδικός</label>
+                      <input type="password" name="password" placeholder="Κωδικός" class="form-control">
+                    </div>                                  
+                    <p class =terms>By clicking Submit, you agree to our Terms and that you have read our Data Policy, including our Cookie Use.</p>
+                    <div class="text-center"> 
+                      <button id="submitButton" type="submit" class="btn btn-lg btn-info">Submit <span><i class="fa fa-smile-o"></i></span></button>  
+                    </div>               
+                  </div>
+                </form> 
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="Section2">                                  
+            <div class="col-lg-12 my-form-business">                   
+              <div class="row">
+                <form id="business-account-form" action="/register/provider" method="post">
+                  <div class="col-sm-12 ">
+                    <div class="form-group">
+                      <label>Επίσημο Όνομα Επιχείρησης</label>
+                      <input type="text" name="legalBusinessName" placeholder="Επίσημο Όνομα Επιχείρησης" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label>Διεύθυνση ηλεκτρονικού ταχυδρομίου Επιχείρησης</label>
+                      <input type="text" name="email" placeholder="Διεύθυνση ηλεκτρονικού ταχυδρομίου Επιχείρησης" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                      <label>Επίσημο τηλέφωνο Επιχείρησης</label>
+                      <input type="text" name="legalBusinessPhone" placeholder="Επίσημο τηλέφωνο Επιχείρησης" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label>Όνομα Επιχείρησης</label>
+                      <input type="text" name="businessName" placeholder="Όνομα Επιχείρησης" class="form-control">
+                    </div>  
+                    <div class="form-group">
+                      <label>Ίστότοπος Επιχείρησης</label>
+                      <input type="text" name="businessSite" placeholder="Ιστότοπος Επιχείρησης" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                      <label class="password">Κωδικός</label>
+                      <input type="password" name="password" placeholder="Κωδικός" class="form-control">
+                    </div>      
+
+                    <p class =terms>By clicking Submit, you agree to our Terms and that you have read our Data Policy, including our Cookie Use. We will contact you when we approve you etc.</p>
+                    
+                    <div class="text-center"> 
+                      <button id="submitButton" type="submit" class="btn btn-lg btn-info">Submit <span><i class="fa fa-smile-o"></i></span></button>  
+                    </div>
+                    
+                    
+                  </div>
+                </form> 
+              </div>
+            </div>                               
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>               
+
+</body>
+
+
+<script>
+  
+  $( window ).resize(function() {
+    if($(window).width() < 992){ 
+      $("#personal-tab").addClass("asd")
+      $("#business-tab").addClass("asd")
+        // $("#my-navbar").addClass("sticky")
+      }
+      else{
+        $("#personal-tab").removeClass("asd")
+        $("#business-tab").removeClass("asd")
+        // $("#my-navbar").removeClass("sticky")
+// 751
+}
+});
+  if($(window).width() < 992){
+    $("#personal-tab").addClass("asd")
+    $("#business-tab").addClass("asd")
+        // $("#my-navbar").addClass("sticky")
+      }
+      else{
+        $("#personal-tab").removeClass("asd")
+        $("#business-tab").removeClass("asd")
+        // $("#my-navbar").removeClass("sticky")
+
+      }
+
+  // do your stuff
+
+</script>
+
+
+</html>
