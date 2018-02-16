@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Event creation page</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <h1>Select and upload a file</h1>
+    <form action="/file_upload" method="POST" enctype="multipart/form-data" >
+        <div class="form-group">
+          <label>Files</label>
+          <div id="files">
+            <input type="file" class="form-control" name="file" id="file">
+          </div>
+        </div>
+        <button class="btn btn-success add-new-image">Add Image</button>
+        <div class="form-group">
+          <label for="id">Event id</label>
+          <input type="text" class="form-control" placeholder="event id" name="id" id ="id">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <script type="text/javascript">
+      var count = 0;
+      $('.add-new-image').click(function (event) {
+        event.preventDefault();
+        if (count == 4) {
+          // this is not safe. client can just change count manually
+          alert("maximum number of files reached");
+          return;
+        }
+        var newfield = "<input type=\"file\" class=\"form-control\" name=\"file" + count.toString() + "\" id=\"file" + count.toString() + "\">"
+        count++;
+        $("#files").html($("#files").html() + newfield);
+      });
+  </script>
+  </body>
+</html>

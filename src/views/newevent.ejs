@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+    
+<script src="https://use.fontawesome.com/899071ec86.js"></script>
+
+<title>HappyKidz - Register Page</title>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+ <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+<!-- Latest compiled and minified CSS -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/stylesheets/style_new_event.css">
+
+<nav class="navbar navbar-custom" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+            <span>
+                <img src="icon2.png" alt="Party" height="25" width="27">
+            </span> HappyKidz
+        </a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li>  <!--  it was active -->
+                <a href="#">Home</a>
+            </li>
+            <li>
+                <a href="#">Events</a>
+            </li>
+        </ul>
+        <div class="col-sm-5 col-md-5">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q">
+                    <span class="input-group-addon">@</span>
+                    <input type="text" class="form-control" placeholder="Location" name="l">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="#">Register</a>
+            </li>
+            <li>
+                <a href="#">Login</a>
+            </li>
+        </ul>
+    </div>
+</div>
+    <!-- /.navbar-collapse -->
+</nav>
+
+<style>
+       #map {
+        height: 400px;
+       }
+    </style>
+
+
+<body>
+    
+<div class="container">    
+<div class="panel panel-primary" style="margin: 20px; ">
+    <div class="panel-heading">
+            <h3 class="panel-title">Δημιουργία Νέου Event</h3>
+    </div>
+<div class="panel-body" >
+    <form action="/event_create" method="POST" enctype="multipart/form-data">
+            <div class="col-md-6 col-sm-12"  >
+                <div class="form-group col-md-12 col-sm-12">
+                    <label for="event-name">Τίτλος Event </label>
+                    <input type="text" class="form-control input-sm" id="event-name" name="EventName">
+                </div>
+                <div class="form-group col-md-12 col-sm-12" >
+                    <label for="Description">Περιγραφή Event</label>
+                    <textarea  maxlength = "5000" placeholder="το πολύ 5000 χαρακτήρες" cols = "40" rows = "20" class="form-control input-sm" id="Description" name="Description"></textarea>
+                </div>
+                <div class="form-group col-md-6 col-sm-6">
+                    <label for="event-date">Ημερομηνία </label>
+                    <input type="date" class="form-control input-sm" name="Date" id="event-date" >
+                </div>
+                <div class="form-group col-md-6 col-sm-6">
+                    <label for="AgeGroup">Ηλικιακή Ομάδα Παιδιών</label>
+                    <select class="form-control col-sm-2" name="AgeGroup" id="AgeGroup">
+                                <option value="01">3-5</option>
+                                <option value="02">6-8</option>
+                                <option value="03">9-12</option>
+                                <option value="04">>12</option>
+                            </select>
+          
+                </div>
+                <div class="form-group ">
+                    <label for="city">Ανέβασμα αρχείων </label>
+                    <input type="file" class="form-control input-sm" id="Image" placeholder="" name="Image" multiple="">
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12"  >
+
+        <div class="form-group">
+            <label for="latlng">Εισάγετε την τοποθεσία του Event(θα γίνει αναζήτηση στο χάρτη)</label>
+            <input id="latlng" type="text" name = "location" class="form-control input-sm">
+        </div>
+        <div class="form-group">
+            <button type="button" id = "submit" class="btn btn-default" >Αναζήτηση</button>
+        </div>
+        
+        <div id="map" class="form-group " ></div>
+    
+    <script>
+        var latlng;
+      function initMap() {
+        var uluru = {lat: 37.983810 , lng: 23.727539}
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: uluru,
+          zoom: 10
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+
+        var geocoder = new google.maps.Geocoder;
+        var infowindow = new google.maps.InfoWindow;
+
+        document.getElementById('latlng').addEventListener('keypress', function() {
+          geocodeAddress(geocoder, map, infowindow,marker);
+        });
+      }
+
+      function geocodeAddress(geocoder, resultsMap, infowindow,marker) {
+        var input = document.getElementById('latlng').value;
+        //var latlngStr = input.split(',', 2);
+        //var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
+        geocoder.geocode({'address': input}, function(results, status) {
+          if (status === 'OK') {
+            latlng = results[0].geometry.location;
+            resultsMap.setCenter(results[0].geometry.location);
+            marker.setOptions({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+          } else {
+            
+          }
+        });
+
+        };
+      
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBC7V-i6x2AWc0nSbMo51tkcnfiteuKuo&callback=initMap">
+    </script>
+    
+    
+        <div class="form-group ">
+            <label for="event-date">Αριθμός Εισιτηρίων </label>
+            <input type="number" name="TicketNum" class="form-control input-sm" id="TicketNum" >
+    </div>
+
+        <div class="form-group ">
+            <label for="mobile">Προσθήκη υδατογραφήματος στη φωτογραφία</label>
+            <input id="Watermark" name="watermark" type="checkbox" >
+        </div>
+
+        
+    
+        <div class="form-group ">
+            <label for="city">Τιμή ανά Εισιτήριο (&euro;) </label>
+            <input type="number" step="0.1" class="form-control input-sm" name = "Price" id="Price" placeholder="">
+        </div>
+        
+    </div>
+    <button id="Creation"  class="btn btn-primary" style="float: right;" >Δημιουργία</button>
+    <button id="Cancel" type="button" class="btn btn-primary" style="float: left;">Ακύρωση</button>
+
+    
+    
+</div>
+</form>
+</div>
+                        
+</div>
+                
+ 
+
+
+            
+
+</body>
+
+
+<script>
+
+
+</script>
+
+
+</html>
