@@ -59,9 +59,7 @@ Organizer.belongsToMany(Parent, { through: Subscription, foreignKey: 'organizerI
 
 
 //initialize tables if they don't exist
-Parent.sync().then(() => {console.log('parent table created');});
-Organizer.sync().then(() => {console.log('parent table created');});
-Admin.sync().then(() => {console.log('parent table created');});
+sequelize.sync();
 
 // Construct DB Interface (API) object
 var db = {
