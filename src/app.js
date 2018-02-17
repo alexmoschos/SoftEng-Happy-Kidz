@@ -39,10 +39,6 @@ var logout = require('./routes/logout');
 var protected = require('./routes/protected');
 
 var admin = require('./routes/admin');
-var admin_events = require('./routes/admin_events');
-var adminResetProvider = require('./routes/adminResetProvider');
-var adminResetUser = require('./routes/adminResetUser');
-
 
 var app = express();
 
@@ -92,10 +88,6 @@ app.use('/ticketPayment', ticketPayment);
 app.use('/successPayment', successPayment);
 app.use('/failPayment', failPayment);
 app.use('/admin', admin);
-app.use('/admin_events', admin_events);
-app.use('/admin/resetUserPassword', adminResetUser);
-app.use('/admin/resetProviderPassword', adminResetProvider);
-
 
 app.use(function (req, res, next) {
   var form = new formidable.IncomingForm({
