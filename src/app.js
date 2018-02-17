@@ -30,6 +30,8 @@ var successPayment = require('./routes/successPayment');
 var failPayment = require('./routes/failPayment');
 var admin = require('./routes/admin');
 var review = require('./routes/review');
+var payment = require('./routes/payment');
+var membership = require('./routes/membership');
 
 
 var booked_seats = require('./routes/booked_seats');
@@ -52,9 +54,13 @@ app.set('view engine', 'ejs');
 // Override http method for DELETE to work
 app.use(methodOverride('_method'));
 
-app.use(session({secret: "Shh, its a secret!"}));
+app.use(session({
+    secret: "Shh, its a secret!",
+    resave: false,
+    saveUninitialized: false
+}));
 app.use(passport.initialize());
-app.use(passport.session({saveUninitialized: false}));
+app.use(passport.session());
 
 
 // uncomment after placing your favicon in /public
@@ -68,20 +74,23 @@ app.use('/', index);
 app.use('/login', login);
 app.use('/parent', parent);
 
-app.use('/chart_data',chart_data);
-app.use('/booked_seats',booked_seats);
+app.use('/chart_data', chart_data);
+app.use('/booked_seats', booked_seats);
 
 //app.use('/search', event_search);
 app.use('/ticket', ticket_route);
-app.use('/events',events);
+app.use('/events', events);
 //app.use('/search', event_search);//
-app.use('/search',search_results);
+app.use('/search', search_results);
 app.use('/review', review);
 
 app.use('/provider', provider);
 app.use('/register', register);
 app.use('/logout', logout);
 app.use('/protected', protected);
+app.use('/payment', payment);
+
+app.use('/membership', membership);
 app.use('/subscription', subscription);
 app.use('/subscriptionPayment', subscriptionPayment);
 app.use('/ticketPayment', ticketPayment);
@@ -89,18 +98,18 @@ app.use('/successPayment', successPayment);
 app.use('/failPayment', failPayment);
 app.use('/admin', admin);
 
-app.use(function (req, res, next) {
-  var form = new formidable.IncomingForm({
-      encoding: 'utf-8',
-      uploadDir:  path.join(__dirname, '/public/files'),
-      multiples: true,
-      keepExtensions: true
-  });
-  form.once('error', console.log);
-  form.parse(req, function (err, fields, files) {
-      Object.assign(req, {fields, files});
-      next();
-  });
+app.use(function(req, res, next) {
+    var form = new formidable.IncomingForm({
+        encoding: 'utf-8',
+        uploadDir: path.join(__dirname, '/public/files'),
+        multiples: true,
+        keepExtensions: true
+    });
+    form.once('error', console.log);
+    form.parse(req, function(err, fields, files) {
+        Object.assign(req, { fields, files });
+        next();
+    });
 });
 
 
@@ -110,20 +119,20 @@ app.use('/event_create', event_create);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 

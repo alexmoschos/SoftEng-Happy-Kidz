@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const Sequelize = require('sequelize');
+const conf = require('../config.js');
 
 // Database connection config
 const sequelize = new Sequelize('devdb', 'dev', 'password', {
@@ -60,6 +61,16 @@ Organizer.belongsToMany(Parent, { through: Subscription, foreignKey: 'organizerI
 
 //initialize tables if they don't exist
 sequelize.sync();
+
+// for each supported category make sure, we have it in the categories table
+conf.supportedCategories.forEach(function (category, idx) {
+    Categories.findOne({where: {categoryName: category}}).then(res => {
+        if (!res) {
+            // this category has to be added.
+            Categories.create({categoryName: category}).catch(err => {console.log(err);});
+        }
+    }).catch(err => {console.log(err);});
+});
 
 // Construct DB Interface (API) object
 var db = {
