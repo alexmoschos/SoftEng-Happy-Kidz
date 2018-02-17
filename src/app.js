@@ -40,8 +40,6 @@ var protected = require('./routes/protected');
 
 var admin = require('./routes/admin');
 var admin_events = require('./routes/admin_events');
-var adminDeleteProvider = require('./routes/adminDeleteProvider');
-var adminDeleteUser = require('./routes/adminDeleteUser');
 var adminResetProvider = require('./routes/adminResetProvider');
 var adminResetUser = require('./routes/adminResetUser');
 
@@ -95,9 +93,7 @@ app.use('/successPayment', successPayment);
 app.use('/failPayment', failPayment);
 app.use('/admin', admin);
 app.use('/admin_events', admin_events);
-app.use('/admin/deleteUserAccount', adminDeleteUser);
 app.use('/admin/resetUserPassword', adminResetUser);
-app.use('/admin/deleteProviderAccount', adminDeleteProvider);
 app.use('/admin/resetProviderPassword', adminResetProvider);
 
 
