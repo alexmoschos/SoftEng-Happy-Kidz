@@ -54,7 +54,7 @@ app.set('view engine', 'ejs');
 
 app.use(session({secret: "Shh, its a secret!"}));
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session({saveUninitialized: false}));
 
 
 // uncomment after placing your favicon in /public
