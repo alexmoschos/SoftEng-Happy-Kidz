@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var elastic = require('../apis/elastic_interface');
 var geocoding = require('../apis/geocoding');
+var db = require('../models/db');
 const request = require('request');
 
 /* GET create event page. */
@@ -59,32 +60,27 @@ router.get('/', function(req, res, next) {
 
 });
 
-/* POST create event page */
+/* Create a new provider */
 router.post('/', function(req, res, next) {
     var event = req.body;
     console.log(event);
-    /*geocoding(event.location, function(loc) {
-        event.location = {
-            lat: loc.lat,
-            lon: loc.lng
-        };
-	console.log(event);
-        event.tickets = parseInt(event.tickets);
-        event.price = parseFloat(event.price);
-        event.start_time = parseInt(event.start_time);
-        event.end_time = parseInt(event.end_time);
-	
-        elastic.insert('events', event, function (err, resp, status) {
-            if (err) {
-                console.log(err);
-            }
-            else {
-                res.send("ok");
-            }
-        });
-    });*/
+
     res.send("You have submitted an event!");
     
+});
+
+/* Route to delete a provider */
+router.delete('/:providerId', function(req, res){
+	db.Organizer.findById(req.params.providerId)
+	.then( (provider) => {
+		if (provider) {
+			return provider.destroy();
+		} else {
+			res.send('No such user!')
+		}
+	}  )
+	.then( (succ) => res.redirect("/admin") );
+
 });
 
 module.exports = router;

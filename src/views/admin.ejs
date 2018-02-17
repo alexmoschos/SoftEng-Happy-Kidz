@@ -207,7 +207,7 @@ crossorigin="anonymous"></script>
                       <td><a href="/admin_providers/<%=it.organizerId%>"><%= it.email %></a></td>
                       <td><%= it.isVerified%></td>
                       <td>
-                      <form role="form" action="/admin/deleteProviderAccount/<%=it.organizerId%>" method="POST">
+                      <form role="form" action="/provider/<%=it.organizerId%>?_method=DELETE" method="POST">
                         <input type="submit" class="btn btn-primary" name="delete" value="<%=it.name%>">
                       </form>
                       </td>

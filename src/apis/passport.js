@@ -19,12 +19,15 @@ passport.serializeUser(function(user, done) {
             break;
         case 'organizer': 
             done(null, {id: user.user.organizerId, type: user.type});
+        case 'admin': 
+            done(null, {id: user.user.adminId, type: user.type});
         default: 
             console.log('error serializeUser');
     }
 });
   
 passport.deserializeUser(function(obj, done) {
+    console.log('deserializeUser called');
     auth.findUserById(obj.id, function (user) {
         return done(null, {user: user, type: obj.type});
     }, console.log);

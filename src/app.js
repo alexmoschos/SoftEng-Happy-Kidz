@@ -6,11 +6,12 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var formidable = require('formidable');
+var methodOverride = require('method-override');
 
 var chart_data = require('./routes/chart_data');
 var index = require('./routes/index');
 var users = require('./routes/users');
-var provider_page = require('./routes/provider_page');
+var provider = require('./routes/provider');
 
 var passport = require('./apis/passport');
 
@@ -48,13 +49,19 @@ var adminResetUser = require('./routes/adminResetUser');
 
 var app = express();
 
+// Static Resources
+app.use(express.static(path.join(__dirname, 'public')));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Override http method for DELETE to work
+app.use(methodOverride('_method'));
+
 app.use(session({secret: "Shh, its a secret!"}));
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session({saveUninitialized: false}));
 
 
 // uncomment after placing your favicon in /public
@@ -63,7 +70,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 app.use('/', index);
 app.use('/login', login);
 app.use('/users', users);
@@ -78,7 +85,7 @@ app.use('/events',events);
 app.use('/search',search_results);
 app.use('/review', review);
 
-app.use('/provider_page', provider_page);
+app.use('/provider', provider);
 app.use('/register', register);
 app.use('/logout', logout);
 app.use('/protected', protected);

@@ -20,7 +20,7 @@ function whereClause(type, idx, obj) {
 }
 
 function lookUpTables(idx, type, val, succ, fail) {
-    if (idx == Tables.length) succ(null);
+    if (idx === Tables.length) succ(null);
     Tables[idx].findOne(whereClause(type, idx, val)).then(
         function (user) {
             if (user) 
