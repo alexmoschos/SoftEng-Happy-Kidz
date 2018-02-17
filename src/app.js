@@ -10,13 +10,12 @@ var methodOverride = require('method-override');
 
 var chart_data = require('./routes/chart_data');
 var index = require('./routes/index');
-var users = require('./routes/users');
+var parent = require('./routes/parent');
 var provider = require('./routes/provider');
 
 var passport = require('./apis/passport');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
 
 //var event_search = require('./routes/search');//
 var file_upload = require('./routes/file_upload');
@@ -73,7 +72,7 @@ app.use(cookieParser());
 
 app.use('/', index);
 app.use('/login', login);
-app.use('/users', users);
+app.use('/parent', parent);
 
 app.use('/chart_data',chart_data);
 app.use('/booked_seats',booked_seats);

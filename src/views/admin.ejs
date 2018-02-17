@@ -154,8 +154,8 @@ crossorigin="anonymous"></script>
                       <td><a href="/admin_users/<%=it.parentId%>"><%= it.name %></a></td>
                       <td><a href="/admin_users/<%=it.parentId%>"><%= it.email %></a></td>
                       <td>
-                      <form role="form" action="/admin/deleteUserAccount/<%=it.parentId%>" method="POST">
-                        <input type="submit" class="btn btn-primary" name="delete" value="<%=it.name%>">
+                      <form role="form" action="/parent/<%=it.parentId%>?_method=DELETE" method="POST">
+                        <input type="submit" class="btn btn-primary" name="parentId" value="<%=it.name%>">
                       </form>
                       </td>
                       <td>
