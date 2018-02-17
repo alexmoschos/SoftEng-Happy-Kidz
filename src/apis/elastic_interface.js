@@ -30,7 +30,7 @@ function initialiaze_elastic() {
                     "mappings": {
                         "general": {
                             "properties": {
-                                "name": { 
+                                "title": { 
                                     "type": "text",
                                     "fields": {
                                         "greek": { 
@@ -48,12 +48,18 @@ function initialiaze_elastic() {
                                         }
                                     }
                                 },
-                                "location" : {
+                                "categoryName": { 
+                                    "type": "text",
+                                    "fields": {
+                                        "greek": { 
+                                            "type":     "text",
+                                            "analyzer": "greek"
+                                        }
+                                    }
+                                },
+                                "geoLocation" : {
                                     "type": "geo_point"
                                 },
-                                "price" : {
-                                    "type": "float"
-                                }
                             }
                         }
                     }
@@ -72,32 +78,37 @@ function createQuery(filters, callback) {
             filter: []
         }
     };
+
+    if (filters.page && filters.page.length != 0) {
+        query.from = (parseInt(filters.page) * 10).toString();
+        query.size = 10
+    }
     
     if (filters.free_text && filters.free_text.length != 0) {
       query.bool.must.push({
             multi_match : {
                 type: 'most_fields',
                 query : filters.free_text,
-                fields: ['name', 'name.greek', 'description', 'description.greek']
+                fields: ['title', 'title.greek', 'description', 'description.greek','categoryName', 'categoryName.greek']
             }
       });
     }
   
     if (filters.tickets && filters.tickets.length != 0) {
         query.bool.filter.push({
-            range: {tickets: {gte: parseInt(filters.tickets)}}
+            range: {ticketCount: {gte: parseInt(filters.tickets)}}
         });
     }
   
     if (filters.price && filters.price.length != 0) {
         query.bool.filter.push({
-            range: {price: {lte: parseFloat(filters.price)}}
+            range: {ticketPrice: {lte: parseFloat(filters.price)}}
         });
     }
   
     if (filters.max_time && filters.max_time.length != 0) {
         query.bool.filter.push({
-            range: {start_time: {lte: parseInt(filters.max_time)}}
+            range: {startTime: {lte: parseInt(filters.max_time)}}
         });
     }
   

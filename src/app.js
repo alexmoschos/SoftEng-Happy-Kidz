@@ -30,7 +30,7 @@ var successPayment = require('./routes/successPayment');
 var failPayment = require('./routes/failPayment');
 var admin = require('./routes/admin');
 var review = require('./routes/review');
-
+var event_create = require('./routes/event_create');
 
 var booked_seats = require('./routes/booked_seats');
 
@@ -111,7 +111,6 @@ app.use(function (req, res, next) {
 
 
 app.use('/file_upload', file_upload);
-var event_create = require('./routes/event_create');
 app.use('/event_create', event_create);
 
 // catch 404 and forward to error handler

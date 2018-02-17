@@ -47,19 +47,19 @@ function isLoggedIn(req, res, next) {
 }
 
 function isUserParent(req, res, next) {
-    if (req.isAuthenticated() && req.user.type == 'parent')
+    if (req.isAuthenticated() && req.user.type === 'parent')
         return next();
     return res.render('no_page');
 }
 
 function isUserOrganizer(req, res, next) {
-    if (req.isAuthenticated() && req.user.type == 'organizer')
+    if (req.isAuthenticated() && req.user.type === 'organizer')
         return next();
     return res.render('no_page');
 }
 
 function isUserAdmin(req, res, next) {
-    if (req.isAuthenticated() && req.user.type == 'admin')
+    if (req.isAuthenticated() && req.user.type === 'admin')
         return next();
     return res.render('no_page');
 }
