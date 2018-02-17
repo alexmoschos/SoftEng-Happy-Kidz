@@ -8,7 +8,7 @@ var fs = require('fs');
 var conf = require('../config');
 var auth = require('../apis/authentication');
 var db = require('../models/db');
-
+var watermark = require('../apis/watermark/watermark.js');
 
 function validNewEvent(newEvent) {
 
@@ -94,6 +94,9 @@ router.post('/', auth.isUserOrganizer,  function(req, res, next) {
                     fs.rename(files[i].path, newpath, function (err) {
                         if (err) throw err;
                     });
+
+                    if (body.watermark)
+                        watermark.addTextWatermark(newpath, newpath, 'HappyKidz').catch(err => {console.log(err);});
                 }
             }
 
