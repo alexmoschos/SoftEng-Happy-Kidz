@@ -14,11 +14,11 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
         },
         startTime: {
-            type: DataTypes.DATE,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         endTime: {
-            type: DataTypes.DATE,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         description: {
@@ -37,7 +37,7 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
-        geoAdress: {
+        geoAddress: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -62,11 +62,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
         },
         pictures: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        isVerified: {
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         clickNumber: {
