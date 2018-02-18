@@ -60,6 +60,7 @@ router.post('/', auth.isUserOrganizer,  function(req, res, next) {
     newEvent.geoAddress = body.location;
     newEvent.ticketPrice = parseInt(body.Price);
     newEvent.ticketCount = parseInt(body.TicketNum);
+    newEvent.initialTicketCount  = newEvent.ticketCount;
     newEvent.minAge = parseInt(body.AgeGroup);
     newEvent.maxAge = newEvent.minAge + 2;
     if (newEvent.minAge === 13)
@@ -110,6 +111,7 @@ router.post('/', auth.isUserOrganizer,  function(req, res, next) {
 
             newEvent.providerName = req.user.user.name;
             newEvent.providerPhone = req.user.user.phone;
+            newEvent.eventId = event.eventId.toString();
 
             elastic.insert('events', newEvent, function( err, resp, status){
                 if (err) {

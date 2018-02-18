@@ -85,10 +85,7 @@ function createQuery(filters, callback) {
         }
     };
 
-    if (filters.page && filters.page.length != 0) {
-        query.from = (parseInt(filters.page) * 10).toString();
-        query.size = 10
-    }
+    
     
     if (filters.free_text && filters.free_text.length != 0) {
       query.bool.must.push({
@@ -185,12 +182,17 @@ function delete_document(index, id, f) {
 
 function search_document(index, filters, f) {
     createQuery(filters, function (query) {
-        client.search({  
-                index: index,
-                body: {
-                    query: query,
-                }
-            },function (error, response,status) {
+        var req_obj = {  
+                        index: index,
+                        body: {
+                            query: query,
+                        }
+                    };
+        if (filters.page && filters.page.length != 0) {
+            req_obj.from = (parseInt(filters.page) * 10);
+            req_obj.size = 10;
+        }
+        client.search(req_obj,function (error, response,status) {
                 if (error){
                     console.log("search error: "+error)
                 }
