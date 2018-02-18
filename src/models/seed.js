@@ -1,5 +1,6 @@
 const conf = require('../config.js');
 const bcrypt = require('bcrypt');
+const elastic = require('../apis/elastic_interface');
 
 function seedDatabase(db) {
     // for each supported category make sure, we have it in the categories table
@@ -74,9 +75,9 @@ function seedDatabase(db) {
                     endTime: Math.floor(Date.now() / 1000 + 3600),
                     description: '',
                     categoryName: 'Αθλητισμός',
-                    geoLon: '37.988930',
-                    geoLat: '23.764727',
-                    geoAddress: 'Ευρυτανίας 56, ΤΚ15451, Αθήνα',
+                    geoLon: 37.988930,
+                    geoLat: 23.764727,
+                    geoAddress: 'Ευρυτανίας 56, 15451, Αθήνα',
                     ticketPrice: 15,
                     discount: 5,
                     ticketCount: 100,
@@ -94,9 +95,9 @@ function seedDatabase(db) {
                     endTime: Math.floor(Date.now() / 1000 + 3600),
                     description: '',
                     categoryName: 'Αθλητισμός',
-                    geoLon: '37.988930',
-                    geoLat: '23.764727',
-                    geoAddress: 'Ευρυτανίας 56, ΤΚ15451, Αθήνα',
+                    geoLon: 37.988930,
+                    geoLat: 23.764727,
+                    geoAddress: 'Ευρυτανίας 56, 15451, Αθήνα',
                     ticketPrice: 15,
                     discount: 5,
                     ticketCount: 100,
@@ -107,8 +108,47 @@ function seedDatabase(db) {
                     clickNumber: 0,
                     isVerified: false
                 }
-            ]))
-        .catch((err) => console.log(err));
+            ])).then( () => {
+                // add all events from postgres to elastic
+
+
+                db.Event.findAll().then(hits => {
+                    hits.forEach(function (event) {
+                        var newEvent = {};
+
+                        newEvent.organizerId = event.organizerId;
+                    
+                        newEvent.title = event.title;
+                        newEvent.startTime = event.startTime;
+                        newEvent.endTime = event.endTime; // this field should probably go
+                        newEvent.description = event.description;
+                        newEvent.categoryName = event.categoryName;
+                        newEvent.geoAddress = event.geoAddress;
+                        newEvent.ticketPrice = event.ticketPrice;
+                        newEvent.ticketCount = event.ticketCount
+                        newEvent.initialTicketCount  = event.initialTicketCount;
+                        newEvent.minAge = event.minAge;
+                        newEvent.maxAge = event.maxAge;
+                        newEvent.discount  = event.discount;
+                        newEvent.pictures = event.pictures;
+                        newEvent.geoLocation = {
+                            lat: event.geoLat,
+                            lon: event.geoLon
+                        };
+            
+                        newEvent.eventId = event.eventId.toString();
+
+                        db.Organizer.findOne({where: {organizerId: event.organizerId}}).then( (provider) => {
+                            newEvent.providerName = provider.name;
+                            newEvent.providerPhone = provider.phone;
+
+                            elastic.insert('events', newEvent);
+                        });
+                    });
+                });
+
+            }).catch((err) => console.log(err));
+
 }
 
 module.exports = { seedDatabase: seedDatabase };
