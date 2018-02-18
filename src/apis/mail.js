@@ -20,28 +20,27 @@ function sendTextEmail(subject, receiver, text)
           subject: subject, // Subject line
           text: text, // plain text body
           html: '<p>'+text+'</p>' // html body
-      };
+        };
 
       //gurnaei (error, info)
-
-
       return transporter.sendMail(mailOptions);
-  }
+    }
 
 
-  function sendPdfEmail(subject, receiver, text, pdfRoute)
-{
+    function sendPdfEmail(subject, receiver, text, pdfRoute)
+    {
 
-	let transporter = nodeMailer.createTransport({
-		host: 'smtp.gmail.com',
-		port: 465,
-		secure: true,
-		auth: {
-			user: 'happykidz4122@gmail.com',
-			pass: 'PROBONAS'
-		}
-	});
-	let mailOptions = {
+     let transporter = nodeMailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+       user: 'happykidz4122@gmail.com',
+       pass: 'PROBONAS'
+     }
+   });
+     
+     let mailOptions = {
           from: '"Happy Kidz" <happykidz4122@gmail.com>', // sender address
           to: receiver, // list of receivers
           subject: subject, // Subject line
@@ -54,21 +53,21 @@ function sendTextEmail(subject, receiver, text)
           	contentType: 'application/pdf'
           }
           ]
-      };
+        };
 
-      //gurnaei (error, info)msE'g'
-      return transporter.sendMail(mailOptions);
-  }
-
-
-
-mail = {
-    sendTextEmail: sendTextEmail,
-    sendPdfEmail: sendPdfEmail
-};
+      //gurnaei (error, info)
+      return transporter.sendMail(mailOptions) ;
+    }
 
 
-module.exports = mail;
+
+    mail = {
+      sendTextEmail: sendTextEmail,
+      sendPdfEmail: sendPdfEmail
+    };
+
+
+    module.exports = mail;
 
 
 

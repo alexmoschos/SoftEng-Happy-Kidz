@@ -2,32 +2,50 @@ var express = require('express');
 var router = express.Router();
 var db = require('../models/db');
 var mail = require('../apis/mail');
+var nodeMailer = require('nodemailer');
+
 
 
 router.get('/', function(req, res, next) {
     
 
 
-    db.Parent.findAll()
-    .then( (parents) => parents.forEach( (parent) => console.log(parent.name) )
-    );
+    // db.Parent.findAll()
+    // .then( (parents) => parents.forEach( (parent) => console.log(parent.name) )
+    // );
 
-    var promise1 = db.Parent.findAll();
-    var promise2 = db.Organizer.findAll();
-    var promise3 = db.Event.findAll({
-        where: {
-            isVerified: false
+    // var promise1 = db.Parent.findAll();
+    // var promise2 = db.Organizer.findAll();
+    // var promise3 = db.Event.findAll({
+    //     where: {
+    //         isVerified: false
+    //     }
+    // });
+    // /* test gia na doume an itan swsto to accept */
+    // //var promise3 = db.Event.findAll();
+
+    // var obj;
+
+    // Promise.all([promise1,promise2,promise3])
+    // .then( (values) => {
+    //         obj = { user: values[0], provider: values[1], event: values[2]};
+    //         res.render('admin',obj);
+    // });
+
+
+    var promise = mail.sendTextEmail('geia sou','gvelegkas41@gmail.com', 'eimai ena mail');
+
+    promise.then( (error, succ) => {
+        if (error) {
+            console.log('Error');
+            console.error(error);
+            res.redirect('/search');
+
         }
-    });
-    /* test gia na doume an itan swsto to accept */
-    //var promise3 = db.Event.findAll();
+        else{
+            res.redirect('/');
+        }
 
-    var obj;
-
-    Promise.all([promise1,promise2,promise3])
-    .then( (values) => {
-            obj = { user: values[0], provider: values[1], event: values[2]};
-            res.render('admin',obj);
     });
 
 });
