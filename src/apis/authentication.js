@@ -57,7 +57,6 @@ function isUserParent(req, res, next) {
 }
 
 function isUserOrganizer(req, res, next) {
-    console.log(req.user);
     if (req.isAuthenticated() && req.user.type === 'organizer')
         return next();
     return res.render('no_page');
