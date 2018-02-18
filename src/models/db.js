@@ -36,7 +36,7 @@ const Categories = sequelize.import(__dirname + '/categories.js');
 // Parent Foreign Key
 Parent.hasOne(Membership, { foreignKey: 'parentId', targetKey: 'parentId' });
 
-// Event Foreign Key 
+// Event Foreign Key
 Organizer.hasMany(Event, { foreignKey: 'organizerId', sourceKey: 'organizerId' });
 Event.belongsTo(Organizer, { foreignKey: 'organizerId', targetKey: 'organizerId' });
 
@@ -60,21 +60,7 @@ Organizer.belongsToMany(Parent, { through: Subscription, foreignKey: 'organizerI
 
 
 //initialize tables if they don't exist
-Parent.sync().then(() => {console.log('parent table created');});
-Organizer.sync().then(() => {console.log('organizer table created');});
-Admin.sync().then(() => {console.log('admin table created');});
-Categories.sync().then(() => {console.log('categories table created');});
-Event.sync().then(() => {console.log('event table created');});
-
-// for each supported category make sure, we have it in the categories table
-conf.supportedCategories.forEach(function (category, idx) {
-    Categories.findOne({where: {categoryName: category}}).then(res => {
-        if (!res) {
-            // this category has to be added.
-            Categories.create({categoryName: category}).catch(err => {console.log(err);});
-        }
-    }).catch(err => {console.log(err);});
-});
+sequelize.sync();
 
 // Construct DB Interface (API) object
 var db = {
