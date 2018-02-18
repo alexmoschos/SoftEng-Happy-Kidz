@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>HappyKidz - Search</title>
+    <meta charset="UTF-8">
+
+</head>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified CSS -->
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/stylesheets/styles_admin_event.css">
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-fixed-top navbar-custom" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                        aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">
+                        <span>
+                            <img src="/ icon2.png" alt="Party" height="25" width="27">
+                        </span> HappyKidz
+                    </a>
+
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="/">Home</a>
+                        </li>
+                        <li>
+                            <a href="/search">Events</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </nav>
+
+    <br>
+
+    <div id="main-container" class="container" style="border:1px solid #29335c; border-radius:10px">
+        <!-- <div class="container"> -->
+        <h1><%= obj.title %></h1>
+        <div class="row">
+            <!-- Carousel start -->
+            <div id="my-carousel" class="col-xs-12 col-sm-12 col-md-6 col-lg-7 col-xl-7">
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="border:1px solid #29335c; border-radius:1px">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <% for (index = 0; index < obj.pictures; index++) {
+                            if(index === 0){ %>
+                                <div class="item active">
+                                    <img src="files/events/<%=obj.eventId%>/<%=index%>" alt="..." style="width:100%; height: 100%;">
+                                    <div class="carousel-caption">
+                                        <h3><%=index%></h3>
+                                    </div>
+                                </div>
+                            <% } else { %>
+                                <div class="item">
+                                    <img src="files/events/<%=obj.eventId%>/<%=index%>" alt="..." style="width:100%; height: 100%;">
+                                    <div class="carousel-caption">
+                                        <h3><%=index%></h3>
+                                    </div>
+                                </div>
+                            <% }
+                        }; %>
+
+
+                    <!-- </div> -->
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                    </div>
+                </div>
+            </div>
+
+                    <!-- Carousel End -->
+            <div id="info-container" class="container col-xs-12 col-sm-12 col-md-6 col-lg-5 col-xl-5">
+                <hr>
+                <div class="row row-eq-height">
+                    <div class="row row-eq-height col-xs-12 col-sm-6">
+                        <div class="col-xs-1">
+                            <center>
+                                <h4><i class="glyphicon glyphicon-calendar"></i></h4>
+                            </center>
+                        </div>
+                        <div class="col-xs-10">
+                            <h4>Ημερομηνία</h4>
+                            <p><% startTime_ = new Date(obj.startTime*1000) %>
+                                <%= startTime_.getDate().toString() + "/" + (startTime_.getMonth()+1).toString() + "/" + startTime_.getFullYear().toString() %></p>
+                      </div>
+                    </div>
+                    <div class="row row-eq-height col-xs-12 col-sm-6">
+                        <div class="col-xs-1">
+                            <center>
+                                <h4><i class="glyphicon glyphicon-time"></i></h4>
+                            </center>
+                        </div>
+                        <div class="col-xs-10">
+                            <h4>Ώρα</h4>
+                            <p><%= startTime_.getHours().toString() + ":" + startTime_.getMinutes().toString() %></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-eq-height">
+                    <div class="row row-eq-height col-xs-12 col-sm-6">
+                        <div class="col-xs-1">
+                            <center>
+                                <h4><i class="glyphicon glyphicon-map-marker"></i></h4>
+                            </center>
+                        </div>
+                        <div class="col-xs-10">
+                            <h4>Διεύθυνση</h4>
+                            <a href="#map"><%= obj.geoAddress %></a>
+                        </div>
+                    </div>
+                    <div class="row row-eq-height col-xs-12 col-sm-6">
+                        <div class="col-xs-1">
+                            <center>
+                                <h4><i class="glyphicon glyphicon-briefcase"></i></h4>
+                            </center>
+                        </div>
+                        <div class="col-xs-10">
+                            <h4>Πάροχος</h4>
+                            <p><a href="/admin/provider/<%=obj.provider.providerId%>"><%= obj.provider.name %></a></p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row row-eq-height">
+
+                    <!-- <div class="col-xs-6"> -->
+                    <div class="row row-eq-height  col-xs-12 col-sm-6">
+                        <div class="col-xs-1">
+                            <center>
+                                <h4><i class="glyphicon glyphicon-remove"></i></h4>
+                            </center>
+                        </div>
+                        <div class="col-xs-10">
+                            <h4>Αρχική Τιμή</h4>
+                            <p><%= obj.ticketPrice+obj.discount %> €</p>
+                        </div>
+                    </div>
+                    <div class="row row-eq-height col-xs-12 col-sm-6">
+                        <div class="col-xs-1">
+                            <center>
+                                <h4><i class="glyphicon glyphicon-ok"></i></h4>
+                            </center>
+                        </div>
+                        <div class="col-xs-10">
+                            <h4>Happy Kidz Τιμή</h4>
+                            <p><%= obj.ticketPrice %>€</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-eq-height">
+                    <div class="row row-eq-height col-xs-12 col-sm-6">
+                        <div class="col-xs-1">
+                            <center>
+                                <h4><i class="glyphicon glyphicon-earphone"></i></h4>
+                            </center>
+                        </div>
+                        <div class="col-xs-10">
+                            <h4>Τηλέφωνο Επικοινωνίας</h4>
+                            <p><%= obj.provider.phone %></p>
+                        </div>
+                    </div>
+                    <div class="row row-eq-height col-xs-12 col-sm-6">
+                        <div class="col-xs-1">
+                            <center>
+                                <h4><i class="glyphicon glyphicon-signal"></i></h4>
+                            </center>
+                        </div>
+                        <div class="col-xs-10">
+                            <h4>Ηλικίες</h4>
+                            <p><%= obj.minAge.toString() + "-" + obj.maxAge.toString() %></p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <br>
+                <div class="row">
+                        <div class=" col-12">
+                            <div class="row">
+                                <form action = "/events/<%=obj.eventId%>?_method=PUT" method = "POST">
+                                    <div class="col-6 col-xs-6">
+                                        <button id="accept-btn" name="action" value="accept" class="btn btn-lg">
+                                            <div class="row">
+                                            <p style="margin: auto auto;">Αποδοχή</p>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </form>
+                                <form action = "/events/<%=obj.eventId%>?_method=DELETE" method = "POST">
+                                    <div class="col-6 col-xs-6">
+                                        <button id="reject-btn" name="action" value="reject" class="btn btn-lg">Απόρριψη</button>
+                                    </div>
+                                </form>
+
+                                    </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+<!-- Αξιολογήσεις Χάρτης Περιγραφή -->
+        <br>
+        <div class="row" >
+            <div  id="description-container" class="col-xs-12">
+                <hr>
+                <h3>Περιγραφή</h3>
+                    <p> <%= obj.description %> </p>
+                <hr>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <form action="/events/:id/newcomment" method = "POST">
+                <div class="form-group">
+                    <input type="text" name="content">
+                </div>
+                <div class="form-group">
+                    <button class="btn">submit</button>
+                </div>
+            </form>
+        </div> -->
+        <!-- <div class="row">
+                <form action="/review" method = "POST">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="content[text]">
+                    </div>
+                    <div class="form-group">
+                            <input class="form-control" type="text" name="content[name]">
+                    </div>
+                    <div class="form-group">
+                            <input class="form-control" type="text" name="content[rating]">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn">submit</button>
+                    </div>
+                </form>
+        </div> -->
+
+        <div class="row">
+            <div class="col-xs-12" >
+                <h3>Χάρτης</h3>
+                <div id="map" style="border:1px solid #29335c; border-radius:1px"></div>
+                <script>
+                function initMap() {
+                    var place = {lat: <%= obj.geoLat%>, lng: <%= obj.geoLon%>};
+
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 10,
+                        center: place
+                    });
+                    var marker = new google.maps.Marker({
+                        position: place,
+                        map: map
+                    });
+                    var infowindow = new google.maps.InfoWindow();
+                    marker.addListener('click', function() {
+                        infowindow.setContent("<%= obj.geoAddress%>");
+                        infowindow.open(map, marker);
+                    });
+                }
+
+
+
+                </script>
+                <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSz5x7fN6a-k9UJATld1uvuc_Fv1xBDCg&callback=initMap">
+                </script>
+            </div>
+        </div>
+        <br>
+    </div>
+    <br>
+</body>
+
+<script>
+
+        $('.carousel').carousel({
+            interval: 5000
+        })
+        $('#my-carousel').css('height',$('#info-container').height());
+
+        $( window ).resize(function() {
+            if($(window).width() >= 768){
+                $('#my-carousel').css('height',$('#info-container').height());
+            }
+            else{
+                $('#my-carousel').css('height',($('#info-container').height())/2);
+
+            }
+        });
+        if($(window).width() >= 768){
+            $('#my-carousel').css('height',$('#info-container').height());
+            }
+        else{
+            $('#my-carousel').css('height',($('#info-container').height())/2);
+
+
+        }
+        $("#my-location").click(function() {
+    $('html').animate({
+        scrollTop: $("#map").offset().top
+    }, 2000);
+});
+
+        $('#my-location').click(function(){
+            $('#my-location').scrollTop('#my-map');
+        });
+      // do your stuff
+
+</script>
+</html>
