@@ -8,13 +8,12 @@ var bodyParser = require('body-parser');
 var formidable = require('formidable');
 var methodOverride = require('method-override');
 var validator = require('express-validator');
-
-var chart_data = require('./routes/chart_data');
-var parent = require('./routes/parent');
-var provider = require('./routes/provider');
 var passport = require('./apis/passport');
 
-//var event_search = require('./routes/search');//
+var chart_data = require('./routes/chart_data');
+var index = require('./routes/index');
+var parent = require('./routes/parent');
+var provider = require('./routes/provider');
 var file_upload = require('./routes/file_upload');
 var ticket_route = require('./routes/ticket');
 var login = require('./routes/login');
@@ -25,13 +24,9 @@ var admin = require('./routes/admin');
 var review = require('./routes/review');
 var payment = require('./routes/payment');
 var membership = require('./routes/membership');
-
-
 var booked_seats = require('./routes/booked_seats');
-
 var register = require('./routes/register');
 var logout = require('./routes/logout');
-
 var admin = require('./routes/admin');
 
 var app = express();
@@ -78,7 +73,6 @@ app.use('/review', review);
 app.use('/provider', provider);
 app.use('/register', register);
 app.use('/logout', logout);
-app.use('/protected', protected);
 app.use('/payment', payment);
 
 app.use('/membership', membership);
