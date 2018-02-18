@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var db = require('../models/db');
+
 var ratings= [
     {name: "John", content:"It sucks", rating:2},
     {name: "John", content:"It sucks", rating:3},
@@ -27,6 +29,42 @@ router.get('/:id', function(req, res, next) {
         ratings
     }
     res.render('events',obj);
+});
+
+/* Route to delete an event */
+
+//edw thelei elastic kai sto delete kai sto put
+router.delete('/:eventId', function(req, res){
+    db.Event.findById(req.params.eventId)
+    .then( (event) => {
+        if (event && event.isVerified === false) {
+            return event.destroy();
+        } else {
+            res.send('No such event!')
+        }
+    }  )
+    .then( (succ) => res.redirect("/admin") );
+
+});
+
+/* Route to approve an event */
+
+//edw thelei elastic kai sto delete kai sto put
+
+
+router.put('/:eventId', function(req, res){
+
+    db.Event.findById(req.params.eventId)
+    .then( (event) => {
+        if (event && event.isVerified === false) {
+            return event.update({isVerified: true});
+        }  
+        else {
+            res.send('No such event!')
+        }
+    })
+    .then ( (succ) => res.redirect("/admin")); 
+
 });
 
 module.exports = router;

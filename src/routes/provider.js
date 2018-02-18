@@ -83,4 +83,20 @@ router.delete('/:providerId', function(req, res){
 
 });
 
+/* Route to accept a provider */
+
+router.put('/:providerId', function(req, res){
+	
+    db.Event.findById(req.params.providerId)
+    .then( (provider) => {
+        if (provider && provider.isVerified === false) {
+            return provider.update({isVerified: true});
+        }  
+        else {
+            res.send('No such provider!')
+        }
+    })
+    .then ( (succ) => res.redirect("/admin")); 
+});
+
 module.exports = router;
