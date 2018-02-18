@@ -42,7 +42,7 @@ function applyWatermark(sourcePath, destinationPath) {
 
 };
 
-function addTextWatermark(sourcePath, destinationPath) {
+function addTextWatermark(sourcePath, destinationPath, text) {
     return new Promise((resolve, reject) => {
         imageMagick(sourcePath).size(function(err, value) {
             if (err) {
@@ -61,7 +61,7 @@ function addTextWatermark(sourcePath, destinationPath) {
                     .fontSize(150)
                     .stroke("rgba(255, 255, 255, 0.4)", 2)
                     //.fill("#888")
-                    .drawText(0, 0, "HappyKidz",'Center')
+                    .drawText(0, 0, text,'Center')
                     // .drawText(10,10,'HappyKidz','Center')
                     // .fontSize( 1000000000 )
                     // .draw(['-pointsize 200'])

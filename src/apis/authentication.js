@@ -20,7 +20,7 @@ function whereClause(type, idx, obj) {
 }
 
 function lookUpTables(idx, type, val, succ, fail) {
-    if (idx == Tables.length) succ(null);
+    if (idx == Tables.length) return succ(null);
     Tables[idx].findOne(whereClause(type, idx, val)).then(
         function (user) {
             if (user) 
@@ -34,8 +34,12 @@ function findUserByEmail(email, succ, fail) {
     lookUpTables(0, 'email', email, succ, fail);
 }
 
-function findUserById(id, succ, fail) {
-    lookUpTables(0, 'id', id, succ, fail);
+function findUserOfTypeById(id, type, succ, fail) {
+    var index = Types.indexOf(type);
+    lookUpTables(index, 'id', id, function (user) {
+        if (user.type === type) return succ(user);
+        return succ(null);
+    }, fail);
 }
 
 
@@ -67,7 +71,7 @@ function isUserAdmin(req, res, next) {
 
 var auth = {
     findUserByEmail: findUserByEmail,
-    findUserById: findUserById,
+    findUserOfTypeById: findUserOfTypeById,
     isLoggedIn: isLoggedIn, 
     isUserParent: isUserParent,
     isUserOrganizer: isUserOrganizer,

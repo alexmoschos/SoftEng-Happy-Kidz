@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const Sequelize = require('sequelize');
 const conf = require('../config.js');
+const seedDB = require('./seed')
 
 // Database connection config
 const sequelize = new Sequelize('devdb', 'dev', 'password', {
@@ -36,12 +37,12 @@ const Categories = sequelize.import(__dirname + '/categories.js');
 // Parent Foreign Key
 Parent.hasOne(Membership, { foreignKey: 'parentId', targetKey: 'parentId' });
 
-// Event Foreign Key
+// Event Foreign Key 
 Organizer.hasMany(Event, { foreignKey: 'organizerId', sourceKey: 'organizerId' });
 Event.belongsTo(Organizer, { foreignKey: 'organizerId', targetKey: 'organizerId' });
 
 Categories.hasMany(Event, { foreignKey: 'categoryName', sourceKey: 'categoryName' });
-Event.belongsTo(Categories, { foreignKey: 'categoryName', targetKey: 'categoryName' })
+Event.belongsTo(Categories, { foreignKey: 'categoryName', targetKey: 'categoryName' });
 
 // Bought Tickets Foreign Keys
 Event.hasMany(BoughtTickets, { foreignKey: 'eventId', sourceKey: 'eventId' });
@@ -59,8 +60,6 @@ Parent.belongsToMany(Organizer, { through: Subscription, foreignKey: 'parentId',
 Organizer.belongsToMany(Parent, { through: Subscription, foreignKey: 'organizerId', otherKey: 'parentId' });
 
 
-//initialize tables if they don't exist
-sequelize.sync();
 
 // Construct DB Interface (API) object
 var db = {
@@ -76,5 +75,9 @@ var db = {
     Subscription: Subscription,
     Membership: Membership
 }
+
+//initialize tables if they don't exist
+sequelize.sync().then(() =>seedDB.seedDatabase(db));
+
 
 module.exports = db;

@@ -27,8 +27,8 @@ passport.serializeUser(function(user, done) {
 });
   
 passport.deserializeUser(function(obj, done) {
-    auth.findUserById(obj.id, function (user) {
-        return done(null, {user: user, type: obj.type});
+    auth.findUserOfTypeById(obj.id,obj.type, function (user) {
+        return done(null, user);
     }, console.log);
 });
 

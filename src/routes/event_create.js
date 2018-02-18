@@ -8,7 +8,7 @@ var fs = require('fs');
 var conf = require('../config');
 var auth = require('../apis/authentication');
 var db = require('../models/db');
-
+var watermark = require('../apis/watermark/watermark.js');
 
 function validNewEvent(newEvent) {
 
@@ -60,6 +60,7 @@ router.post('/', auth.isUserOrganizer,  function(req, res, next) {
     newEvent.geoAddress = body.location;
     newEvent.ticketPrice = parseInt(body.Price);
     newEvent.ticketCount = parseInt(body.TicketNum);
+    newEvent.initialTicketCount  = newEvent.ticketCount;
     newEvent.minAge = parseInt(body.AgeGroup);
     newEvent.maxAge = newEvent.minAge + 2;
     if (newEvent.minAge === 13)
@@ -94,6 +95,9 @@ router.post('/', auth.isUserOrganizer,  function(req, res, next) {
                     fs.rename(files[i].path, newpath, function (err) {
                         if (err) throw err;
                     });
+
+                    if (body.watermark)
+                        watermark.addTextWatermark(newpath, newpath, 'HappyKidz').catch(err => {console.log(err);});
                 }
             }
 
@@ -104,6 +108,10 @@ router.post('/', auth.isUserOrganizer,  function(req, res, next) {
             };
             delete newEvent.geoLat;
             delete newEvent.geoLon;
+
+            newEvent.providerName = req.user.user.name;
+            newEvent.providerPhone = req.user.user.phone;
+            newEvent.eventId = event.eventId.toString();
 
             elastic.insert('events', newEvent, function( err, resp, status){
                 if (err) {
