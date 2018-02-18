@@ -60,6 +60,12 @@ function initialiaze_elastic() {
                                 "geoLocation" : {
                                     "type": "geo_point"
                                 },
+                                "providerName": {
+                                    "type": "text"
+                                },
+                                "providerPhone": {
+                                    "type": "text"
+                                },
                             }
                         }
                     }

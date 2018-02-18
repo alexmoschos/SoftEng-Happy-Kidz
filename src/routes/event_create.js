@@ -108,6 +108,9 @@ router.post('/', auth.isUserOrganizer,  function(req, res, next) {
             delete newEvent.geoLat;
             delete newEvent.geoLon;
 
+            newEvent.providerName = req.user.user.name;
+            newEvent.providerPhone = req.user.user.phone;
+
             elastic.insert('events', newEvent, function( err, resp, status){
                 if (err) {
                     console.log(err);
