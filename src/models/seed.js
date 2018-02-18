@@ -22,7 +22,7 @@ function seedDatabase(db) {
         .then((succ) => db.Organizer.bulkCreate(
             [{
                     organizerId: 1,
-                    name: 'lkajfklajfklajfklajfkljaklfjalkjfklasjfkkjfjfΒελεγκοιβεντς',
+                    name: 'Βελεγκοιβεντς',
                     email: 'velegkevents@velegkas.com',
                     password: '123456',
                     description: '',
@@ -63,7 +63,7 @@ function seedDatabase(db) {
             [{
                     eventId: 1,
                     organizerId: 1,
-                    title: 'Παρτυ με τον Βελεγκα χωρις τον Βελεγκα',
+                    title: 'Παρτυ στο σπίτι του Βελεγκα χωρις τον Βελεγκα',
                     startTime: Math.floor(Date.now() / 1000),
                     endTime: Math.floor(Date.now() / 1000 + 3600),
                     description: '',
@@ -78,12 +78,12 @@ function seedDatabase(db) {
                     maxAge: 18,
                     pictures: 0,
                     clickNumber: 0,
-                    isVerified: false
+                    isVerified: true
                 },
                 {
                     eventId: 2,
                     organizerId: 2,
-                    title: ' με τον Βελεγκα χωρις τον Βελεγκα',
+                    title: 'Παρτυ με τον Βελεγκα χωρις τον Βελεγκα',
                     startTime: Math.floor(Date.now() / 1000),
                     endTime: Math.floor(Date.now() / 1000 + 3600),
                     description: '',

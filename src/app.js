@@ -7,6 +7,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var formidable = require('formidable');
 var methodOverride = require('method-override');
+var validator = require('express-validator');
 
 var chart_data = require('./routes/chart_data');
 var index = require('./routes/index');
@@ -23,11 +24,11 @@ var ticket_route = require('./routes/ticket');
 var login = require('./routes/login');
 var events = require('./routes/events');
 var search_results = require('./routes/search_results');
-var subscription = require('./routes/subscription');
-var subscriptionPayment = require('./routes/subscriptionPayment');
-var ticketPayment = require('./routes/ticketPayment');
-var successPayment = require('./routes/successPayment');
-var failPayment = require('./routes/failPayment');
+var membership = require('./routes/membership');
+// var subscriptionPayment = require('./routes/subscriptionPayment');
+// var ticketPayment = require('./routes/ticketPayment');
+// var successPayment = require('./routes/successPayment');
+// var failPayment = require('./routes/failPayment');
 var admin = require('./routes/admin');
 var review = require('./routes/review');
 var payment = require('./routes/payment');
@@ -62,7 +63,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+app.use(validator());
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -91,11 +92,10 @@ app.use('/protected', protected);
 app.use('/payment', payment);
 
 app.use('/membership', membership);
-app.use('/subscription', subscription);
-app.use('/subscriptionPayment', subscriptionPayment);
-app.use('/ticketPayment', ticketPayment);
-app.use('/successPayment', successPayment);
-app.use('/failPayment', failPayment);
+// app.use('/subscriptionPayment', subscriptionPayment);
+// app.use('/ticketPayment', ticketPayment);
+// app.use('/successPayment', successPayment);
+// app.use('/failPayment', failPayment);
 app.use('/admin', admin);
 
 app.use(function(req, res, next) {

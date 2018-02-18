@@ -20,7 +20,7 @@ function whereClause(type, idx, obj) {
 }
 
 function lookUpTables(idx, type, val, succ, fail) {
-    if (idx === Tables.length) succ(null);
+    if (idx === Tables.length) return succ(null);
     Tables[idx].findOne(whereClause(type, idx, val)).then(
         function (user) {
             if (user) 
@@ -52,6 +52,28 @@ function isUserParent(req, res, next) {
     return res.render('no_page');
 }
 
+function isUserMemberParent(req, res, next){
+    if (req.isAuthenticated()) {
+        if (req.user.type == 'parent') {
+            Membership.findById(req.user.user.parentId)
+            .then((membership) => {
+                if (membership) {
+                    return next();
+                } else {
+                    // Parent without membership
+                    res.redirect('/membership');
+                }
+            });
+        } else {
+            // HTTP Code 403 - Not a parent
+            res.send('Access Denied');
+        }
+    } else {
+        // Not an authenticated user
+        res.redirect('/login');
+    }
+}
+
 function isUserOrganizer(req, res, next) {
     if (req.isAuthenticated() && req.user.type == 'organizer')
         return next();
@@ -64,6 +86,28 @@ function isUserAdmin(req, res, next) {
     return res.render('no_page');
 }
 
+// TODO: Implement HTTP 403 
+function isUserVerifiedOrganizer(req, res, next) {
+    if (req.isAuthenticated()) {
+        if (req.user.type == 'organizer') {
+            Organizer.findById(req.user.user.organizerId)
+            .then((organizer) => {
+                if (organizer.isVerified) {
+                    return next();
+                } else {
+                    // Not verified provider page
+                    res.send('You are not verified yet');
+                }
+            });
+        } else {
+            // HTTP Code 403
+            res.send('Access Denied');
+        }
+    } else {
+        res.redirect('/login');
+    }
+}
+
 
 var auth = {
     findUserByEmail: findUserByEmail,
@@ -71,7 +115,9 @@ var auth = {
     isLoggedIn: isLoggedIn, 
     isUserParent: isUserParent,
     isUserOrganizer: isUserOrganizer,
-    isUserAdmin: isUserAdmin
+    isUserAdmin: isUserAdmin,
+    isUserMemberParent: isUserMemberParent,
+    isUserVerifiedOrganizer: isUserVerifiedOrganizer
 };
 
 module.exports = auth;
