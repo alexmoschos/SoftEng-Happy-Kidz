@@ -12,16 +12,18 @@ const Op = Sequelize.Op;
 
 /* GET create event page. */
 router.get('/', function(req, res, next) {
+	var providerId = req.user.user.organizerId;
+	console.log(req.user.user.organizerId);
   	db.Organizer.findAll({
 		where: {
-			organizerId : 123
+			organizerId : providerId
 		}
 	}).then(provider => {
 		var currtime = new Date().getTime()/1000;
 		var result = provider[0].dataValues;
 		db.Event.findAll({
 			where: {
-				organizerId: 123,
+				organizerId: providerId,
 				endTime:{
 					[Op.lt]: currtime
 				}
@@ -42,7 +44,7 @@ router.get('/', function(req, res, next) {
 				var stringDate = numberdate + "/"+month+"/"+year;
 				PastEventsArray[i]= 
 					{
-					ImgUrl: "files/"+event.eventId +"/0",
+					ImgUrl: "files/events/"+event.eventId +"/0",
 					Title: event.title,
 					Date: stringDate,
 					Hours: time,
@@ -56,7 +58,7 @@ router.get('/', function(req, res, next) {
 			});
 			db.Event.findAll({
 				where: {
-					organizerId: 123,
+					organizerId: providerId,
 					startTime:{
 						[Op.gt]: currtime
 					}
@@ -77,7 +79,7 @@ router.get('/', function(req, res, next) {
 				var stringDate = numberdate + "/"+month+"/"+year;
 				CurrentEvents[i]= 
 					{
-					ImgUrl: "files/"+event.eventId +"/0",
+					ImgUrl: "files/events/"+event.eventId +"/0",
 					Title: event.title,
 					Date: stringDate,
 					Hours: time,
