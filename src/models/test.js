@@ -1,10 +1,10 @@
 var db = require('./db');
 
-db.BoughtTickets.findAll({
+db.Event.findAll({
     include: [{
-      model: db.Event, 
+      model: db.Organizer, 
       required: true
     }],
-    where: {parentId: parentIdHere}
+    where: {organizerId: 1}
   })
   .then( tickets => console.log(tickets))
