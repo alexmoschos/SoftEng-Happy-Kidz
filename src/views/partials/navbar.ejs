@@ -1,0 +1,95 @@
+<!-- Pass the user object to the ejs as {user: req.user} -->
+<% if (!locals.user) { %>
+<body>
+    <nav class="navbar navbar-default" id="navbar-happy-kidz">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#responsive-navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </button>
+                <a class="navbar-brand" id="navbar-logo" href="/"><img src="/images/navbar-logo.png" id="navbar-logo-img"></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="responsive-navbar-collapse">
+                <form class="navbar-form" action="/search" method="GET">
+                    <div class="form-group">
+                        <input type="text" class="form-control search-form" id="event" placeholder="Δραστηριότητα">
+                    </div>
+                    <span id="span-search-divider">@</span>
+                    <div class="form-group">
+                        <input type="text" class="form-control search-form" id="location" placeholder="Τοποθεσία">
+                    </div>
+                    <button type="submit" class="btn btn-primary search-btn"><i class="fa fa-search"></i></button>
+                </form>
+
+
+                <!-- Navbar right links  -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/login">Σύνδεση</a></li>
+                    <li><a href="/register">Εγγραφή</a></li>
+                </ul>
+
+            </div>
+
+
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+<%} else if ((user.type ==='parent') || (user.type === 'organizer')) { 
+    var opt;
+    switch(user.type){
+        case 'parent':
+            opt = {primaryKey: user.user.parentId, route: 'parent'};
+            break;
+        case 'organizer':
+            opt = {primaryKey: user.user.organizerId, route: 'provider'};
+            break;
+    }%>
+    <nav class="navbar navbar-default" id="navbar-happy-kidz">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#responsive-navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </button>
+                <a class="navbar-brand" id="navbar-logo" href="/"><img src="/images/navbar-logo.png" id="navbar-logo-img"></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="responsive-navbar-collapse">
+                <form class="navbar-form" action="/search" method="GET">
+                    <div class="form-group">
+                        <input type="text" class="form-control search-form" id="event" placeholder="Δραστηριότητα">
+                    </div>
+                    <span id="span-search-divider">@</span>
+                    <div class="form-group">
+                        <input type="text" class="form-control search-form" id="location" placeholder="Τοποθεσία">
+                    </div>
+                    <button type="submit" class="btn btn-primary search-btn"><i class="fa fa-search"></i></button>
+                </form>
+
+
+                <!-- Navbar right links  -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" id="profile-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        	<img class="profile-pic" src="/images/profile-pic.png"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/<%= opt.route %>/<%= opt.primaryKey %>">Προφίλ</a></li>
+                            <li><a href="/logout">Έξοδος</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+
+
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <% } %>
