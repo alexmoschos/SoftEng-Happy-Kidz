@@ -19,8 +19,13 @@ router.get('/:id', function(req, res, next) {
             eventId:  parseInt(req.params.id)
         }
     }).then(events => {
-        //console.log(events);
+        console.log(events);
+        if( events.length == 0 ) {
+            res.render('no_page');
+            return;
+        }
         var event = events[0];
+        console.log(event.organizerId);
         db.Organizer.findAll({
             where : {
                 organizerId : parseInt(event.organizerId)
@@ -86,7 +91,8 @@ router.get('/:id', function(req, res, next) {
                         agegroups: event.minAge + "-" + (event.minAge + 2).toString(),
                         description: event.description,
                         images: imglist,
-                        ratings
+                        ratings,
+                        user : req.user
                     }
                     console.log(obj);
                     res.render('events',obj);
@@ -98,7 +104,7 @@ router.get('/:id', function(req, res, next) {
 
         })
     });
-    console.log("Something went wrong");
+    // console.log("Something went wrong");
     // obj={
     //     title: "Alex Kalom",
     //     date: "14/12/1999",
@@ -145,12 +151,12 @@ router.put('/:eventId', function(req, res){
     .then( (event) => {
         if (event && event.isVerified === false) {
             return event.update({isVerified: true});
-        }  
+        }
         else {
             res.send('No such event!')
         }
     })
-    .then ( (succ) => res.redirect("/admin")); 
+    .then ( (succ) => res.redirect("/admin"));
 
 });
 
