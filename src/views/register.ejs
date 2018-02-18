@@ -1,5 +1,87 @@
-<%- //include partials/header %>
+<!DOCTYPE html>
+<html>
+<title>HappyKidz - Register Page</title>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+crossorigin="anonymous"></script>
+<!-- Latest compiled and minified CSS -->
 
+<script src="https://use.fontawesome.com/899071ec86.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/stylesheets/styles_register.css">
+
+<nav class="navbar navbar-custom" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">
+      <span>
+        <img src="/icon2.png" alt="Party" height="25" width="27">
+      </span> HappyKidz
+    </a>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav" id="tabs">
+      <li>  <!--  it was active -->
+        <a href="#">Home</a>
+      </li>
+      <li>
+        <a href="#">Events</a>
+      </li>
+    </ul>
+    <div class="col-sm-5 col-md-5">
+      <form class="navbar-form" role="search">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search" name="q">
+          <span class="input-group-addon">@</span>
+          <input type="text" class="form-control" placeholder="Location" name="l">
+          <div class="input-group-btn">
+            <button class="btn btn-default" type="submit">
+              <i class="glyphicon glyphicon-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <a href="#">Register</a>
+      </li>
+      <li>
+        <a href="#">Login</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- /.navbar-collapse -->
+</nav>
+
+
+
+<body>
   <img id="joinUsLogo" src="/joinlogo2.png" alt="join_logo"> 
   <div class="container well">
     <div class="row">
@@ -20,68 +102,75 @@
                     <div class="row">
                       <div class="col-sm-6 form-group">
                         <label>Όνομα</label>
-                        <input type="text" name="firstName" placeholder="Όνομα" class="form-control">
+                        <input type="text" name="firstName" placeholder="Όνομα" class="form-control" required>
                       </div>
                       <div class="col-sm-6 form-group">
                         <label>Επώνυμο</label>
-                        <input type="text" name="lastName" placeholder="Επώνυμο" class="form-control">
+                        <input type="text" name="lastName" placeholder="Επώνυμο" class="form-control" required>
                       </div>
                     </div>
                     
                     <div class="form-group">
                       <label>Διεύθυνση ηλεκτρονικού ταχυδρομίου</label>
-                      <input type="text" name="email" placeholder="Διεύθυνση ηλεκτρονικού ταχυδρομίου" class="form-control">
+                      <input type="text" id="email" name="email" placeholder="Διεύθυνση ηλεκτρονικού ταχυδρομίου" class="form-control" required>
                     </div>     
                     <div class="form-group">
                       <label class="password">Κωδικός</label>
-                      <input type="password" name="password" placeholder="Κωδικός" class="form-control">
-                    </div>                                  
-                    <p class =terms>By clicking Submit, you agree to our Terms and that you have read our Data Policy, including our Cookie Use.</p>
+                      <input type="password" id="password" name="password" placeholder="Κωδικός" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                      <label class="password">Επανάληψη Κωδικού</label>
+                      <input type="password" id="passwordAgain" name="passwordAgain" placeholder="Κωδικός" class="form-control" required>
+                    </div>                                    
+                    <p class =terms>Πατώντας το πλήκτρο υποβολής, συμφωνείτε με τους όρους και την πολιτική δεδομένων μας. </p>
                     <div class="text-center"> 
-                      <button id="submitButton" type="submit" class="btn btn-lg btn-info">Submit <span><i class="fa fa-smile-o"></i></span></button>  
+                      <button id="submitButton" type="submit" class="btn btn-lg btn-info">Υποβολή <span><i class="fa fa-smile-o"></i></span></button>  
                     </div>               
                   </div>
                 </form> 
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane fade" id="Section2">
-            <!-- Provider Form   -->                                
+          <div role="tabpanel" class="tab-pane fade" id="Section2">                                  
             <div class="col-lg-12 my-form-business">                   
               <div class="row">
                 <form id="business-account-form" action="/register/provider" method="post">
                   <div class="col-sm-12 ">
                     <div class="form-group">
                       <label>Επίσημο Όνομα Επιχείρησης</label>
-                      <input type="text" name="legalBusinessName" placeholder="Επίσημο Όνομα Επιχείρησης" class="form-control">
+                      <input type="text" id="legalBusinessName" name="legalBusinessName" placeholder="Επίσημο Όνομα Επιχείρησης" class="form-control" required>
                     </div>
                     <div class="form-group">
                       <label>Διεύθυνση ηλεκτρονικού ταχυδρομίου Επιχείρησης</label>
-                      <input type="text" name="email" placeholder="Διεύθυνση ηλεκτρονικού ταχυδρομίου Επιχείρησης" class="form-control">
+                      <input type="text" id="businessemail" name="email" placeholder="Διεύθυνση ηλεκτρονικού ταχυδρομίου Επιχείρησης" class="form-control" required>
                     </div>
                     
                     <div class="form-group">
                       <label>Επίσημο τηλέφωνο Επιχείρησης</label>
-                      <input type="text" name="legalBusinessPhone" placeholder="Επίσημο τηλέφωνο Επιχείρησης" class="form-control">
+                      <input type="text" id="legalBusinessPhone" name="legalBusinessPhone" placeholder="Επίσημο τηλέφωνο Επιχείρησης" class="form-control" required>
                     </div>
                     <div class="form-group">
                       <label>Όνομα Επιχείρησης</label>
-                      <input type="text" name="businessName" placeholder="Όνομα Επιχείρησης" class="form-control">
+                      <input type="text" id="businessName" name="businessName" placeholder="Όνομα Επιχείρησης" class="form-control" required>
                     </div>  
                     <div class="form-group">
                       <label>Ίστότοπος Επιχείρησης</label>
-                      <input type="text" name="businessSite" placeholder="Ιστότοπος Επιχείρησης" class="form-control">
+                      <input type="text" id="businessSite" name="businessSite" placeholder="Ιστότοπος Επιχείρησης" class="form-control" required>
                     </div>
                     
                     <div class="form-group">
                       <label class="password">Κωδικός</label>
-                      <input type="password" name="password" placeholder="Κωδικός" class="form-control">
+                      <input type="password" id="businesspassword" name="password" placeholder="Κωδικός" class="form-control" required  >
+                    </div>
+                    <div class="form-group">
+                      <label class="password">Επανάληψη Κωδικού</label>
+                      <input type="password" id="businesspasswordAgain" name="passwordAgain" placeholder="Κωδικός" class="form-control" required>
                     </div>      
 
-                    <p class =terms>By clicking Submit, you agree to our Terms and that you have read our Data Policy, including our Cookie Use. We will contact you when we approve you etc.</p>
+                    <p class =terms>Πατώντας το πλήκτρο υποβολής, συμφωνείτε με τους όρους και την πολιτική δεδομένων μας. </p>
                     
                     <div class="text-center"> 
-                      <button id="submitButton" type="submit" class="btn btn-lg btn-info">Submit <span><i class="fa fa-smile-o"></i></span></button>  
+                      <button id="submitButton" type="submit" class="btn btn-lg btn-info">Υποβολή <span><i class="fa fa-smile-o"></i></span></button>  
                     </div>
                     
                     
@@ -104,28 +193,55 @@
     if($(window).width() < 992){ 
       $("#personal-tab").addClass("asd")
       $("#business-tab").addClass("asd")
-        // $("#my-navbar").addClass("sticky")
       }
       else{
         $("#personal-tab").removeClass("asd")
         $("#business-tab").removeClass("asd")
-        // $("#my-navbar").removeClass("sticky")
-// 751
 }
 });
   if($(window).width() < 992){
     $("#personal-tab").addClass("asd")
     $("#business-tab").addClass("asd")
-        // $("#my-navbar").addClass("sticky")
       }
       else{
         $("#personal-tab").removeClass("asd")
         $("#business-tab").removeClass("asd")
-        // $("#my-navbar").removeClass("sticky")
-
       }
 
-  // do your stuff
+
+//Script for handling errors from validation step in backend
+$( document ).ready(function() {
+
+ var errorList = <%-JSON.stringify(errors)%>;
+ var whichTab = <%-JSON.stringify(tab)%>;
+ var actualId = "";
+ if(whichTab === "providerTab") {
+  $("#Section1").removeClass("active")
+  $("#Section1").removeClass("in")
+  $("#personal-tab").removeClass("active")
+  $("#Section2").addClass("in")
+  $("#Section2").addClass("active")
+  $("#business-tab").addClass("active") 
+  errorList.forEach(function(myError){ 
+    actualId = "business" + myError.param; 
+    $('#' + actualId).addClass("error-input")
+    $('#' + actualId).attr("placeholder", myError.msg) 
+  });
+ }
+ else if(whichTab === "userTab"){
+  errorList.forEach(function(myError){ 
+  $('#' + myError.param).addClass("error-input")
+  $('#' + myError.param).attr("placeholder", myError.msg) 
+    });
+ }
+
+ 
+ 
+ 
+});
+
+
+
 
 </script>
 

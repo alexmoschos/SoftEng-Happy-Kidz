@@ -7,6 +7,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var formidable = require('formidable');
 var methodOverride = require('method-override');
+var validator = require('express-validator');
 
 var chart_data = require('./routes/chart_data');
 var index = require('./routes/index');
@@ -66,7 +67,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+app.use(validator());
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
