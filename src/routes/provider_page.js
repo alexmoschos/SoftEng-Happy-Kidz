@@ -12,59 +12,9 @@ const Op = Sequelize.Op;
 
 /* GET create event page. */
 router.get('/', function(req, res, next) {
-  /*var ProviderInfo =  {
-		PersonalInfo: { ProviderName : "Κανδήρος Βαρδής", ProviderText : "Είμαι ένας Provider",
-											ProviderEmail : "vkandiros@yahoo.gr",
-											ProviderPage : "google.gr",
-											ProviderPhoneNumber: "6814123",
-											ProviderAddress : "25ης Μαρτίου 10, Βριλήσσια"},
-		PastEventsList: [
-			{
-				ImgUrl: "barcelona.png",
-				Title: "Ποδοσφαιρομάνια στο Μαρούσι",
-				Date: "17/10/2008",
-				Hours: "18:00-20:00",
-				Address: "Μαρούσι",
-				Provider: "Αθλητικός Όμιλος Αμαρουσίου",
-				Ages: "7-10",
-				PhoneNumber: "210-6814789",
-				InitialPrice: "10 €",
-				FinalPrice: "5 €"
-			}
-		],
-		CurrentEventsList: [
-			{
-				ImgUrl: "barcelona.png",
-				Title: "Ποδοσφαιρομάνια στο Μαρούσι",
-				Date: "17/10/2008",
-				Hours: "18:00-20:00",
-				Address: "Μαρούσι",
-				Provider: "Αθλητικός Όμιλος Αμαρουσίου",
-				Ages: "7-10",
-				PhoneNumber: "210-6814789",
-				InitialPrice: "10 €",
-				FinalPrice: "5 €",
-				EmptySeats: 15,
-				BookedSeats: 35,
-				BarchartID: "barchart1",
-				ChartData: [
-        ['Genre', 'Ελεύθερες', 'Κρατημένες', { role: 'annotation' } ],
-        ['Θέσεις', 10, 24, '']
-      ],
-				ChartOptions: {
-				title: "Θέσεις",
-        legend: { position: 'top', maxLines: 3 },
-        bar: { groupWidth: '75%' },
-        isStacked: 'percent',
-        backgroundColor: '#e6ecf0'
-			 }
-			}
-		]
-	};
-  */
-  db.Organizer.findAll({
-	where: {
-		organizerId : 123
+  	db.Organizer.findAll({
+		where: {
+			organizerId : 123
 		}
 	}).then(provider => {
 		var currtime = new Date().getTime()/1000;
@@ -151,86 +101,12 @@ router.get('/', function(req, res, next) {
 											ProviderAddress : "25ης Μαρτίου 10, Βριλήσσια"},
 					PastEventsList: PastEventsArray,
 					CurrentEventsList: CurrentEvents
-			/*[
-			{
-				ImgUrl: "barcelona.png",
-				Title: "Ποδοσφαιρομάνια στο Μαρούσι",
-				Date: "17/10/2008",
-				Hours: "18:00-20:00",
-				Address: "Μαρούσι",
-				Provider: "Αθλητικός Όμιλος Αμαρουσίου",
-				Ages: "7-10",
-				PhoneNumber: "210-6814789",
-				InitialPrice: "10 €",
-				FinalPrice: "5 €",
-				EmptySeats: 15,
-				BookedSeats: 35,
-				BarchartID: "barchart1",
-				
-			}
-		]*/
+			
 				};
 				res.render('ProviderPage', ProviderInfo);
 			});
 		});
-		
-		
-		
-
-
 	});
-  
-  /*var ProviderInfo =  {
-		PersonalInfo: { ProviderName : "Κανδήρος Βαρδής", ProviderText : "Είμαι ένας Provider",
-											ProviderEmail : "vkandiros@yahoo.gr",
-											ProviderPage : "google.gr",
-											ProviderPhoneNumber: "6814123",
-											ProviderAddress : "25ης Μαρτίου 10, Βριλήσσια"},
-		PastEventsList: [
-			{
-				ImgUrl: "barcelona.png",
-				Title: "Ποδοσφαιρομάνια στο Μαρούσι",
-				Date: "17/10/2008",
-				Hours: "18:00-20:00",
-				Address: "Μαρούσι",
-				Provider: "Αθλητικός Όμιλος Αμαρουσίου",
-				Ages: "7-10",
-				PhoneNumber: "210-6814789",
-				InitialPrice: "10 €",
-				FinalPrice: "5 €"
-			}
-		],
-		CurrentEventsList: [
-			{
-				ImgUrl: "barcelona.png",
-				Title: "Ποδοσφαιρομάνια στο Μαρούσι",
-				Date: "17/10/2008",
-				Hours: "18:00-20:00",
-				Address: "Μαρούσι",
-				Provider: "Αθλητικός Όμιλος Αμαρουσίου",
-				Ages: "7-10",
-				PhoneNumber: "210-6814789",
-				InitialPrice: "10 €",
-				FinalPrice: "5 €",
-				EmptySeats: 15,
-				BookedSeats: 35,
-				BarchartID: "barchart1",
-				ChartData: [
-        ['Genre', 'Ελεύθερες', 'Κρατημένες', { role: 'annotation' } ],
-        ['Θέσεις', 10, 24, '']
-      ],
-				ChartOptions: {
-				title: "Θέσεις",
-        legend: { position: 'top', maxLines: 3 },
-        bar: { groupWidth: '75%' },
-        isStacked: 'percent',
-        backgroundColor: '#e6ecf0'
-			 }
-			}
-		]
-	};*/
-  
-
 });
 
 /* POST create event page */
