@@ -7,12 +7,12 @@ router.get('/', function(req, res, next) {
     // Maybe delete startingPrice field from ejs.
     // Make sure to render a helpful text when no search results are found.
     filters = {
-        // free_text : req.query.q,
-        // price : req.query.endPrice,
-        // distance : req.query.radius,
-        // tickets : 1,
-        // address : req.query.location,
-        page : req.query.page.toString()
+        free_text : req.query.q,
+        price : req.query.endPrice,
+        distance : req.query.radius,
+        tickets : 1,
+        address : req.query.location,
+        page : req.query.page
     }
 
 
