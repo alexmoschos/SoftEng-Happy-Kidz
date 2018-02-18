@@ -167,7 +167,7 @@ router.post('/membership/:id', auth.isUserParent, function (req, res) {
 });
 
 router.get('/success', function(req, res){
-    res.render('successPayment');
+    res.render('successPayment', {user: req.user});
 });
 
 module.exports = router;
