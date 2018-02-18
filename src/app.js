@@ -10,13 +10,9 @@ var methodOverride = require('method-override');
 var validator = require('express-validator');
 
 var chart_data = require('./routes/chart_data');
-var index = require('./routes/index');
 var parent = require('./routes/parent');
 var provider = require('./routes/provider');
-
 var passport = require('./apis/passport');
-
-var index = require('./routes/index');
 
 //var event_search = require('./routes/search');//
 var file_upload = require('./routes/file_upload');
@@ -25,10 +21,6 @@ var login = require('./routes/login');
 var events = require('./routes/events');
 var search_results = require('./routes/search_results');
 var membership = require('./routes/membership');
-// var subscriptionPayment = require('./routes/subscriptionPayment');
-// var ticketPayment = require('./routes/ticketPayment');
-// var successPayment = require('./routes/successPayment');
-// var failPayment = require('./routes/failPayment');
 var admin = require('./routes/admin');
 var review = require('./routes/review');
 var payment = require('./routes/payment');
@@ -39,7 +31,6 @@ var booked_seats = require('./routes/booked_seats');
 
 var register = require('./routes/register');
 var logout = require('./routes/logout');
-var protected = require('./routes/protected');
 
 var admin = require('./routes/admin');
 
@@ -81,7 +72,6 @@ app.use('/booked_seats', booked_seats);
 //app.use('/search', event_search);
 app.use('/ticket', ticket_route);
 app.use('/events', events);
-//app.use('/search', event_search);//
 app.use('/search', search_results);
 app.use('/review', review);
 
@@ -92,10 +82,7 @@ app.use('/protected', protected);
 app.use('/payment', payment);
 
 app.use('/membership', membership);
-// app.use('/subscriptionPayment', subscriptionPayment);
-// app.use('/ticketPayment', ticketPayment);
-// app.use('/successPayment', successPayment);
-// app.use('/failPayment', failPayment);
+
 app.use('/admin', admin);
 
 app.use(function(req, res, next) {
