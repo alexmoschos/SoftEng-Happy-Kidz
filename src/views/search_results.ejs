@@ -75,6 +75,10 @@
                             <label for="Location">Τοποθεσία</label>
                             <input type="text" class="form-control" placeholder="Location" name="location"  <%= location %> >
                         </div>
+                        <div class="input-group">
+                        <label for="Radius">Απόσταση απο τοποθεσία</label>
+                            <input type="number" class="form-control" placeholder="Απόσταση απο τοποθεσία σε χιλιόμετρα" name="radius" <%= radius %> >
+                        </div>
 
                         <div class="form-group">
                             <label for="AgeGroup">Ηλικιακή Ομάδα</label>
@@ -87,13 +91,13 @@
                         </div>
                         <div class="input-group">
                         <label for="PriceRange">Τιμή</label>
-                            <input type="number" class="form-control" placeholder="Minimum Price" name="startPrice" <%= startPrice %> >
+                            <!-- <input type="number" class="form-control" placeholder="Minimum Price" name="startPrice"  > -->
                             <input type="number" class="form-control" placeholder="Maximum Price" name="endPrice" <%= endPrice %> >
                         </div>
 
                         <div class="input-group">
-                        <label for="Date">Εύρος ημερομηνιών</label>
-                            <input type="date" class="form-control" placeholder="Start Date" name="startDate" <%= startDate %> >
+                        <label for="Date">Ημερομηνία</label>
+                            <!-- <input type="date" class="form-control" placeholder="Start Date" name="startDate" <%= startDate %> > -->
                             <input type="date" class="form-control" placeholder="End Date " name="endDate" <%= endDate %> >
                         </div>
                         <div class="input-group" style="display: none;">
@@ -219,7 +223,7 @@
                                         <script>
                                             // var map;
                                             var markers = [];
-                                            
+
 
                                             function initMap() {
                                                 var myObject = <%- JSON.stringify(coordinates)%>;
@@ -252,7 +256,7 @@
 
                                             }
 
-                                        
+
                                             function createHandlers(){
                                                 for (let i = 0; i < markers.length; i++){
                                                     $("#event" + i).hover(function (){

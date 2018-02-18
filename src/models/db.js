@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const Sequelize = require('sequelize');
+const conf = require('../config.js');
 
 // Database connection config
 const sequelize = new Sequelize('devdb', 'dev', 'password', {
@@ -35,7 +36,7 @@ const Categories = sequelize.import(__dirname + '/categories.js');
 // Parent Foreign Key
 Parent.hasOne(Membership, { foreignKey: 'parentId', targetKey: 'parentId' });
 
-// Event Foreign Key 
+// Event Foreign Key
 Organizer.hasMany(Event, { foreignKey: 'organizerId', sourceKey: 'organizerId' });
 Event.belongsTo(Organizer, { foreignKey: 'organizerId', targetKey: 'organizerId' });
 
