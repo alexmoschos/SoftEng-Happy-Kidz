@@ -1,11 +1,8 @@
 module.exports = function(sequelize, DataTypes) {
     // Membership Model
     const Membership = sequelize.define('membership', {
-        membershipId: {
-            type: DataTypes.INTEGER,
-            primaryKey: true
-        },
         parentId: {
+            primaryKey: true,
             type: DataTypes.INTEGER,
             allowNull: false
         },

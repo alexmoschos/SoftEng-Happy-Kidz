@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const Sequelize = require('sequelize');
 const conf = require('../config.js');
+const seedDB = require('./seed')
 
 // Database connection config
 const sequelize = new Sequelize('devdb', 'dev', 'password', {
@@ -40,8 +41,8 @@ Parent.hasOne(Membership, { foreignKey: 'parentId', targetKey: 'parentId' });
 Organizer.hasMany(Event, { foreignKey: 'organizerId', sourceKey: 'organizerId' });
 Event.belongsTo(Organizer, { foreignKey: 'organizerId', targetKey: 'organizerId' });
 
-Categories.hasMany(Event, { foreignKey: 'categoryName', sourceKey: 'categoryName' });
-Event.belongsTo(Categories, { foreignKey: 'categoryName', targetKey: 'categoryName' })
+// Categories.hasMany(Event, { foreignKey: 'categoryName', sourceKey: 'categoryName' });
+// Event.belongsTo(Categories, { foreignKey: 'categoryName', targetKey: 'categoryName' })
 
 // Bought Tickets Foreign Keys
 Event.hasMany(BoughtTickets, { foreignKey: 'eventId', sourceKey: 'eventId' });
@@ -59,18 +60,6 @@ Parent.belongsToMany(Organizer, { through: Subscription, foreignKey: 'parentId',
 Organizer.belongsToMany(Parent, { through: Subscription, foreignKey: 'organizerId', otherKey: 'parentId' });
 
 
-//initialize tables if they don't exist
-sequelize.sync();
-
-// for each supported category make sure, we have it in the categories table
-conf.supportedCategories.forEach(function (category, idx) {
-    Categories.findOne({where: {categoryName: category}}).then(res => {
-        if (!res) {
-            // this category has to be added.
-            Categories.create({categoryName: category}).catch(err => {console.log(err);});
-        }
-    }).catch(err => {console.log(err);});
-});
 
 // Construct DB Interface (API) object
 var db = {
@@ -86,5 +75,10 @@ var db = {
     Subscription: Subscription,
     Membership: Membership
 }
+
+//initialize tables if they don't exist
+sequelize.sync({force:true})
+.then(() =>seedDB.seedDatabase(db));
+
 
 module.exports = db;
