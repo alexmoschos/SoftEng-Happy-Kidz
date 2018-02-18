@@ -37,7 +37,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
             <span>
                 <img src="icon2.png" alt="Party" height="25" width="27">
             </span> HappyKidz
@@ -48,10 +48,10 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li>  <!--  it was active -->
-                <a href="#">Home</a>
+                <a href="/">Home</a>
             </li>
             <li>
-                <a href="#">Events</a>
+                <a href="/search">Events</a>
             </li>
         </ul>
         <div class="col-sm-5 col-md-5">
@@ -70,10 +70,10 @@
         </div>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="#">Register</a>
+                <a href="/register">Register</a>
             </li>
             <li>
-                <a href="#">Login</a>
+                <a href="/login">Login</a>
             </li>
         </ul>
     </div>
@@ -97,10 +97,20 @@
     </div>
 <div class="panel-body" >
     <form action="/event_create" method="POST" enctype="multipart/form-data">
+        <div class = "row">
             <div class="col-md-6 col-sm-12"  >
                 <div class="form-group col-md-12 col-sm-12">
                     <label for="event-name">Τίτλος Event </label>
                     <input type="text" class="form-control input-sm" id="event-name" name="EventName">
+                </div>
+                <div class =" form-group col-md-12 col-sm-12">
+                    <label for ="categoryName">Κατηγορία Event</label>
+                    <select class="form-control col-sm-2" name="categoryName" id="categoryName">
+                                <% categories.forEach(function(category, idx) { %>
+                                    <option value"<%= category %>"><%= category %> </option>
+
+                                <% }); %>
+                        </select>
                 </div>
                 <div class="form-group col-md-12 col-sm-12" >
                     <label for="Description">Περιγραφή Event</label>
@@ -113,16 +123,19 @@
                 <div class="form-group col-md-6 col-sm-6">
                     <label for="AgeGroup">Ηλικιακή Ομάδα Παιδιών</label>
                     <select class="form-control col-sm-2" name="AgeGroup" id="AgeGroup">
-                                <option value="01">3-5</option>
-                                <option value="02">6-8</option>
-                                <option value="03">9-12</option>
-                                <option value="04">>12</option>
+                                <option value="3">3-5</option>
+                                <option value="6">6-8</option>
+                                <option value="9">9-12</option>
+                                <option value="13">>12</option>
                             </select>
           
                 </div>
                 <div class="form-group ">
-                    <label for="city">Ανέβασμα αρχείων </label>
-                    <input type="file" class="form-control input-sm" id="Image" placeholder="" name="Image" multiple="">
+                    <label for="city">Ανέβασμα εικώνων </label>
+                    <div id="files">
+                      
+                    </div>
+                    <button style = "margin-top:5px;" class="btn btn-success add-new-image">Προσθήκη εικώνας</button>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12"  >
@@ -190,20 +203,31 @@
 
         <div class="form-group ">
             <label for="mobile">Προσθήκη υδατογραφήματος στη φωτογραφία</label>
-            <input id="Watermark" name="watermark" type="checkbox" >
+            <input id="Watermark" name="watermark" type="checkbox" checked>
         </div>
 
         
     
-        <div class="form-group ">
-            <label for="city">Τιμή ανά Εισιτήριο (&euro;) </label>
+        <div class="form-group col-md-6 col-sm-6">
+            <label for="Price">Τιμή ανά Εισιτήριο (&euro;) </label>
             <input type="number" step="0.1" class="form-control input-sm" name = "Price" id="Price" placeholder="">
         </div>
+
+        <div class="form-group col-md-6 col-sm-6">
+            <label for="discount">Έκπτωση (%)</label>
+            <input type="number" step="0.1" class="form-control input-sm" name = "Discount" id="Discount" placeholder="">
+        </div>
+        
+        <input type="number" style="display:none;" name="pictures" id = "pictures" value = "0" />
         
     </div>
-    <button id="Creation"  class="btn btn-primary" style="float: right;" >Δημιουργία</button>
-    <button id="Cancel" type="button" class="btn btn-primary" style="float: left;">Ακύρωση</button>
-
+    </div>
+    <div class = "row">
+        <div class="col-md-12 col-sm-12">
+            <button id="Creation"  class="btn btn-primary" style="float: right;" >Δημιουργία</button>
+            <button id="Cancel" type="button" class="btn btn-primary cancel-btn" style="float: left;">Ακύρωση</button>
+        </div>
+    </div>
     
     
 </div>
@@ -219,10 +243,18 @@
 
 </body>
 
-
-<script>
-
-
+<script type="text/javascript">
+    $(".cancel-btn").click(function (event) {
+        history.back();
+    });
+    $('.add-new-image').click(function (event) {
+      event.preventDefault();
+      var count= 0;
+      var newfield = "<input type=\"file\" class=\"form-control\" name=\"file" + count.toString() + "\" id=\"file" + count.toString() + "\">"
+      count++;
+      $("#files").html($("#files").html() + newfield);
+      $("#pictures").val(count);
+    });
 </script>
 
 

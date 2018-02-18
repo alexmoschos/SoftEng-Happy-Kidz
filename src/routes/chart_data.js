@@ -3,10 +3,35 @@ var router = express.Router();
 var elastic = require('../apis/elastic_interface');
 var geocoding = require('../apis/geocoding');
 const request = require('request');
+var conf = require('../config');
+var auth = require('../apis/authentication');
+var db = require('../models/db');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 /* GET create event page. */
 router.get('/', function(req, res, next) {
-	var obj = {CurrentEventsList: [
+	var temp = req.query.from.split("-"), temp2 = req.query.to.split("-");
+	var fromdate = new Date(req.query.from).getTime()/1000, todate = new Date(req.query.to).getTime()/1000;
+	console.log(fromdate);
+	console.log(todate);
+	db.Event.findAll({
+			attributes: [
+				"categoryName"//,
+				//[sequelize.fn('COUNT',sequelize.col('categoryName')), 'num']
+			],
+			where: {
+				organizerId: 123,
+				startTime:{
+					[Op.lt]: todate,
+					[Op.gt]: fromdate
+				}
+			},
+			group: [
+				"categoryName"
+			]
+		}).then(events => {console.log("success");console.log(events);
+			var obj = {CurrentEventsList: [
 			{
 				ImgUrl: "barcelona.png",
 				Title: "Ποδοσφαιρομάνια στο Μαρούσι",
@@ -60,7 +85,9 @@ router.get('/', function(req, res, next) {
 				}
 			}
 						};
-		res.send(obj);
+		res.send(obj);});
+	
+	
 });
 
 /* POST create event page */

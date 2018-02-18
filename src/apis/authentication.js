@@ -20,7 +20,7 @@ function whereClause(type, idx, obj) {
 }
 
 function lookUpTables(idx, type, val, succ, fail) {
-    if (idx === Tables.length) return succ(null);
+    if (idx == Tables.length) return succ(null);
     Tables[idx].findOne(whereClause(type, idx, val)).then(
         function (user) {
             if (user) 
@@ -34,8 +34,12 @@ function findUserByEmail(email, succ, fail) {
     lookUpTables(0, 'email', email, succ, fail);
 }
 
-function findUserById(id, succ, fail) {
-    lookUpTables(0, 'id', id, succ, fail);
+function findUserOfTypeById(id, type, succ, fail) {
+    var index = Types.indexOf(type);
+    lookUpTables(index, 'id', id, function (user) {
+        if (user.type === type) return succ(user);
+        return succ(null);
+    }, fail);
 }
 
 
@@ -47,7 +51,7 @@ function isLoggedIn(req, res, next) {
 }
 
 function isUserParent(req, res, next) {
-    if (req.isAuthenticated() && req.user.type == 'parent')
+    if (req.isAuthenticated() && req.user.type === 'parent')
         return next();
     return res.render('no_page');
 }
@@ -75,13 +79,13 @@ function isUserMemberParent(req, res, next){
 }
 
 function isUserOrganizer(req, res, next) {
-    if (req.isAuthenticated() && req.user.type == 'organizer')
+    if (req.isAuthenticated() && req.user.type === 'organizer')
         return next();
     return res.render('no_page');
 }
 
 function isUserAdmin(req, res, next) {
-    if (req.isAuthenticated() && req.user.type == 'admin')
+    if (req.isAuthenticated() && req.user.type === 'admin')
         return next();
     return res.render('no_page');
 }
@@ -111,7 +115,7 @@ function isUserVerifiedOrganizer(req, res, next) {
 
 var auth = {
     findUserByEmail: findUserByEmail,
-    findUserById: findUserById,
+    findUserOfTypeById: findUserOfTypeById,
     isLoggedIn: isLoggedIn, 
     isUserParent: isUserParent,
     isUserOrganizer: isUserOrganizer,

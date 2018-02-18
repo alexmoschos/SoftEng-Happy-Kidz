@@ -2,10 +2,10 @@ var passport = require('passport');
 var db = require('../models/db');
 var auth = require('./authentication');
 var LocalStrategy = require('passport-local').Strategy;
+var bcrypt = require('bcrypt');
 
-
-function validatePassword(pas1, pas2) {
-    return pas1 === pas2;
+function validatePassword(hash, pass) {
+    return bcrypt.compareSync(pass, hash);
 }
 
 /**
@@ -27,9 +27,8 @@ passport.serializeUser(function(user, done) {
 });
   
 passport.deserializeUser(function(obj, done) {
-    console.log('deserializeUser called');
-    auth.findUserById(obj.id, function (user) {
-        return done(null, {user: user, type: obj.type});
+    auth.findUserOfTypeById(obj.id,obj.type, function (user) {
+        return done(null, user);
     }, console.log);
 });
 
@@ -55,7 +54,7 @@ function(req, email, password, done) {
                 var newUser = {
                     name : req.body.firstName + " " + req.body.lastName,
                     email : email,
-                    password : password,
+                    password : bcrypt.hashSync(password, 10),
                     wallet: 0,
                     mailNotifications: true
                 }
@@ -90,7 +89,7 @@ function(req, email, password, done) {
                 var newUser = {
                     name : req.body.legalBusinessName,
                     email : email,
-                    password : password,
+                    password : bcrypt.hashSync(password,10),
                     description: "",
                     phone: req.body.legalBusinessPhone,
                     webpage: "", 

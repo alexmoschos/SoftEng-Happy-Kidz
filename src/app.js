@@ -24,6 +24,8 @@ var admin = require('./routes/admin');
 var review = require('./routes/review');
 var payment = require('./routes/payment');
 var membership = require('./routes/membership');
+var event_create = require('./routes/event_create');
+
 var booked_seats = require('./routes/booked_seats');
 var register = require('./routes/register');
 var logout = require('./routes/logout');
@@ -47,7 +49,7 @@ app.use(session({
     saveUninitialized: false
 }));
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session({saveUninitialized: false}));
 
 app.use(validator());
 // uncomment after placing your favicon in /public
@@ -95,7 +97,6 @@ app.use(function(req, res, next) {
 
 
 app.use('/file_upload', file_upload);
-var event_create = require('./routes/event_create');
 app.use('/event_create', event_create);
 
 // catch 404 and forward to error handler

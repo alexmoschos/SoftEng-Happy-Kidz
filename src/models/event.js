@@ -53,6 +53,10 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false
         },
+	    initialTicketCount: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+	    },
         minAge: {
             type: DataTypes.INTEGER,
             allowNull: false
@@ -72,7 +76,8 @@ module.exports = function(sequelize, DataTypes) {
         },
         isVerified: {
             type: DataTypes.BOOLEAN,
-            allowNull: false
+            allowNull: false,
+            defaultValue: false
         }
     }, {
         tableName: 'event',

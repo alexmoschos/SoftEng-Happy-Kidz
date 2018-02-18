@@ -41,8 +41,8 @@ Parent.hasOne(Membership, { foreignKey: 'parentId', targetKey: 'parentId' });
 Organizer.hasMany(Event, { foreignKey: 'organizerId', sourceKey: 'organizerId' });
 Event.belongsTo(Organizer, { foreignKey: 'organizerId', targetKey: 'organizerId' });
 
-// Categories.hasMany(Event, { foreignKey: 'categoryName', sourceKey: 'categoryName' });
-// Event.belongsTo(Categories, { foreignKey: 'categoryName', targetKey: 'categoryName' })
+Categories.hasMany(Event, { foreignKey: 'categoryName', sourceKey: 'categoryName' });
+Event.belongsTo(Categories, { foreignKey: 'categoryName', targetKey: 'categoryName' });
 
 // Bought Tickets Foreign Keys
 Event.hasMany(BoughtTickets, { foreignKey: 'eventId', sourceKey: 'eventId' });

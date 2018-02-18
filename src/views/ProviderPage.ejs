@@ -353,7 +353,7 @@
                     </div>
                     <div class="tab-pane fade in well main-well col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12"  id="tab4">  
                     	<div class="panel-body">
-                    		<form action = "/AgeBounds" method="POST">
+                    		<form >
                     	
                     			<div class="form-group col-md-6 col-sm-6">
 	    		        			<label for="event-name">Από:  </label>
@@ -363,7 +363,7 @@
 	    		        			<label for="event-name">Έως: </label>
     	        					<input type="date" name = "to" class="form-control input-sm" id="to-date" >
     							</div>
-    							<button  class="btn btn-default">Εφαρμογή </button>
+    							<button  type = "button" id = "StatisticsButton" class="btn btn-default">Εφαρμογή </button>
     						
                     		</form>
                     	</div>
@@ -427,52 +427,75 @@ $(".btn-pref .btn").click(function () {
         $("#tab2").removeClass("active");
 
     }
-		var charts = [], datas = [], ops = [];
-    		$.getJSON("/booked_seats",function(response){
-			CurrentEventsList = response.CurrentEventsList;
-			google.charts.load('current', {'packages':['corechart']});
-      			google.charts.setOnLoadCallback(drawChart);
-			function drawChart() {
-				CurrentEventsList.forEach(function(event){
-					var data = google.visualization.arrayToDataTable(event.ChartData);
-					var options = event.ChartOptions;
-					datas.push(data);
-					ops.push(options);
-					var chart = new google.visualization.BarChart(document.getElementById(event.BarchartID));
-					chart.draw(data, options);
-					charts.push(chart);
-				});
-			}
-			window.addEventListener('resize', function() {
-				for(var i=0;i<charts.length;i++){
-                                        charts[i].draw(datas[i],ops[i]);
-                                }
-			},false);
+	
+	var charts = [], datas = [], ops = [];
+    	$.getJSON("/booked_seats",function(response){
+		CurrentEventsList = response.CurrentEventsList;
+		google.charts.load('current', {'packages':['corechart']});
+      		google.charts.setOnLoadCallback(drawChart);
+		function drawChart() {
+			CurrentEventsList.forEach(function(event){
+				var data = google.visualization.arrayToDataTable(event.ChartData);
+				var options = event.ChartOptions;
+				datas.push(data);
+				ops.push(options);
+				var chart = new google.visualization.BarChart(document.getElementById(event.BarchartID));
+				chart.draw(data, options);
+				charts.push(chart);
 			});
+		}
+		window.addEventListener('resize', function() {
+			for(var i=0;i<charts.length;i++){
+                        	charts[i].draw(datas[i],ops[i]);
+                	}
+		},false);
+	});
 				
 			
-			$.getJSON("/chart_data",function(response){
+	$.getJSON("/chart_data",function(response){
 								
-        var data = google.visualization.arrayToDataTable(response.TopicChart.Data);
-	 var data2 = google.visualization.arrayToDataTable(response.AgesChart.Data);
-        var width = .6 * window.innerWidth;
-    	var height = .8 * window.innerHeight;
-    	var options = response.TopicChart.Options;
-	var options2 = response.AgesChart.Options;
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        var chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
-        chart.draw(data, options);
-        chart2.draw(data2, options2);
-        window.addEventListener('resize', function() {
-        chart.draw(data, options);
-        chart2.draw(data2,options2);
+        	var data = google.visualization.arrayToDataTable(response.TopicChart.Data);
+		var data2 = google.visualization.arrayToDataTable(response.AgesChart.Data);
+        	var width = .6 * window.innerWidth;
+    		var height = .8 * window.innerHeight;
+	    	var options = response.TopicChart.Options;
+		var options2 = response.AgesChart.Options;
+        	var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        	var chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
+	        chart.draw(data, options);
+        	chart2.draw(data2, options2);
+        	window.addEventListener('resize', function() {
+        		chart.draw(data, options);
+        		chart2.draw(data2,options2);
 
 
-    }, false);
+    		}, false);
 
-       window.onresize = drawChart;
-								});
-      
+       		window.onresize = drawChart;
+	});
+	
+	$("#StatisticsButton").click(function(){
+		
+		console.log($("#from-date")[0].value);
+		console.log($("#to-date")[0].value);
+		$.getJSON("/chart_data",
+			{ from : $("#from-date")[0].value,
+			  to : $("#to-date")[0].value
+			},		
+			function(response){
+				var data = google.visualization.arrayToDataTable(response.TopicChart.Data);
+				var data2 = google.visualization.arrayToDataTable(response.AgesChart.Data);
+        			var width = .6 * window.innerWidth;
+    				var height = .8 * window.innerHeight;
+	    			var options = response.TopicChart.Options;
+				var options2 = response.AgesChart.Options;
+        			var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        			var chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
+	        		chart.draw(data, options);
+        			chart2.draw(data2, options2);
+				
+			}, false);
+	});
 
 
 });
