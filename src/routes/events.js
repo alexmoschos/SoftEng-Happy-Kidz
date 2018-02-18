@@ -35,32 +35,63 @@ router.get('/:id', function(req, res, next) {
                 console.log("I have entered");
                 console.log(reviews);
                 var ratings = [];
+                //DUMMY OBJECT
+                reviews = [
+                    {
+                        parentId : 1,
+                        text : "42",
+                        rating : 4
+                    },
+                    {
+                        parentId : 1,
+                        text : "42",
+                        rating : 4
+                    },
+                    {
+                        parentId : 1,
+                        text : "42",
+                        rating : 4
+                    },
+                ]
+                var promises = [];
                 reviews.forEach(review => {
-                    ratings.push({
-                        name : "John",
-                        content : review.text,
-                        rating : review.rating
-                    })
+                    promises.push( db.Parent.findAll({
+                        where : {
+                            parentId : review.parentId
+                        }
+                    }).then(parent => {
+                        console.log("HERE");
+                        ratings.push({
+                            name : parent[0].name,
+                            content : review.text,
+                            rating : review.rating
+                        });
+                    }) )
                 });
-                var startDate = new Date(event.startTime*1000);
-                obj = {
-                    title : event.title,
-                    date : startDate.toLocaleDateString(),
-                    time : startDate.toLocaleTimeString(),
-                    address : event.geoAddress,
-                    geolon : event.geoLon,
-                    geolat: event.geoLat,
-                    providerName: provider.name,
-                    startingPrice : event.ticketPrice * 100 / (100 - event.discount),
-                    finalPrice: event.ticketPrice,
-                    phone: provider.phone,
-                    agegroups:"16-21",
-                    description: event.description,
-                    images: ["https://i.ndtvimg.com/i/2016-11/sleeping_620x350_51479727691.jpg"],
-                    ratings
-                }
-                console.log(obj);
-                res.render('events',obj);
+                console.log(promises);
+                Promise.all(promises).then(function() {
+                    var startDate = new Date(event.startTime*1000);
+                    var imglist = [];
+                    obj = {
+                        title : event.title,
+                        date : startDate.toLocaleDateString(),
+                        time : startDate.toLocaleTimeString(),
+                        address : event.geoAddress,
+                        geolon : event.geoLon,
+                        geolat: event.geoLat,
+                        providerName: provider.name,
+                        startingPrice : event.ticketPrice * 100 / (100 - event.discount),
+                        finalPrice: event.ticketPrice,
+                        phone: provider.phone,
+                        agegroups: event.minAge + "-" + (event.minAge + 2).toString(),
+                        description: event.description,
+                        images: imglist,
+                        ratings
+                    }
+                    console.log(obj);
+                    res.render('events',obj);
+                });
+
             });
 
 
