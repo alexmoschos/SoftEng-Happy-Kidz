@@ -8,7 +8,7 @@ var auth = require('../apis/authentication');
 var db = require('../models/db');
 const Sequelize = require('sequelize');
 
-const Op = Sequelize.Op; 
+const Op = Sequelize.Op;  
 
 /* GET create event page. */
 router.get('/', function(req, res, next) {
