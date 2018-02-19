@@ -21,25 +21,26 @@ router.get('/:id', function(req, res, next) {
                     }
                 }).then(reviews => {
                     var ratings = [];
+                    console.log(reviews);
                     //DUMMY OBJECT
                     //TODO: Remove this dummy object
-                    reviews = [
-                        {
-                            parentId : 1,
-                            text : "Lorem ipsum",
-                            rating : 4
-                        },
-                        {
-                            parentId : 1,
-                            text : "42",
-                            rating : 4
-                        },
-                        {
-                            parentId : 1,
-                            text : "42",
-                            rating : 4
-                        },
-                    ];
+                    // reviews = [
+                    //     {
+                    //         parentId : 1,
+                    //         text : "Lorem ipsum",
+                    //         rating : 4
+                    //     },
+                    //     {
+                    //         parentId : 1,
+                    //         text : "42",
+                    //         rating : 4
+                    //     },
+                    //     {
+                    //         parentId : 1,
+                    //         text : "42",
+                    //         rating : 4
+                    //     },
+                    // ];
                     var promises = [];
                     reviews.forEach(review => {
                         promises.push( db.Parent.findById(review.parentId).then(parent => {
