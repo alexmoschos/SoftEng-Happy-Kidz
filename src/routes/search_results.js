@@ -6,50 +6,22 @@ router.get('/', function(req, res, next) {
     // TODO: Add image links, AgeGroups, ProviderName and ID, Provider Phone,
     // Maybe delete startingPrice field from ejs.
     // Make sure to render a helpful text when no search results are found.
+
+    var endDate = new Date(req.query.endDate).getTime() /1000 + 24 * 60 * 60;
+    if (isNaN(endDate))
+        endDate = undefined;
+
     filters = {
         free_text : req.query.q,
         price : req.query.endPrice,
         distance : req.query.radius,
         tickets : 1,
         address : req.query.location,
-        page : req.query.page
+        page : req.query.page,
+        max_time: endDate,
+        age_group: req.query.AgeGroup
     }
 
-
-    // checks for valid search request
-    var q = "value=" + req.query.q;
-    if (req.query.q == null)
-        q = "";
-    var location = "value=" + req.query.location;
-    if (req.query.location == null)
-        location = "";
-    var ageGroup = "" + req.query.AgeGroup;
-    if (req.query.AgeGroup == null)
-        ageGroup = "one";
-
-    // var startPrice = "value=" + req.query.startPrice;
-    // if (req.query.startPrice == null)
-    //     startPrice = "";
-
-    var radius = "value=" + req.query.radius;
-    if (req.query.radius == null)
-        radius = "";
-
-    var endPrice = "value=" + req.query.endPrice;
-    if (req.query.endPrice == null)
-        endPrice = "";
-
-    // var startDate = "value=" + req.query.startDate;
-    // if (req.query.startDate == null)
-    //     startDate = "";
-
-    var endDate = "value=" + req.query.endDate;
-    if (req.query.endDate == null)
-        endDate = "";
-
-    var startDate = "value=" + req.query.startDate;
-    if (req.query.endDate == null)
-        endDate = "";
     var page = req.query.page;
     if (req.query.page == null)
         page = 0;
@@ -59,34 +31,50 @@ router.get('/', function(req, res, next) {
     elastic.search('events',filters, (hits) => {
         obj = [];
         hits.forEach((element) => {
+            var agegroups = "";
+            switch(element._source.minAge) {
+                case 3:
+                    agegroups = "3-5";
+                    break;
+                case 6:
+                    agegroups = "6-8";
+                    break;
+                case 9:
+                    agegroups = "9-12";
+                    break;
+                default: 
+                    agegroups = ">12"
+            };
+
             obj.push ({
                 title : element._source.title,
                 date : new Date(element._source.startTime * 1000).toLocaleDateString(),
-                time : element._source.startTime,
+                time : new Date(element._source.startTime * 1000).toLocaleTimeString(),
                 address : element._source.geoAddress,
                 providerName : element._source.providerName,
-                startingPrice : 42,
                 finalPrice : element._source.ticketPrice,
                 phone : element._source.providerPhone,
-                agegroups : "5-10",
+                agegroups : agegroups,
                 images : [
-                    "https://i.ndtvimg.com/i/2016-11/sleeping_620x350_51479727691.jpg"
+                    "files/events/" + element._source.eventId + "/0"
                 ],
                 geolon : element._source.geoLocation.lon,
-                geolat : element._source.geoLocation.lat
+                geolat : element._source.geoLocation.lat,
+                eventId: element._source.eventId,
+                providerId: element._source.organizerId
             });
         });
 
         info = {
             obj : obj,
-            activity : q,
-            location : location,
-            ageGroup : ageGroup,
+            activity : req.query.q,
+            location : req.query.location,
+            ageGroup : req.query.AgeGroup,
             // startPrice : startPrice,
-            radius : radius,
-            endPrice : endPrice,
-            startDate : startDate,
-            endDate : endDate,
+            radius : req.query.radius,
+            endPrice : req.query.endPrice,
+            //startDate : startDate,
+            endDate : req.query.endDate,
             page : page,
     
         };

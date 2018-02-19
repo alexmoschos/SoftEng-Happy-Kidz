@@ -75,15 +75,15 @@ function seedDatabase(db) {
                 endTime: Math.floor(Date.now() / 1000 + 3600),
                 description: '',
                 categoryName: 'Αθλητισμός',
-                geoLon: 37.988930,
-                geoLat: 23.764727,
+                geoLon: 37.9889300,
+                geoLat: 23.7647270,
                 geoAddress: 'Ευρυτανίας 56, 15451, Αθήνα',
                 ticketPrice: 15,
                 discount: 5,
                 ticketCount: 100,
                 initialTicketCount: 100,
-                minAge: 10,
-                maxAge: 18,
+                minAge: 9,
+                maxAge: 12,
                 pictures: 0,
                 clickNumber: 0,
                 isVerified: true
@@ -95,15 +95,15 @@ function seedDatabase(db) {
                 endTime: Math.floor(Date.now() / 1000 + 3600),
                 description: '',
                 categoryName: 'Αθλητισμός',
-                geoLon: 37.988930,
-                geoLat: 23.764727,
+                geoLon: 37.9889300,
+                geoLat: 23.7647270,
                 geoAddress: 'Ευρυτανίας 56, 15451, Αθήνα',
                 ticketPrice: 15,
                 discount: 5,
                 ticketCount: 100,
                 initialTicketCount: 100,
-                minAge: 10,
-                maxAge: 18,
+                minAge: 3,
+                maxAge: 5,
                 pictures: 0,
                 clickNumber: 0,
                 isVerified: false
@@ -111,39 +111,40 @@ function seedDatabase(db) {
             ])).then(() => {
                 // add all events from postgres to elastic
 
-
                 db.Event.findAll().then(hits => {
                     hits.forEach(function (event) {
-                        var newEvent = {};
+                        if (false) {
+                            var newEvent = {};
 
-                        newEvent.organizerId = event.organizerId;
+                            newEvent.organizerId = event.organizerId;
 
-                        newEvent.title = event.title;
-                        newEvent.startTime = event.startTime;
-                        newEvent.endTime = event.endTime; // this field should probably go
-                        newEvent.description = event.description;
-                        newEvent.categoryName = event.categoryName;
-                        newEvent.geoAddress = event.geoAddress;
-                        newEvent.ticketPrice = event.ticketPrice;
-                        newEvent.ticketCount = event.ticketCount
-                        newEvent.initialTicketCount = event.initialTicketCount;
-                        newEvent.minAge = event.minAge;
-                        newEvent.maxAge = event.maxAge;
-                        newEvent.discount = event.discount;
-                        newEvent.pictures = event.pictures;
-                        newEvent.geoLocation = {
-                            lat: event.geoLat,
-                            lon: event.geoLon
-                        };
+                            newEvent.title = event.title;
+                            newEvent.startTime = event.startTime;
+                            newEvent.endTime = event.endTime; // this field should probably go
+                            newEvent.description = event.description;
+                            newEvent.categoryName = event.categoryName;
+                            newEvent.geoAddress = event.geoAddress;
+                            newEvent.ticketPrice = event.ticketPrice;
+                            newEvent.ticketCount = event.ticketCount
+                            newEvent.initialTicketCount = event.initialTicketCount;
+                            newEvent.minAge = event.minAge;
+                            newEvent.maxAge = event.maxAge;
+                            newEvent.discount = event.discount;
+                            newEvent.pictures = event.pictures;
+                            newEvent.geoLocation = {
+                                lat: parseFloat(event.geoLat),
+                                lon: parseFloat(event.geoLon)
+                            };
 
-                        newEvent.eventId = event.eventId.toString();
+                            newEvent.eventId = event.eventId.toString();
 
-                        db.Organizer.findOne({ where: { organizerId: event.organizerId } }).then((provider) => {
-                            newEvent.providerName = provider.name;
-                            newEvent.providerPhone = provider.phone;
+                            db.Organizer.findOne({ where: { organizerId: event.organizerId } }).then((provider) => {
+                                newEvent.providerName = provider.name;
+                                newEvent.providerPhone = provider.phone;
 
-                            elastic.insert('events', newEvent);
-                        });
+                                elastic.insert('events', newEvent);
+                            });
+                        }
                     });
                 });
 
