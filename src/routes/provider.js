@@ -45,6 +45,7 @@ router.get('/:providerId', function(req, res, next) {
 				var stringDate = numberdate + "/"+month+"/"+year;
 				PastEventsArray[i]= 
 					{
+					eventId : event.eventId,
 					ImgUrl: "../files/events/"+event.eventId +"/0",
 					Title: event.title,
 					Date: stringDate,
@@ -60,7 +61,6 @@ router.get('/:providerId', function(req, res, next) {
 			db.Event.findAll({
 				where: {
 					organizerId: providerId,
-					isVerified: true,
 					startTime:{
 						[Op.gt]: currtime
 					}
@@ -81,6 +81,7 @@ router.get('/:providerId', function(req, res, next) {
 				var stringDate = numberdate + "/"+month+"/"+year;
 				CurrentEvents[i]= 
 					{
+					eventId : event.eventId,
 					ImgUrl: "../files/events/"+event.eventId +"/0",
 					Title: event.title,
 					Date: stringDate,

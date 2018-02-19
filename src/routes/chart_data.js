@@ -40,7 +40,7 @@ router.get('/', function(req, res, next) {
 			var Data = [['Task', 'Hours per Day']];
 			categories.forEach(function(element,i){
 				var cat = element.dataValues;
-				Data[i+1] = [cat.categoryName, cat.num];
+				Data[i+1] = [cat.categoryName, Number(cat.num)];
 			})
 			db.Event.findAll({
 				attributes: [
@@ -66,7 +66,7 @@ router.get('/', function(req, res, next) {
 					else if(age.minAge == 6)agestring = "6-8";
 					else if (age.minAge == 9)agestring = "9-12"
 					else agestring = ">12";
-					AgesData[i+1] = [agestring, age.num];
+					AgesData[i+1] = [agestring, Number(age.num)];
 				});
 				var obj = {
 					TopicChart : {
@@ -111,6 +111,7 @@ router.get('/bar_chart', function(req,res, next){
 			var result = element.dataValues;
 			Rows[i] = [result.title, result.clickNumber];
 		});
+		console.log(Rows);
 		res.send({Rows:Rows});
 	})
 

@@ -171,7 +171,7 @@
                                                                     <div class="row">                            
                                                                             
                                                                         <div class="col-12 col-xs-12">
-                                                                            <h3><%= event.Title %></h3>
+                                                                            <h3><a href="/events/<%=event.eventId%>"><%= event.Title %></a></h3>
                                                                         </div>
                                                                             <div class="col-12 col-xs-12">
                                                                                         <span class="glyphicon glyphicon-calendar"></span> 
@@ -252,7 +252,7 @@
                                                                         <div class="row">                            
                                                                                 
                                                                             <div class="col-12 col-xs-12">
-                                                                                <h3><%= event.Title %></h3>
+                                                                                <h3><a href="/events/<%=event.eventId%>"><%= event.Title %></a></h3>
                                                                             </div>
                                                                                 <div class="col-12 col-xs-12">
                                                         
@@ -308,11 +308,11 @@
                     	
                     			<div class="form-group col-md-6 col-sm-6">
 	    		        			<label for="event-name">Από:  </label>
-    	        					<input type="date" name = "from" class="form-control input-sm" id="from-date" >
+    	        					<input type="date" name = "from" class="form-control input-sm" id="from-date" value="2018-01-01">
     							</div>
     							<div class="form-group col-md-6 col-sm-6">
 	    		        			<label for="event-name">Έως: </label>
-    	        					<input type="date" name = "to" class="form-control input-sm" id="to-date" >
+    	        					<input type="date" name = "to" class="form-control input-sm" id="to-date" value="2018-03-01">
     							</div>
     							<button  type = "button" id = "StatisticsButton" class="btn btn-default">Εφαρμογή </button>
     						
@@ -400,28 +400,24 @@ $(".btn-pref .btn").click(function () {
 	});
 				
 	var data, data2,chart,chart2,options,options2;		
-	/*$.getJSON("/chart_data",function(response){
-								
-        	data = google.visualization.arrayToDataTable(response.TopicChart.Data);
-		    data2 = google.visualization.arrayToDataTable(response.AgesChart.Data);
-        	var width = .6 * window.innerWidth;
-    		var height = .8 * window.innerHeight;
-	    	var options = response.TopicChart.Options;
-		    var options2 = response.AgesChart.Options;
-        	chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        	chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
-	        chart.draw(data, options);
-        	chart2.draw(data2, options2);
-        	window.addEventListener('resize', function() {
-        		chart.draw(data, options);
-        		chart2.draw(data2,options2);
-
-
-    		}, false);
-
-       		window.onresize = drawChart;
-	});
-    */
+    $.getJSON("/chart_data",            //we load the data for the default values of from-date and to-date
+            { from : $("#from-date")[0].value,
+              to : $("#to-date")[0].value
+            },      
+            function(response){
+                setTimeout(function () {
+                    data = google.visualization.arrayToDataTable(response.TopicChart.Data);
+                    data2 = google.visualization.arrayToDataTable(response.AgesChart.Data);
+                    var width = .6 * window.innerWidth;
+                    var height = .8 * window.innerHeight;
+                    options = response.TopicChart.Options;
+                    options2 = response.AgesChart.Options;
+                    chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                    chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
+                    chart.draw(data, options);
+                    chart2.draw(data2, options2);
+                },3000); //we wait for 3 seconds in order for google visualization to load properly
+            }, false);
 	
 	$("#StatisticsButton").click(function(){
 		
@@ -432,6 +428,7 @@ $(".btn-pref .btn").click(function () {
 			  to : $("#to-date")[0].value
 			},		
 			function(response){
+                console.log(response.TopicChart.Data);
 				data = google.visualization.arrayToDataTable(response.TopicChart.Data);
 				data2 = google.visualization.arrayToDataTable(response.AgesChart.Data);
         			var width = .6 * window.innerWidth;
@@ -468,7 +465,7 @@ $(".btn-pref .btn").click(function () {
                   }
                 },
                 vAxis: {
-                  title: 'Rating (scale of 1-10)'
+                  title: 'Clicks'
                 }
               };
 
