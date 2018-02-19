@@ -25,38 +25,11 @@
     crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/stylesheets/styles_search.css">
 
-<body>
-    <div id="wrapper">
-        <nav class="navbar navbar-fixed-top navbar-custom" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                        aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/">
-                        <span>
-                            <img src="icon2.png" alt="Party" height="25" width="27">
-                        </span> HappyKidz
-                    </a>
+<link rel="stylesheet" type="text/css" href="/stylesheets/navbar.css">
 
-                </div>
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active">
-                            <a href="/">Home</a>
-                        </li>
-                        <li>
-                            <a href="/search">Events</a>
-                        </li>
-                    </ul>
-                </div>
-                <!--/.nav-collapse -->
-            </div>
-        </nav>
+<body>
+    <%- include partials/navbar.ejs %>
+    <div id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <h3><center>Φίλτρα αναζήτησης</center></h3>

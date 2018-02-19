@@ -76,6 +76,7 @@ router.get('/', function(req, res, next) {
             //startDate : startDate,
             endDate : req.query.endDate,
             page : page,
+            user: req.user
     
         };
         // console.log(info);

@@ -39,12 +39,12 @@ function validNewEvent(newEvent) {
 
 
 /* GET create event page. */
-router.get('/', auth.isUserOrganizer, function(req, res, next) {
-  res.render('newevent', {categories: conf.supportedCategories});
+router.get('/', auth.isUserVerifiedOrganizer, function(req, res, next) {
+  res.render('newevent', {categories: conf.supportedCategories, user: req.user});
 });
 
 /* POST create event page */
-router.post('/', auth.isUserOrganizer,  function(req, res, next) {
+router.post('/', auth.isUserVerifiedOrganizer,  function(req, res, next) {
     var body = req.fields;
     var files = req.files;
 
@@ -126,7 +126,7 @@ router.post('/', auth.isUserOrganizer,  function(req, res, next) {
 
         }).catch(err => {
             console.log(err);
-            res.send("There was an error please try again.");
+            res.send("There was an error please try again.", {user: req.user});
         });
     });
 });

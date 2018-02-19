@@ -113,7 +113,7 @@ function seedDatabase(db) {
 
                 db.Event.findAll().then(hits => {
                     hits.forEach(function (event) {
-                        if (false) {
+                        if (event.isVerified) {
                             var newEvent = {};
 
                             newEvent.organizerId = event.organizerId;
