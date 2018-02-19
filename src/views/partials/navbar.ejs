@@ -38,16 +38,17 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-<%} else if ((user.type ==='parent') || (user.type === 'organizer')) { 
-    var opt;
+<%} else { 
+    var navbarOpt = null;
     switch(user.type){
         case 'parent':
-            opt = {primaryKey: user.user.parentId, route: 'parent'};
+            navbarOpt = {primaryKey: user.user.parentId, route: 'parent'};
             break;
         case 'organizer':
-            opt = {primaryKey: user.user.organizerId, route: 'provider'};
+            navbarOpt = {primaryKey: user.user.organizerId, route: 'provider'};
             break;
     }%>
+<body>
     <nav class="navbar navbar-default" id="navbar-happy-kidz">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -80,7 +81,11 @@
                         	<img class="profile-pic" src="/images/profile-pic.png"></i>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/<%= opt.route %>/<%= opt.primaryKey %>">Προφίλ</a></li>
+                            <% if (navbarOpt){ %>
+                            <li><a href="/<%= navbarOpt.route %>/<%= navbarOpt.primaryKey %>">Προφίλ</a></li>
+                            <%} else {%>
+                            <li><a href="/admin">Διαχείριση</a></li>
+                            <%}%>
                             <li><a href="/logout">Έξοδος</a></li>
                         </ul>
                     </li>

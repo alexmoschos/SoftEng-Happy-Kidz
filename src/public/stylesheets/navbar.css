@@ -7,18 +7,18 @@
     width: auto;
 }
 
-.search-form {
+nav .search-form {
     width: 100%;
     border-radius: 33px;
 }
 
-.btn {
+nav .btn {
     width: auto;
     border-radius: 33px;
 }
 
 .navbar-brand,
-.form-group,
+nav .form-group,
 .navbar-nav li a {
     height: 70px;
     line-height: 70px;
@@ -30,16 +30,21 @@
     display: inline-block;
 }
 
-.form-group {
+nav .form-group {
     width: 100%;
 }
 
-.form-group .form-control {
+nav .form-group .form-control {
     width: 100%;
 }
 
 .navbar-form {
     margin: 0;
+}
+
+nav .profile-pic {
+    height: 100%;
+    border-radius: 50%;
 }
 
 #navbar-happy-kidz {
@@ -55,20 +60,31 @@
     display: none;
 }
 
-.profile-pic {
-    height: 100%;
-}
-
 @media screen and (min-width: 768px) {
 
     #span-search-divider {
         display: inline-block;
     }
 
-    .form-group {
+    nav .form-group {
         width: 40%;
     }
     .navbar-form {
         width: 70%;
     }
 }
+
+#profile-dropdown:focus{
+    background-color: transparent;
+}
+
+#profile-dropdown:active{
+    background-color: transparent;
+}
+
+
+.dropdown-menu > li > a {
+    line-height: 40px;
+    height: 100%
+}
+

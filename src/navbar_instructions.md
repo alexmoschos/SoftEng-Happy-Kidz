@@ -4,7 +4,7 @@
 Γίνεται include με την εξής εντολή:
 
 ```javascript
-<%- include /partials/navbar.ejs %>
+<%- include partials/navbar.ejs %>
 ```
 
 Μέσα στο ejs που κάνετε include το partial πρέπει να έχετε περάσει το user object του session.
