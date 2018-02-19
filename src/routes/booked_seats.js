@@ -11,10 +11,11 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 /* GET create event page. */
 router.get('/', function(req, res, next) {
+	var organizerId = req.user.user.organizerId;
 	var currtime = new Date().getTime()/1000;
 	db.Event.findAll({
 				where: {
-					organizerId: 123,
+					organizerId: organizerId,
 					startTime:{
 						[Op.gt]: currtime
 					}

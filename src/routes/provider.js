@@ -12,8 +12,8 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 /* GET create event page. */
-router.get('/', function(req, res, next) {
-	var providerId = req.user.user.organizerId;
+router.get('/:providerId', function(req, res, next) {
+	var providerId = req.params.providerId;
 	console.log(req.user.user.organizerId);
   	db.Organizer.findAll({
 		where: {
@@ -45,7 +45,7 @@ router.get('/', function(req, res, next) {
 				var stringDate = numberdate + "/"+month+"/"+year;
 				PastEventsArray[i]= 
 					{
-					ImgUrl: "files/events/"+event.eventId +"/0",
+					ImgUrl: "/public/files/events/"+event.eventId +"/0",
 					Title: event.title,
 					Date: stringDate,
 					Hours: time,
@@ -80,7 +80,7 @@ router.get('/', function(req, res, next) {
 				var stringDate = numberdate + "/"+month+"/"+year;
 				CurrentEvents[i]= 
 					{
-					ImgUrl: "files/events/"+event.eventId +"/0",
+					ImgUrl: "/public/files/events/"+event.eventId +"/0",
 					Title: event.title,
 					Date: stringDate,
 					Hours: time,
@@ -103,7 +103,8 @@ router.get('/', function(req, res, next) {
 											ProviderPhoneNumber: result.phone,
 											ProviderAddress : "25ης Μαρτίου 10, Βριλήσσια"},
 					PastEventsList: PastEventsArray,
-					CurrentEventsList: CurrentEvents
+					CurrentEventsList: CurrentEvents,
+					user: req.user
 			
 				};
 				res.render('ProviderPage', ProviderInfo);

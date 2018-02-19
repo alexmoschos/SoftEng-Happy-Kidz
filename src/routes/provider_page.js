@@ -11,8 +11,8 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;  
 
 /* GET create event page. */
-router.get('/', function(req, res, next) {
-	var providerId = req.user.user.organizerId;
+router.get('/:id', function(req, res, next) {
+	var providerId = id;
 	console.log(req.user.user.organizerId);
   	db.Organizer.findAll({
 		where: {
