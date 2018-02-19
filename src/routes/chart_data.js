@@ -36,7 +36,7 @@ router.get('/', function(req, res, next) {
 				"categoryName"
 			]
 		}).then(categories => {
-			console.log(categories);
+			// console.log(categories);
 			var Data = [['Task', 'Hours per Day']];
 			categories.forEach(function(element,i){
 				var cat = element.dataValues;
@@ -88,7 +88,33 @@ router.get('/', function(req, res, next) {
 		})
 			
 })
-	
+
+router.get('/bar_chart', function(req,res, next){
+	var organizerId = req.user.user.organizerId;
+	var currtime = new Date().getTime()/1000;
+	db.Event.findAll({
+		limit: 10,
+		order:[
+			["clickNumber", 'desc']
+		],
+		attributes :['clickNumber', 'title'],
+		where: {
+				organizerId: organizerId,
+				isVerified: true,
+				/*startTime:{
+					[Op.gt]: currtime
+				}*/
+			}
+	}).then(results => {
+		Rows = [];
+		results.forEach(function(element,i){
+			var result = element.dataValues;
+			Rows[i] = [result.title, result.clickNumber];
+		});
+		res.send({Rows:Rows});
+	})
+
+});
 	
 
 
