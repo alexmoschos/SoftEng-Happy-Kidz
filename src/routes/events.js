@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var db = require('../models/db');
 const Sequelize = require('sequelize');
+var fs = require('fs');
 
 router.get('/:id', function(req, res, next) {
     //console.log(req.params.id);
@@ -50,26 +51,43 @@ router.get('/:id', function(req, res, next) {
                         }));
                     });
                     Promise.all(promises).then(function() {
+
                         var startDate = new Date(event.startTime*1000);
                         var imglist = [];
-                        obj = {
-                            title : event.title,
-                            date : startDate.toLocaleDateString(),
-                            time : startDate.toLocaleTimeString(),
-                            address : event.geoAddress,
-                            geolon : event.geoLon,
-                            geolat: event.geoLat,
-                            providerName: provider.name,
-                            startingPrice : event.ticketPrice * 100 / (100 - event.discount),
-                            finalPrice: event.ticketPrice,
-                            phone: provider.phone,
-                            agegroups: event.minAge + "-" + (event.minAge + 2).toString(),
-                            description: event.description,
-                            images: imglist,
-                            ratings,
-                            user : req.user
-                        };
-                        res.render('events',obj);
+                        path = './public/files/' + event.eventId + "/";
+                        fs.readdir(path, function(err, items) {
+                            //console.log(items);
+                            if(!err){
+                                for (var i=0; i<items.length; i++) {
+                                    imglist.push('/files/' + event.eventId + '/' + items[i]);
+                                }
+                            }
+                            if(imglist.length === 0){
+                                console.log(42);
+                                imglist.push('/happy.png');
+                            }
+                            obj = {
+                                eventId : event.eventId,
+                                title : event.title,
+                                date : startDate.toLocaleDateString(),
+                                time : startDate.toLocaleTimeString(),
+                                address : event.geoAddress,
+                                geolon : event.geoLon,
+                                geolat: event.geoLat,
+                                providerName: provider.name,
+                                startingPrice : event.ticketPrice * 100 / (100 - event.discount),
+                                finalPrice: event.ticketPrice,
+                                phone: provider.phone,
+                                agegroups: event.minAge + "-" + (event.minAge + 2).toString(),
+                                description: event.description,
+                                ticketCount : event.ticketCount,
+                                images: imglist,
+                                ratings,
+                                user : req.user
+                            };
+                            res.render('events',obj);
+                        });
+
                     });
                 });
             });

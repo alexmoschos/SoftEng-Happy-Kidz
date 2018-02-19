@@ -41,9 +41,13 @@
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="border:1px solid #29335c; border-radius:1px">
                     <!-- Indicators -->
                     <ol class="carousel-indicators">
-                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    <% images.forEach(function(image,index) {
+                        if(index === 0){ %>
+                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <% } else { %>
+                            <li data-target="#carousel-example-generic" data-slide-to="<%=index%>"></li>
+                        <% }
+                    }); %>
                     </ol>
 
                     <!-- Wrapper for slides -->
@@ -52,16 +56,10 @@
                             if(index === 0){ %>
                                 <div class="item active">
                                     <img src="<%=image%>" alt="..." style="width:100%; height: 100%;">
-                                    <div class="carousel-caption">
-                                        <h3><%=image%></h3>
-                                    </div>
                                 </div>
                             <% } else { %>
                                 <div class="item">
                                     <img src="<%=image%>" alt="..." style="width:100%; height: 100%;">
-                                    <div class="carousel-caption">
-                                        <h3><%=image%></h3>
-                                    </div>
                                 </div>
                             <% }
                         }); %>
