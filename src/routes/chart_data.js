@@ -12,16 +12,21 @@ const Op = Sequelize.Op;
 /* GET create event page. */
 router.get('/', function(req, res, next) {
 	var temp = req.query.from.split("-"), temp2 = req.query.to.split("-");
+	if((req.query.from === "") || (req.query.to === "")){
+		res.send({});
+		return;
+	}
+	var organizerId = req.user.user.organizerId;
 	var fromdate = new Date(req.query.from).getTime()/1000, todate = new Date(req.query.to).getTime()/1000;
 	console.log(fromdate);
 	console.log(todate);
 	db.Event.findAll({
 			attributes: [
 				"categoryName"//,
-				//[sequelize.fn('COUNT',sequelize.col('categoryName')), 'num']
+				//[sequelize.fn('COUNT',sequelize.col("categoryName")), 'num']
 			],
 			where: {
-				organizerId: 123,
+				organizerId: organizerId,
 				startTime:{
 					[Op.lt]: todate,
 					[Op.gt]: fromdate
@@ -85,7 +90,7 @@ router.get('/', function(req, res, next) {
 				}
 			}
 						};
-		res.send(obj);});
+		res.send(obj);})
 	
 	
 });
