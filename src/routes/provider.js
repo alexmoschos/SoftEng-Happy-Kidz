@@ -25,7 +25,7 @@ router.get('/:providerId', function(req, res, next) {
 		db.Event.findAll({
 			where: {
 				organizerId: providerId,
-				endTime:{
+				startTime:{
 					[Op.lt]: currtime
 				}
 			}

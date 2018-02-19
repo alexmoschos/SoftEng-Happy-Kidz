@@ -22,8 +22,8 @@ router.get('/', function(req, res, next) {
 	console.log(todate);
 	db.Event.findAll({
 			attributes: [
-				"categoryName"//,
-				//[sequelize.fn('COUNT',sequelize.col("categoryName")), 'num']
+				"categoryName",
+				[Sequelize.fn('COUNT',Sequelize.col("categoryName")), 'num']
 			],
 			where: {
 				organizerId: organizerId,
@@ -35,65 +35,62 @@ router.get('/', function(req, res, next) {
 			group: [
 				"categoryName"
 			]
-		}).then(events => {console.log("success");console.log(events);
-			var obj = {CurrentEventsList: [
-			{
-				ImgUrl: "barcelona.png",
-				Title: "Ποδοσφαιρομάνια στο Μαρούσι",
-				Date: "17/10/2008",
-				Hours: "18:00-20:00",
-				Address: "Μαρούσι",
-				Provider: "Αθλητικός Όμιλος Αμαρουσίου",
-				Ages: "7-10",
-				PhoneNumber: "210-6814789",
-				InitialPrice: "10 €",
-				FinalPrice: "5 €",
-				EmptySeats: 15,
-				BookedSeats: 35,
-				BarchartID: "barchart1",
-				ChartData: [
-        ['Genre', 'Ελεύθερες', 'Κρατημένες', { role: 'annotation' } ],
-        ['Θέσεις', 10, 24, '']
-      ],
-				ChartOptions: {
-				title: "Θέσεις",
-        legend: { position: 'top', maxLines: 3 },
-        bar: { groupWidth: '75%' },
-        isStacked: 'percent',
-        backgroundColor: '#e6ecf0'
-			 }
-			}
-		],
-			TopicChart : {
-				Data: [
-          ['Task', 'Hours per Day'],
-          ['Παιδότοπος',     11],
-          ['Αθλήματα',      2],
-          ['Κλοουν',  2],
-          ['Κουκλοθέατρο', 2],
-          ['Λοιπά',    7]
-        ],
-				Options:{
-        	title: 'Θεματικές των Events'
-    	}
-			},
-			AgesChart:{
-				Data: [
-					['Age','Kids per Age'],
-					['3-5',15],
-					['6-8',17],
-					['9-12',25],
-					['> 12',8]
+		}).then(categories => {
+			console.log(categories);
+			var Data = [['Task', 'Hours per Day']];
+			categories.forEach(function(element,i){
+				var cat = element.dataValues;
+				Data[i+1] = [cat.categoryName, cat.num];
+			})
+			db.Event.findAll({
+				attributes: [
+					"minAge",
+					[Sequelize.fn('COUNT',Sequelize.col("minAge")), 'num']
 				],
-				Options: {
-					title: 'Ηλικιακές κατηγορίες'
-				}
-			}
-						};
-		res.send(obj);})
+				where: {
+					organizerId: organizerId,
+					startTime:{
+						[Op.lt]: todate,
+						[Op.gt]: fromdate
+					}
+				},
+				group: [
+					"minAge"
+				]
+			}).then(Ages => {
+				var AgesData = [['Age','Kids per Age']];
+				Ages.forEach(function(element,i){
+					var age = element.dataValues;
+					var agestring;
+					if(age.minAge == 3)agestring = "3-5";
+					else if(age.minAge == 6)agestring = "6-8";
+					else if (age.minAge == 9)agestring = "9-12"
+					else agestring = ">12";
+					AgesData[i+1] = [agestring, age.num];
+				});
+				var obj = {
+					TopicChart : {
+						Data: Data,
+						Options:{
+			        		title: 'Θεματικές των Events'
+			    		}
+					},
+					AgesChart:{
+						Data: AgesData,
+						Options: {
+							title: 'Ηλικιακές κατηγορίες'
+						}
+					}
+				};
+				res.send(obj);
+
+			});
+		})
+			
+})
 	
 	
-});
+
 
 /* POST create event page */
 router.post('/', function(req, res, next) {
