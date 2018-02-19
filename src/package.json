@@ -20,6 +20,7 @@
     "formidable": "^1.1.1",
     "gm": "^1.23.1",
     "grunt": "^1.0.2",
+    "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-express-server": "^0.5.3",
     "grunt-parallel": "^0.5.1",

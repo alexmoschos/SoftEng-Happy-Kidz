@@ -6,7 +6,8 @@ var fs = require('fs');
 
 router.get('/:id', function(req, res, next) {
     //console.log(req.params.id);
-    if(parseInt(req.params.id)){
+    if(!isNaN(req.params.id) && req.params.id == parseInt(req.params.id)){
+        req.params.id = parseInt(req.params.id);
         db.Event.findById(req.params.id).then(event => {
             if( event == null ) {
                 res.render('no_page');
@@ -21,26 +22,6 @@ router.get('/:id', function(req, res, next) {
                     }
                 }).then(reviews => {
                     var ratings = [];
-                    console.log(reviews);
-                    //DUMMY OBJECT
-                    //TODO: Remove this dummy object
-                    // reviews = [
-                    //     {
-                    //         parentId : 1,
-                    //         text : "Lorem ipsum",
-                    //         rating : 4
-                    //     },
-                    //     {
-                    //         parentId : 1,
-                    //         text : "42",
-                    //         rating : 4
-                    //     },
-                    //     {
-                    //         parentId : 1,
-                    //         text : "42",
-                    //         rating : 4
-                    //     },
-                    // ];
                     var promises = [];
                     reviews.forEach(review => {
                         promises.push( db.Parent.findById(review.parentId).then(parent => {
@@ -69,6 +50,7 @@ router.get('/:id', function(req, res, next) {
                             }
                             obj = {
                                 eventId : event.eventId,
+                                organizerId : event.organizerId,
                                 title : event.title,
                                 date : startDate.toLocaleDateString(),
                                 time : startDate.toLocaleTimeString(),
@@ -76,8 +58,8 @@ router.get('/:id', function(req, res, next) {
                                 geolon : event.geoLon,
                                 geolat: event.geoLat,
                                 providerName: provider.name,
-                                startingPrice : event.ticketPrice * 100 / (100 - event.discount),
-                                finalPrice: event.ticketPrice,
+                                startingPrice : (event.ticketPrice * 100 / (100 - event.discount)).toFixed(2),
+                                finalPrice: event.ticketPrice.toFixed(2),
                                 phone: provider.phone,
                                 agegroups: event.minAge + "-" + (event.minAge + 2).toString(),
                                 description: event.description,
@@ -94,6 +76,7 @@ router.get('/:id', function(req, res, next) {
             });
         });
     } else {
+        console.log(42);
         res.render('no_page');
     }
 });
@@ -106,7 +89,7 @@ router.delete('/:eventId', function(req, res){
         if (event && event.isVerified === false) {
             return event.destroy();
         } else {
-            res.send('No such event!')
+            res.send('No such event!');
         }
     }).then( (succ) =>
         res.redirect("/admin")
@@ -127,7 +110,7 @@ router.put('/:eventId', function(req, res){
             return event.update({isVerified: true});
         }
         else {
-            res.send('No such event!')
+            res.send('No such event!');
         }
     })
     .then ( (succ) => res.redirect("/admin"));
