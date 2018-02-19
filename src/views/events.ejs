@@ -186,9 +186,15 @@
                 <br>
                 <div class="row">
                     <div class=" col-xs-12">
-                        <center>
-                            <button id="book-now" class="btn my-btn btn-lg">Book Now</button>
-                        </center>
+                        <form class="form-inline" action="/payment/events/<%= eventId %>" method="POST">
+                            <center>
+                                <div class="form-group">
+                                        <label for="quantity">Αριθμός Εισιτηρίων:</label>
+                                        <input type="number" name="quantity" value="1" min="1" max="<%= ticketCount %>" class="form-control" id="quantity">
+                                </div>
+                                <button id="book-now" type="submit" class="btn my-btn btn-lg">Book Now</button>
+                            </center>
+                        </form>
                     </div>
                 </div>
             </div>
