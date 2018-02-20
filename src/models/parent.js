@@ -21,7 +21,8 @@ module.exports = function(sequelize, DataTypes) {
         },
         wallet: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            defaultValue: 0            
         },
         mailNotifications: {
             type: DataTypes.BOOLEAN,
