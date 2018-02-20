@@ -42,12 +42,12 @@ router.get('/:id', function(req, res, next) {
 
                         var startDate = new Date(event.startTime*1000);
                         var imglist = [];
-                        path = './public/files/' + event.eventId + "/";
+                        path = './public/files/events/' + event.eventId + "/";
                         fs.readdir(path, function(err, items) {
                             //console.log(items);
                             if(!err){
                                 for (var i=0; i<items.length; i++) {
-                                    imglist.push('/files/' + event.eventId + '/' + items[i]);
+                                    imglist.push('/files/events/' + event.eventId + '/' + items[i]);
                                 }
                             }
                             if(imglist.length === 0){
