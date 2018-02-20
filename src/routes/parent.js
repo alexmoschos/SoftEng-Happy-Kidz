@@ -7,26 +7,29 @@ var bcrypt = require('bcrypt');
 router.get('/:parentId', function(req, res, next) {
 	db.Parent.findById(req.params.parentId)
 	.then( (parent) => {
-		db.Organizer.findAll({
+		db.BoughtTickets.findAll({
 			include: [{
 			  model: db.Event,
 			  required: true
 			}],
-			// where: { organizerId: 4 }
-		  })
-		  .then( tickets => { 
-			console.log(tickets);
-			obj = {
-				user: req.user,
-				id: parent.parentId ,
-				name: parent.name,
-				category:"Gold",
-				expiryDate: "12-12-12",
-				points: parent.wallet,
-				email: parent.email,
-				bought: tickets
-			};
-			res.render('parent', obj);
+			where: { parentId: parent.parentId }
+		})
+		.then( tickets => { 
+			db.Membership.findById(req.params.parentId)
+			.then( member => {
+				obj = {
+					user: req.user,
+					id: parent.parentId ,
+					name: parent.name,
+					category: member.membershipTier,
+					expiryDate: member.expiryDate,
+					points: parent.wallet,
+					email: parent.email,
+					bought: tickets
+				};
+				res.render('parent', obj);
+			})	
+			// console.log(tickets);
 		})
 	});
 });

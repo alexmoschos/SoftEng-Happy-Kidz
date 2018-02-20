@@ -32,9 +32,6 @@ crossorigin="anonymous"></script>
 
 </head> 
 <%- include partials/navbar.ejs %>
-
-
-<body>
   
 
 
@@ -64,7 +61,7 @@ crossorigin="anonymous"></script>
           </div>
         </div>
         <!-- /.col-md-12 -->
-        <div class="col-md-4 col-sm-12 pull-right">
+        <div class="col-md-4 col-sm-12 col-xs-12 pull-right">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h1 class="page-header small">Στοιχεία Συνδρομής</h1>
@@ -105,12 +102,12 @@ crossorigin="anonymous"></script>
 
 
 
-        <div class="col-md-8 col-sm-12 pull-left posttimeline">
+        <div class="col-md-8 col-sm-12 col-xs-12 pull-left posttimeline">
           
            <div class="panel panel-default">
                <div class="panel-heading">
                    <h1 class="page-header small">Αγορασμένα Εισιτήρια</h1>
-                 </div>
+                 
                  
  
  
@@ -119,7 +116,7 @@ crossorigin="anonymous"></script>
                  <% if(bought.length > 0) {%>
                    <div class="row">
                        <% bought.forEach(function(it, index){ %>
-                           <div class="col-12 col-xs-12 col-sm-5 col-md-12 col-lg-12 myClass" style="border:1px solid #e0e0e0; margin-bottom:20px; border-radius:20px;">
+                           <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 myClass" style="border:1px solid #e0e0e0; margin-bottom:20px; border-radius:20px;">
                                    <!-- <center>     -->
                                    <div class="row" style="height: 170px; margin-top: 15px">
                                                <div class="col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
@@ -129,28 +126,28 @@ crossorigin="anonymous"></script>
                                                        <div class="row">
  
                                                            <div class="col-12 col-xs-12">
-                                                               <h3><a href="/events/<%=it.events[0].eventId%> " style="color: #29335c"><%= it.events[0].title %></a></h3>
+                                                               <h3><a href="/events/<%=it.event.eventId%> " style="color: #29335c"><%= it.event.title %></a></h3>
                                                            </div>
                                                                <div class="col-12 col-xs-12">
                                                                            <span class="glyphicon glyphicon-calendar"></span>
                                                                            <span>Ημερομηνία: </span>
-                                                                           <span id="date-data" class="result-data"><%=it.events[0].date%>,</span>
+                                                                           <span id="date-data" class="result-data"><%=it.event.date%>,</span>
                                                                            &nbsp;
                                                                            <span class="glyphicon glyphicon-time"></span>
                                                                            <span >Ώρα: </span>
-                                                                           <span id="time-data" class="result-data"><%=it.events[0].startTime%>,</span>
+                                                                           <span id="time-data" class="result-data"><%=it.event.startTime%>,</span>
                                                                            &nbsp;
                                                                            <span class="glyphicon glyphicon-map-marker"></span>
                                                                            <span>Διεύθυνση: </span>
-                                                                           <span id="adress-data" class="result-data"><%=it.events[0].geoAddress%>,</span>
+                                                                           <span id="adress-data" class="result-data"><%=it.event.geoAddress%>,</span>
                                                                            &nbsp;
                                                                            <span class="glyphicon glyphicon-briefcase"></span>
                                                                            <span >Πάροχος: </span>
-                                                                           <span id="provider-data" class="result-data"><a href="/provider_page/"><%= it.events[0].providerName %></a>,</span>
+                                                                           <span id="provider-data" class="result-data"><a href="/provider_page/"><%= it.event.providerName %></a>,</span>
                                                                            &nbsp;
                                                                            <span class="glyphicon glyphicon-signal"></span>
                                                                            <span >Ηλικίες: </span>
-                                                                           <span id="age-data" class="result-data"><%=it.events[0].minAge%>,</span>
+                                                                           <span id="age-data" class="result-data"><%=it.event.minAge%>,</span>
                                                                            &nbsp;
                                                                            <!-- <span class="glyphicon glyphicon-euro"></span>
                                                                            <span>Τιμή: </span>
@@ -164,11 +161,11 @@ crossorigin="anonymous"></script>
                                                                    <hr>
                                                                        <span class="glyphicon glyphicon-remove"></span>
                                                                        <span>Αρχική Τιμή: </span>
-                                                                       <span id="price-data" class="result-data"><%=it.events[0].ticketPrice%></span>
+                                                                       <span id="price-data" class="result-data"><%=it.event.ticketPrice%></span>
                                                                        &nbsp;
                                                                        <span class="glyphicon glyphicon-ok"></span>
                                                                        <span>Τιμή HappyKidz: </span>
-                                                                       <span id="price-data" class="result-data"><%=it.events[0].ticketPrice%></span>
+                                                                       <span id="price-data" class="result-data"><%=it.event.ticketPrice%></span>
                                                                        <!-- <br> -->
                                                                </div>
  
@@ -183,13 +180,16 @@ crossorigin="anonymous"></script>
                                <div class="col-sm-1"></div>
                        <% }); %>
                      </div>
-                     
                    <% }
                    else{%>
+                    <div class="container">
                       <div class="row">
-                        <p>No tickets</p>
+                        <p>Δεν υπάρχουν διαθέσιμα εισιτήρια</p>
                       </div>
+                    </div>
                    <% }%>
+                </div>
+                  
  
  
  
