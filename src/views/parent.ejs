@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>HappyKidz - Register Page</title>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+crossorigin="anonymous"></script>
+<!-- Latest compiled and minified CSS -->
+
+<script src="https://use.fontawesome.com/899071ec86.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/stylesheets/styles_user.css">
+<link rel="stylesheet" type="text/css" href="/stylesheets/navbar.css">
+
+</head> 
+<%- include partials/navbar.ejs %>
+  
+
+
+<div class="container">
+    <div class="container">
+
+  
+
+      <div class="row">
+        <div class="col-md-12 text-center ">
+          <div class="panel panel-default">
+            <div class="userprofile social ">
+              <div class="userpic"> <img src="https://www.shareicon.net/download/2015/09/18/103157_man_512x512.png" alt="User Avatar" class="userpicimg"> </div>
+              <h3 class="username"><%= name%></h3>
+              
+              
+            </div>
+            <div>
+              <ul class="nav nav-pills pull-left countlist" role="tablist">
+                
+                
+                
+              </ul>
+              
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <!-- /.col-md-12 -->
+        <div class="col-md-4 col-sm-12 col-xs-12 pull-right">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h1 class="page-header small">Στοιχεία Συνδρομής</h1>
+              <div class="golden-card">
+                  <span style="font-size:20px; " class="glyphicon glyphicon-credit-card"></span>
+                  <span style="font-size:20px;  margin-left:10px;" id="subscribtion-category"><%= category%></span> 
+                  <p class="page-subtitle small">Λήξη Συνδρομής: <%= expiryDate%></p>
+              </div>
+              <div class="available-points">
+                  <span style="font-size:20px; "  class="glyphicon glyphicon-asterisk"></span>
+                  <span style="font-size:20px;  margin-left:10px;" id="subscribtion-category"><%= points%> Πόντοι</span> 
+                  <!-- <p class="page-subtitle small">Expiration Date: 20/10/19</p> -->
+              </div>
+              <a href="/membership"><button type="button" class="btn btn-info" id="renew-subscription-button">Ανανέωση Συνδρομής</button></a>
+            </div>
+            
+            <div class="clearfix"></div>
+          </div>
+    
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h1 class="page-header small">Προσωπικές Πληροφορίες</h1>
+              <p class="page-subtitle"><span>Όνομα:</span><span style="margin-left: 10px;" id="user-username"><%= name%></span> </p>
+              <p class="page-subtitle"><span>Emai:</span><span style="margin-left: 10px;" id="user-email"><%= email%></span> </p>
+              <a href='/parent/<%= id%>/settings'><button type="button" class="btn btn-info" id="renew-subscription-button">Αλλαγή Στοιχείων</button></a>
+            </div>    
+            <div class="clearfix"></div>
+          </div>
+
+          
+          
+        </div>
+
+        
+    
+    
+        
+
+
+
+        <div class="col-md-8 col-sm-12 col-xs-12 pull-left posttimeline">
+          
+           <div class="panel panel-default">
+               <div class="panel-heading">
+                   <h1 class="page-header small">Αγορασμένα Εισιτήρια</h1>
+                 
+                 
+ 
+ 
+ 
+ 
+                 <% if(bought.length > 0) {%>
+                   <div class="row">
+                       <% bought.forEach(function(it, index){ %>
+                           <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 myClass" style="border:1px solid #e0e0e0; margin-bottom:20px; border-radius:20px;">
+                                   <!-- <center>     -->
+                                   <div class="row" style="height: 170px; margin-top: 15px">
+                                               <div class="col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                                   <img src="" alt="" style="width:100%; height: 150px;">
+                                               </div>
+                                               <div id="info-container" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                                                       <div class="row">
+ 
+                                                           <div class="col-12 col-xs-12">
+                                                               <h3><a href="/events/<%=it.event.eventId%> " style="color: #29335c"><%= it.event.title %></a></h3>
+                                                           </div>
+                                                               <div class="col-12 col-xs-12">
+                                                                           <span class="glyphicon glyphicon-calendar"></span>
+                                                                           <span>Ημερομηνία: </span>
+                                                                           <span id="date-data" class="result-data"><%=it.event.date%>,</span>
+                                                                           &nbsp;
+                                                                           <span class="glyphicon glyphicon-time"></span>
+                                                                           <span >Ώρα: </span>
+                                                                           <span id="time-data" class="result-data"><%=it.event.startTime%>,</span>
+                                                                           &nbsp;
+                                                                           <span class="glyphicon glyphicon-map-marker"></span>
+                                                                           <span>Διεύθυνση: </span>
+                                                                           <span id="adress-data" class="result-data"><%=it.event.geoAddress%>,</span>
+                                                                           &nbsp;
+                                                                           <span class="glyphicon glyphicon-briefcase"></span>
+                                                                           <span >Πάροχος: </span>
+                                                                           <span id="provider-data" class="result-data"><a href="/provider_page/"><%= it.event.providerName %></a>,</span>
+                                                                           &nbsp;
+                                                                           <span class="glyphicon glyphicon-signal"></span>
+                                                                           <span >Ηλικίες: </span>
+                                                                           <span id="age-data" class="result-data"><%=it.event.minAge%>,</span>
+                                                                           &nbsp;
+                                                                           <!-- <span class="glyphicon glyphicon-euro"></span>
+                                                                           <span>Τιμή: </span>
+                                                                           <span id="price-data" class="result-data">10,</span>
+                                                                           &nbsp; -->
+                                                                           <!-- <span class="glyphicon glyphicon-earphone"></span>
+                                                                           <span>Τηλέφωνο Επικοινωνίας: </span>
+                                                                           <span id="phone-data" class="result-data"><%=it.phone%></span> -->
+                                                               </div>
+                                                               <div class="col-xs-12">
+                                                                   <hr>
+                                                                       <span class="glyphicon glyphicon-remove"></span>
+                                                                       <span>Αρχική Τιμή: </span>
+                                                                       <span id="price-data" class="result-data"><%=it.event.ticketPrice%></span>
+                                                                       &nbsp;
+                                                                       <span class="glyphicon glyphicon-ok"></span>
+                                                                       <span>Τιμή HappyKidz: </span>
+                                                                       <span id="price-data" class="result-data"><%=it.event.ticketPrice%></span>
+                                                                       <!-- <br> -->
+                                                               </div>
+ 
+                                                               <!-- <div class="col-xs-10">
+                                                                   <p>20€</p>
+                                                               </div> -->
+                                                           </div>
+                                                   </div>
+                                       </div>
+                                   <!-- </center> -->
+                               </div>
+                               <div class="col-sm-1"></div>
+                       <% }); %>
+                     </div>
+                   <% }
+                   else{%>
+                    <div class="container">
+                      <div class="row">
+                        <p>Δεν υπάρχουν διαθέσιμα εισιτήρια</p>
+                      </div>
+                    </div>
+                   <% }%>
+                </div>
+                  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+               
+               
+           
+ 
+ 
+ 
+ 
+ 
+                 <div class="clearfix"></div>
+           </div>
+           
+           
+           
+ 
+ 
+ 
+ 
+ 
+           
+
+
+
+
+
+
+          
+        </div>
+      </div>
+      
+      
+      
+      </div>
+  </div>
+
+
+
+</div>
+</div>
+
+
+
+</body>
+
+
+<script>
+
+
+
+
+$(".subscription-item").hover(function() {
+    
+   
+
+    $(this).children(".provider-hover").removeClass("col-11");
+    $(this).children(".provider-hover").addClass("col-9");
+    $(this).children(".delete-hover").removeClass("col-1");
+    $(this).children(".delete-hover").addClass("col-3");
+    
+  
+
+
+
+}, function() {
+ 
+
+
+    $(this).children(".provider-hover").removeClass("col-9");
+    $(this).children(".provider-hover").addClass("col-11");
+    $(this).children(".delete-hover").removeClass("col-3");
+    $(this).children(".delete-hover").addClass("col-1");
+});
+
+
+</script>
+
+</html>
