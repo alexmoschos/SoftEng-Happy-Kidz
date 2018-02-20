@@ -58,7 +58,7 @@ function isUserParent(req, res, next) {
 
 function isUserMemberParent(req, res, next){
     if (req.isAuthenticated()) {
-        if (req.user.type == 'parent') {
+        if (req.user.type === 'parent') {
             Membership.findById(req.user.user.parentId)
             .then((membership) => {
                 if (membership) {
