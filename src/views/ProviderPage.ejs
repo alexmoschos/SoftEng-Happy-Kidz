@@ -28,61 +28,14 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
-<link rel="stylesheet" href="/stylesheets/styles.css">
 
-<nav class="navbar navbar-custom" role="navigation">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">
-            <span>
-                <img src="icon2.png" alt="Party" height="25" width="27">
-            </span> HappyKidz
-        </a>
-    </div>
+<link rel="stylesheet" href="/stylesheets/styles_provider.css">
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-            <li>  <!--  it was active -->
-                <a href="#">Home</a>
-            </li>
-            <li>
-                <a href="#">Events</a>
-            </li>
-        </ul>
-        <div class="col-sm-5 col-md-5">
-            <form class="navbar-form" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" name="q">
-                    <span class="input-group-addon">@</span>
-                    <input type="text" class="form-control" placeholder="Location" name="l">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" type="submit">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a href="#">Register</a>
-            </li>
-            <li>
-                <a href="#">Login</a>
-            </li>
-        </ul>
-    </div>
-</div>
-    <!-- /.navbar-collapse -->
-</nav>
+<link rel="stylesheet" type="text/css" href="/stylesheets/navbar.css">
 
+<%- include partials/navbar.ejs %>
+
+    
 
 
 <body>
@@ -95,9 +48,9 @@
                 
                 <div class="card hovercard">
 
-                   
-										 <a id="NewEvent-btn" class="btn btn-primary" href="/event_create">New Event</a>
-                   	<a id="Papers" class="btn btn-primary" href="/upload_files" style="float: right;">Submit deko</a>
+                   <!-- moved buttons in personal info tab -->
+										 <!-- <a id="NewEvent-btn" class="btn btn-primary" href="/event_create">New Event</a>
+                   	<a id="Papers" class="btn btn-primary" href="/upload_files" style="float: right;">Submit deko</a> -->
                         <!-- <button id="subscribe-btn" type="button" class="btn btn-primary">Subscribe</button> -->
 <!--                         
                     <div class="card-background">
@@ -110,6 +63,7 @@
                     <div class="card-info"> <span class="card-title">Όνομα παρόχου</span>
             
                     </div> -->
+                    <h2 class="username"><%= PersonalInfo.ProviderName %></h2>
 
 
 
@@ -118,7 +72,7 @@
                 
                 <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
                     <div class="btn-group" role="group">
-                        <button type="button" id="about-btn" class="btn btn-primary"  data-toggle="tab" href="search/#tab1"><i class="fa fa-info-circle" aria-hidden="true"></i>
+                        <button type="button" id="about-btn" class="btn btn-info"  data-toggle="tab" href="search/#tab1"><i class="fa fa-info-circle" aria-hidden="true"></i>
                             
                             <div class="hidden-xs">Γενικές πληροφορίες</div>
                         </button>
@@ -182,6 +136,8 @@
                                             <%= PersonalInfo.ProviderAddress %>
                                         </span>
                                     </div>
+                                    <a   id="NewEvent-btn" href="/event_create" class="btn btn-info btn-md ">Προσθήκη νέου event</a>
+                                    <a id="Papers" class="btn btn-info btn-md" href="/upload_files" style="float: right;">Submit deko</a>
                                 </div>
 
                     </div>
@@ -220,7 +176,7 @@
                                                                     <div class="row">                            
                                                                             
                                                                         <div class="col-12 col-xs-12">
-                                                                            <h3><%= event.Title %></h3>
+                                                                            <h3><a href="/events/<%=event.eventId%>"><%= event.Title %></a></h3>
                                                                         </div>
                                                                             <div class="col-12 col-xs-12">
                                                                                         <span class="glyphicon glyphicon-calendar"></span> 
@@ -291,6 +247,7 @@
                     								</div>
 										</div>
                     <div class="tab-pane fade in well main-well" id="tab3">
+                            <div class="row">
 											<% CurrentEventsList.forEach(function(event){ %>
                       <div class="col-12 col-xs-12 col-sm-5 col-md-12 col-lg-12" style="border:1px solid #e0e0e0; margin-bottom:20px; border-radius:20px;">
                                                         <div class="row" style="height: 170px; margin-top: 15px">
@@ -301,7 +258,7 @@
                                                                         <div class="row">                            
                                                                                 
                                                                             <div class="col-12 col-xs-12">
-                                                                                <h3><%= event.Title %></h3>
+                                                                                <h3><a href="/events/<%=event.eventId%>"><%= event.Title %></a></h3>
                                                                             </div>
                                                                                 <div class="col-12 col-xs-12">
                                                         
@@ -349,7 +306,7 @@
                                                 </div>
 											<% }) %>
 
-                       
+                                            </div>
                     </div>
                     <div class="tab-pane fade in well main-well col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12"  id="tab4">  
                     	<div class="panel-body">
@@ -357,11 +314,11 @@
                     	
                     			<div class="form-group col-md-6 col-sm-6">
 	    		        			<label for="event-name">Από:  </label>
-    	        					<input type="date" name = "from" class="form-control input-sm" id="from-date" >
+    	        					<input type="date" name = "from" class="form-control input-sm" id="from-date" value="2018-01-01">
     							</div>
     							<div class="form-group col-md-6 col-sm-6">
 	    		        			<label for="event-name">Έως: </label>
-    	        					<input type="date" name = "to" class="form-control input-sm" id="to-date" >
+    	        					<input type="date" name = "to" class="form-control input-sm" id="to-date" value="2018-03-01">
     							</div>
     							<button  type = "button" id = "StatisticsButton" class="btn btn-default">Εφαρμογή </button>
     						
@@ -370,6 +327,7 @@
                     	         	
                     	<div  id="piechart"  style = " height: 500px;"></div>	
                     	<div  id="piechart2"  style = " height: 500px;"></div>
+                        <div id = "chart_div" style="height: 500px;"></div>
                     </div>
                   </div>
                 </div>
@@ -392,44 +350,44 @@
 
 <script>
 $(document).ready(function() {
-$(".btn-pref .btn").click(function () {
-    $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
-
-    //  $(".tab").addClass("active"); // instead of this do the below 
-    $(this).removeClass("btn-default").addClass("btn-primary");   
-
-
-    if (this.id == "about-btn"){
-        $("#tab1").addClass("active");
-        $("#tab2").removeClass("active");
-        $("#tab3").removeClass("active");
-        $("#tab4").removeClass("active");
-        
-    }
-    else if (this.id == "events-btn"){
-        $("#tab2").addClass("active");
-        $("#tab1").removeClass("active");
-        $("#tab3").removeClass("active");
-        $("#tab4").removeClass("active");
-        
-    }
-    else if (this.id == "running-events-btn"){
-        $("#tab3").addClass("active");
-        $("#tab1").removeClass("active");
-        $("#tab2").removeClass("active");
-        $("#tab4").removeClass("active");
-        
-    }
-    else if(this.id == "analytics-btn"){
-    	$("#tab4").addClass("active");
-    	$("#tab3").removeClass("active");
-        $("#tab1").removeClass("active");
-        $("#tab2").removeClass("active");
-
-    }
+    $(".btn-pref .btn").click(function () {
+        $(".btn-pref .btn").removeClass("btn-info").addClass("btn-default");
+    
+        //  $(".tab").addClass("active"); // instead of this do the below 
+        $(this).removeClass("btn-default").addClass("btn-info");   
+    
+    
+        if (this.id == "about-btn"){
+            $("#tab1").addClass("active");
+            $("#tab2").removeClass("active");
+            $("#tab3").removeClass("active");
+            $("#tab4").removeClass("active");
+            
+        }
+        else if (this.id == "events-btn"){
+            $("#tab2").addClass("active");
+            $("#tab1").removeClass("active");
+            $("#tab3").removeClass("active");
+            $("#tab4").removeClass("active");
+            
+        }
+        else if (this.id == "running-events-btn"){
+            $("#tab3").addClass("active");
+            $("#tab1").removeClass("active");
+            $("#tab2").removeClass("active");
+            $("#tab4").removeClass("active");
+            
+        }
+        else if(this.id == "analytics-btn"){
+            $("#tab4").addClass("active");
+            $("#tab3").removeClass("active");
+            $("#tab1").removeClass("active");
+            $("#tab2").removeClass("active");
+    
+        }
 	
 	var charts = [], datas = [], ops = [];
-    	$.getJSON("/booked_seats",function(response){
+    $.getJSON("/booked_seats",function(response){
 		CurrentEventsList = response.CurrentEventsList;
 		google.charts.load('current', {'packages':['corechart']});
       		google.charts.setOnLoadCallback(drawChart);
@@ -444,35 +402,28 @@ $(".btn-pref .btn").click(function () {
 				charts.push(chart);
 			});
 		}
-		window.addEventListener('resize', function() {
-			for(var i=0;i<charts.length;i++){
-                        	charts[i].draw(datas[i],ops[i]);
-                	}
-		},false);
+		
 	});
 				
-			
-	$.getJSON("/chart_data",function(response){
-								
-        	var data = google.visualization.arrayToDataTable(response.TopicChart.Data);
-		var data2 = google.visualization.arrayToDataTable(response.AgesChart.Data);
-        	var width = .6 * window.innerWidth;
-    		var height = .8 * window.innerHeight;
-	    	var options = response.TopicChart.Options;
-		var options2 = response.AgesChart.Options;
-        	var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        	var chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
-	        chart.draw(data, options);
-        	chart2.draw(data2, options2);
-        	window.addEventListener('resize', function() {
-        		chart.draw(data, options);
-        		chart2.draw(data2,options2);
-
-
-    		}, false);
-
-       		window.onresize = drawChart;
-	});
+	var data, data2,chart,chart2,options,options2;		
+    $.getJSON("/chart_data",            //we load the data for the default values of from-date and to-date
+            { from : $("#from-date")[0].value,
+              to : $("#to-date")[0].value
+            },      
+            function(response){
+                setTimeout(function () {
+                    data = google.visualization.arrayToDataTable(response.TopicChart.Data);
+                    data2 = google.visualization.arrayToDataTable(response.AgesChart.Data);
+                    var width = .6 * window.innerWidth;
+                    var height = .8 * window.innerHeight;
+                    options = response.TopicChart.Options;
+                    options2 = response.AgesChart.Options;
+                    chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                    chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
+                    chart.draw(data, options);
+                    chart2.draw(data2, options2);
+                },3000); //we wait for 3 seconds in order for google visualization to load properly
+            }, false);
 	
 	$("#StatisticsButton").click(function(){
 		
@@ -483,20 +434,62 @@ $(".btn-pref .btn").click(function () {
 			  to : $("#to-date")[0].value
 			},		
 			function(response){
-				var data = google.visualization.arrayToDataTable(response.TopicChart.Data);
-				var data2 = google.visualization.arrayToDataTable(response.AgesChart.Data);
+                console.log(response.TopicChart.Data);
+				data = google.visualization.arrayToDataTable(response.TopicChart.Data);
+				data2 = google.visualization.arrayToDataTable(response.AgesChart.Data);
         			var width = .6 * window.innerWidth;
     				var height = .8 * window.innerHeight;
-	    			var options = response.TopicChart.Options;
-				var options2 = response.AgesChart.Options;
-        			var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        			var chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
+	    			options = response.TopicChart.Options;
+				    options2 = response.AgesChart.Options;
+        			chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        			chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
 	        		chart.draw(data, options);
         			chart2.draw(data2, options2);
 				
 			}, false);
 	});
+    var chart3,data3,options3;
+    $.getJSON("/chart_data/bar_chart",function(response){
 
+        google.charts.load('current', {packages: ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(drawBasic);
+
+        function drawBasic() {
+
+              data3 = new google.visualization.DataTable();
+              data3.addColumn('string', 'Title');
+              data3.addColumn('number', 'Number of clicks');
+              data3.addRows(response.Rows);
+
+              var options3 = {
+                title: 'Most Popular Events',
+                hAxis: {
+                  title: 'Title',
+                  viewWindow: {
+                    min: [7, 30, 0],
+                    max: [17, 30, 0]
+                  }
+                },
+                vAxis: {
+                  title: 'Clicks'
+                }
+              };
+
+              chart3 = new google.visualization.ColumnChart(
+                document.getElementById('chart_div'));
+
+              chart3.draw(data3, options3);
+              window.onresize = drawBasic;
+            }
+    });
+    window.addEventListener('resize', function() {
+            chart.draw(data, options);
+            chart2.draw(data2,options2);
+            chart3.draw(data3,options3);
+            for(var i=0;i<charts.length;i++){
+                            charts[i].draw(datas[i],ops[i]);
+                    }
+        },false);
 
 });
 });
