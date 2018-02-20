@@ -54,6 +54,19 @@ router.get('/:id', function(req, res, next) {
                                 console.log(42);
                                 imglist.push('/happy.png');
                             }
+                            var agegroups;
+                            if (event.minAge === 3){
+                                agegroups = '3-5';
+                            }
+                            else if (event.minAge === 6){
+                                agegroups = '6-8';
+                            }
+                            else if (event.minAge === 9){
+                                agegroups = '9-12';
+                            }
+                            else{
+                                agegroups = '>12';
+                            }
                             obj = {
                                 eventId : event.eventId,
                                 organizerId : event.organizerId,
@@ -67,7 +80,7 @@ router.get('/:id', function(req, res, next) {
                                 startingPrice : (event.ticketPrice * 100 / (100 - event.discount)).toFixed(2),
                                 finalPrice: event.ticketPrice.toFixed(2),
                                 phone: provider.phone,
-                                agegroups: event.minAge + "-" + (event.minAge + 2).toString(),
+                                agegroups: agegroups,
                                 description: event.description,
                                 ticketCount : event.ticketCount,
                                 images: imglist,
