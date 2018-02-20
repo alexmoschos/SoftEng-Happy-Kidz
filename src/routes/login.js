@@ -9,23 +9,22 @@ var bcrypt = require('bcrypt');
 
 
 /* GET create event page. */
-router.get('/', function(req, res, next) {
+router.get('/', auth.isNotUserLoggedIn, function(req, res, next) {
     res.render('login', {user: req.user});
 });
 
 router.post('/reset', function(req, res, next) {
 
-  if (typeof req.body.email === 'string' || req.body.email instanceof String){
-    var find = auth.findUserByEmail(req.body.email, function(result) {
+    auth.findUserByEmail(req.body.email, function(result) {
       if (result){
           //create new random 12 digit password
           var newPassword = utilities.makeid(12);
-          var update = result.user.update({password: bcrypt.hashSync(newPassword,10)});
-          update.then( (succ) => {
+          result.user.update({password: bcrypt.hashSync(newPassword,10)})
+          .then( (succ) => {
             //stelnoume mail
             if (succ) {
-              var finalRes = mail.sendTextEmail('Αλλαγή Κωδικού', result.user.email, 'Ο νέος σας κωδικός είναι: ' + newPassword);
-              finalRes.then( (succ1) => {
+              mail.sendTextEmail('Αλλαγή Κωδικού', result.user.email, 'Ο νέος σας κωδικός είναι: ' + newPassword)
+              .then( (succ1) => {
                 if (succ1) {
                   res.render('successReset', {user: req.user});
                 }
@@ -48,10 +47,6 @@ router.post('/reset', function(req, res, next) {
         }
       }
       , console.log);
-  }
-  else{
-    res.redirect('failReset',{user: req.user});
-  }
 });
 
 router.get('/reset', function(req, res, next) {

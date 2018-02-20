@@ -53,7 +53,7 @@ function isLoggedIn(req, res, next) {
 function isUserParent(req, res, next) {
     if (req.isAuthenticated() && req.user.type === 'parent')
         return next();
-    return res.render('no_page');
+    return res.render('no_page',{user: req.user});
 }
 
 function isUserMemberParent(req, res, next) {
@@ -95,7 +95,7 @@ function isUserParentId(req, res, next) {
 function isUserOrganizer(req, res, next) {
     if (req.isAuthenticated() && req.user.type === 'organizer')
         return next();
-    return res.render('no_page');
+    return res.render('no_page',{user: req.user});
 }
 
 function isUserOrganizerId(req, res, next) {
@@ -114,7 +114,7 @@ function isUserOrganizerId(req, res, next) {
 function isUserAdmin(req, res, next) {
     if (req.isAuthenticated() && req.user.type === 'admin')
         return next();
-    return res.render('no_page');
+    return res.render('no_page',{user: req.user});
 }
 
 // TODO: Implement HTTP 403 
@@ -139,6 +139,15 @@ function isUserVerifiedOrganizer(req, res, next) {
     }
 }
 
+function isNotUserLoggedIn(req, res, next) {
+    if (req.isAuthenticated()){
+        res.send('user already logged in as ' + req.user.user.email);
+    }
+    else{
+        return next();
+    }
+}
+
 
 
 var auth = {
@@ -151,7 +160,8 @@ var auth = {
     isUserOrganizerId: isUserOrganizerId,
     isUserAdmin: isUserAdmin,
     isUserMemberParent: isUserMemberParent,
-    isUserVerifiedOrganizer: isUserVerifiedOrganizer
+    isUserVerifiedOrganizer: isUserVerifiedOrganizer,
+    isNotUserLoggedIn: isNotUserLoggedIn
 };
 
 module.exports = auth;
