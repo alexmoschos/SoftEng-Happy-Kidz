@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html>
-    
-    
+
+
 <script src="https://use.fontawesome.com/899071ec86.js"></script>
 
 <title><%= PersonalInfo.ProviderName %></title>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-				crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js">
-					</script>
+crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js">
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-    crossorigin="anonymous"></script>
+crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-    crossorigin="anonymous"></script>
+crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    
+
 <!-- Latest compiled and minified CSS -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-    crossorigin="anonymous">
+crossorigin="anonymous">
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-    crossorigin="anonymous">
+crossorigin="anonymous">
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
+crossorigin="anonymous"></script>
 
 <link rel="stylesheet" href="/stylesheets/styles_provider.css">
 
@@ -35,102 +35,87 @@
 
 <%- include partials/navbar.ejs %>
 
-    
+
 
 
 <body>
-    
-        
-<div id="my-main-row" class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-lg-8 col-sm-8">
-                
-                
-                <div class="card hovercard">
-                    <h2 class="username"><%= PersonalInfo.ProviderName %></h2>
-              
-                </div>
-                
-                <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
-                    <div class="btn-group" role="group">
-                        <button type="button" id="about-btn" class="btn btn-info"  data-toggle="tab" href="search/#tab1"><i class="fa fa-info-circle" aria-hidden="true"></i>
-                            
-                            <div class="hidden-xs">Γενικές πληροφορίες</div>
-                        </button>
-                    </div>
-                    <div class="btn-group" role="group">
-                        <button type="button" id="events-btn" class="btn btn-default" href="search/#tab2" data-toggle="tab"><i class="fa fa-history" aria-hidden="true"></i>
-                            
-                            <div class="hidden-xs">Προηγούμενα Events</div>
-                        </button>
-                    </div>
-                    <div class="btn-group" role="group">
-                        <button type="button" id="running-events-btn" class="btn btn-default" href="search/#tab3" data-toggle="tab"><i class="fa fa-star" aria-hidden="true"></i>
-                            
-                            <div class="hidden-xs">Τρέχοντα Events</div>
-                        </button>
-                    </div>
-                    
-                </div>
-            
-             
-
-                    <div class="">
-                  <div class="tab-content">
-                    <div  class="tab-pane fade in active well main-well" id="tab1">
-
-                        <div class="general-info">
 
 
-                      <!-- <h3>This is tab 1</h3> -->
+	<div id="my-main-row" class="row">
+		<div class="col-sm-2"></div>
+		<div class="col-lg-8 col-sm-8">
 
-                        
-                        <h3><%= PersonalInfo.ProviderName %></h3>
-                        <p><%= PersonalInfo.ProviderText %> </p>
+
+			<div class="card hovercard">
+				<h2 class="username"><%= PersonalInfo.ProviderName %></h2>
+
+			</div>
+
+			<div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+				<div class="btn-group" role="group">
+					<button type="button" id="about-btn" class="btn btn-info"  data-toggle="tab" href="search/#tab1"><i class="fa fa-info-circle" aria-hidden="true"></i>
+
+						<div class="hidden-xs">Γενικές πληροφορίες</div>
+					</button>
+				</div>
+				<div class="btn-group" role="group">
+					<button type="button" id="events-btn" class="btn btn-default" href="search/#tab2" data-toggle="tab"><i class="fa fa-history" aria-hidden="true"></i>
+
+						<div class="hidden-xs">Προηγούμενα Events</div>
+					</button>
+				</div>
+				<div class="btn-group" role="group">
+					<button type="button" id="running-events-btn" class="btn btn-default" href="search/#tab3" data-toggle="tab"><i class="fa fa-star" aria-hidden="true"></i>
+
+						<div class="hidden-xs">Τρέχοντα Events</div>
+					</button>
+				</div>
+
+			</div>
 
 
 
-<div class="personal-info">
-                        <span id="provider-email">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>                                
-                                <a href="mailto:gvelegas41@gmail.gr"><%= PersonalInfo.ProviderEmail %></a>
-                            </span>
-<br>
-                            <span id="provider-site">
-                                    <i class="fa fa-internet-explorer" aria-hidden="true"></i>
-                                    
-                                    <a href="https://www.google.gr/"><%= PersonalInfo.ProviderPage %></a>
-                                </span>
-                                <br>
-                                <span id="provider-telephone">
-                                        <i class="fa fa-phone" aria-hidden="true"></i>
-                                        <%= PersonalInfo.ProviderPhoneNumber %>
-                                    </span>
-                                    <br>
-                                    <span id="provider-address">
-                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            <%= PersonalInfo.ProviderAddress %>
-                                        </span>
-                                    </div>
-                                    <a   id="NewEvent-btn" href="/event_create" class="btn btn-info btn-md ">Προσθήκη νέου event</a>
-                                    <a id="Papers" class="btn btn-info btn-md" href="/upload_files" style="float: right;">Submit deko</a>
-                                </div>
+			<div class="">
+				<div class="tab-content">
+					<div  class="tab-pane fade in active well main-well" id="tab1">
 
-                    </div>
+						<div class="general-info">
 
-                   
-                    
+
+							<!-- <h3>This is tab 1</h3> -->
+
+
+							<h3><%= PersonalInfo.ProviderName %></h3>
+							<p><%= PersonalInfo.ProviderText %> </p>
 
 
 
+							<div class="personal-info">
+								<span id="provider-email">
+									<i class="fa fa-envelope" aria-hidden="true"></i>                                
+									<a href="mailto:gvelegas41@gmail.gr"><%= PersonalInfo.ProviderEmail %></a>
+								</span>
+								<br>
+								<span id="provider-site">
+									<i class="fa fa-internet-explorer" aria-hidden="true"></i>
 
+									<a href="https://www.google.gr/"><%= PersonalInfo.ProviderPage %></a>
+								</span>
+								<br>
+								<span id="provider-telephone">
+									<i class="fa fa-phone" aria-hidden="true"></i>
+									<%= PersonalInfo.ProviderPhoneNumber %>
+								</span>
+								<br>
+								<span id="provider-address">
+									<i class="fa fa-map-marker" aria-hidden="true"></i>
+									<%= PersonalInfo.ProviderAddress %>
+								</span>
+							</div>
+					
+						</div>
 
-
-                    <div  class="tab-pane fade in well main-well" id="tab2">
-
-
-
-                            <div class="previus-events ">
+					</div>
 
 
 
@@ -139,42 +124,56 @@
 
 
 
-                                    <div class="row">
-																						<% PastEventsList.forEach(function(event){ %>
-																									
-                                            <div class="col-12 col-xs-12 col-sm-5 col-md-12 col-lg-12" style="border:1px solid #e0e0e0; margin-bottom:20px; border-radius:20px;">
-                                                <!-- <center>     -->
-                                                <div class="row" style="height: 170px; margin-top: 15px">
-                                                            <div class="col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                                                <img src="<%=event.ImgUrl %>" alt="" style="width:100%; height: 150px;">
-                                                            </div>
-                                                            <div id="info-container" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">   
-                                                                    <div class="row">                            
-                                                                            
-                                                                        <div class="col-12 col-xs-12">
-                                                                            <h3><a href="/events/<%=event.eventId%>"><%= event.Title %></a></h3>
-                                                                        </div>
-                                                                            <div class="col-12 col-xs-12">
-                                                                                        <span class="glyphicon glyphicon-calendar"></span> 
-                                                                                        <span>Ημερομηνία: </span>
-                                                                                        <span id="date-data" class="result-data"><%= event.Date %>,</span>
-                                                                                        &nbsp;
-                                                                                        <span class="glyphicon glyphicon-time"></span> 
-                                                                                        <span >Ώρα: </span>
-                                                                                        <span id="time-data" class="result-data"><%= event.Hours %>,</span> 
-                                                                                        &nbsp;
-                                                                                        <span class="glyphicon glyphicon-map-marker"></span> 
-                                                                                        <span>Διεύθυνση: </span>
-                                                                                        <span id="adress-data" class="result-data"><%= event.Address %>,</span>
-                                                                                        &nbsp;
-                                                                                        <span class="glyphicon glyphicon-briefcase"></span>
-                                                                                        <span >Πάροχος: </span>
-                                                                                        <span id="provider-data" class="result-data"><%= event.Provider %>,</span> 
-                                                                                        &nbsp;
-                                                                                        <span class="glyphicon glyphicon-signal"></span>
-                                                                                        <span >Ηλικίες: </span>
-                                                                                        <span id="age-data" class="result-data"><%= event.Ages %>,</span> 
-                                                                                        &nbsp;
+
+					<div  class="tab-pane fade in well main-well" id="tab2">
+
+
+
+						<div class="previus-events ">
+
+
+
+
+
+
+
+
+							<div class="row">
+								<% PastEventsList.forEach(function(event){ %>
+
+								<div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border:1px solid #e0e0e0; margin-bottom:20px; border-radius:20px;">
+									<!-- <center>     -->
+									<div class="row" style="height: 170px; margin-top: 15px">
+										<div class="col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+											<img src="<%=event.ImgUrl %>" alt="" style="width:100%; height: 150px;">
+										</div>
+										<div id="info-container" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">   
+											<div class="row">                            
+
+												<div class="col-12 col-xs-12">
+													<h3><a href="/events/<%=event.eventId%>"><%= event.Title %></a></h3>
+												</div>
+												<div class="col-12 col-xs-12">
+													<span class="glyphicon glyphicon-calendar"></span> 
+													<span>Ημερομηνία: </span>
+													<span id="date-data" class="result-data"><%= event.Date %>,</span>
+													&nbsp;
+													<span class="glyphicon glyphicon-time"></span> 
+													<span >Ώρα: </span>
+													<span id="time-data" class="result-data"><%= event.Hours %>,</span> 
+													&nbsp;
+													<span class="glyphicon glyphicon-map-marker"></span> 
+													<span>Διεύθυνση: </span>
+													<span id="adress-data" class="result-data"><%= event.Address %>,</span>
+													&nbsp;
+													<span class="glyphicon glyphicon-briefcase"></span>
+													<span >Πάροχος: </span>
+													<span id="provider-data" class="result-data"><%= event.Provider %>,</span> 
+													&nbsp;
+													<span class="glyphicon glyphicon-signal"></span>
+													<span >Ηλικίες: </span>
+													<span id="age-data" class="result-data"><%= event.Ages %>,</span> 
+													&nbsp;
                                                                                         <!-- <span class="glyphicon glyphicon-euro"></span> 
                                                                                         <span>Τιμή: </span>
                                                                                         <span id="price-data" class="result-data">10,</span>
@@ -182,117 +181,121 @@
                                                                                         <span class="glyphicon glyphicon-earphone"></span> 
                                                                                         <span>Τηλέφωνο Επικοινωνίας: </span>
                                                                                         <span id="phone-data" class="result-data"><%= event.PhoneNumber %></span>                                         
-                                                                            </div>
-                                                                            <div class="col-xs-12">
-                                                                                <hr>
-                                                                                    <span class="glyphicon glyphicon-remove"></span> 
-                                                                                    <span>Αρχική Τιμή: </span>
-                                                                                    <span id="price-data" class="result-data"><%= event.InitialPrice %></span>
-                                                                                    &nbsp;
-                                                                                    <span class="glyphicon glyphicon-ok"></span> 
-                                                                                    <span>Τιμή HappyKidz: </span>
-                                                                                    <span id="price-data" class="result-data"><%= event.FinalPrice %></span>
-                                                                                    <!-- <br> -->
-                                                                            </div>
+                                                                                    </div>
+                                                                                    <div class="col-xs-12">
+                                                                                    	<hr>
+                                                                                    	<span class="glyphicon glyphicon-remove"></span> 
+                                                                                    	<span>Αρχική Τιμή: </span>
+                                                                                    	<span id="price-data" class="result-data"><%= event.InitialPrice %></span>
+                                                                                    	&nbsp;
+                                                                                    	<span class="glyphicon glyphicon-ok"></span> 
+                                                                                    	<span>Τιμή HappyKidz: </span>
+                                                                                    	<span id="price-data" class="result-data"><%= event.FinalPrice %></span>
+                                                                                    	<!-- <br> -->
+                                                                                    </div>
                                                                             <!-- <div class="col-xs-10">
                                                                                 <p>20€</p>
                                                                             </div> -->
                                                                         </div>
-                                                                </div>
-                                                    </div>
-                                                <!-- </center> -->
-                                            </div>
-                                            <div class="col-sm-1"></div>
-																						<% }) %>
-                                            <!-- &nbsp; -->
-                                            
-
-                                   
-                                          </div>                        
-                    
-                    
-                    								</div>
-										</div>
-                    <div class="tab-pane fade in well main-well" id="tab3">
-                            <div class="row">
-											<% CurrentEventsList.forEach(function(event){ %>
-                      <div class="col-12 col-xs-12 col-sm-5 col-md-12 col-lg-12" style="border:1px solid #e0e0e0; margin-bottom:20px; border-radius:20px;">
-                                                        <div class="row" style="height: 170px; margin-top: 15px">
-                                                                <div class="col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="text-align: center;">
-                                                                    <img src="<%=event.ImgUrl %>" alt="" style="width:100%; height: 150px;">
-                                                                </div>
-                                                                <div id="info-container" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">   
-                                                                        <div class="row">                            
-                                                                                
-                                                                            <div class="col-12 col-xs-12">
-                                                                                <h3><a href="/events/<%=event.eventId%>"><%= event.Title %></a></h3>
-                                                                            </div>
-                                                                                <div class="col-12 col-xs-12">
-                                                        
-                                                                                            <span class="glyphicon glyphicon-calendar"></span> 
-                                                                                            <span >Ημερομηνία: &nbsp;</span>
-                                                                                            <span id="date-data" class="result-data"><%= event.Date %>,</span>
-                                                        
-                                                                                            <span class="glyphicon glyphicon-time"></span> 
-                                                                                            <span >Ώρα: &nbsp;</span>
-                                                                                            <span id="time-data" class="result-data"><%= event.Hours %>,</span> 
-                                                        
-                                                                                            <span class="glyphicon glyphicon-map-marker"></span> 
-                                                                                            <span>Διεύθυνση: &nbsp;</span>
-                                                                                            <span id="adress-data" class="result-data"><%= event.Address %>,</span>
-                                                        
-                                                                                            <span class="glyphicon glyphicon-briefcase"></span>
-                                                                                            <span >Πάροχος: &nbsp;</span>
-                                                                                            <span id="provider-data" class="result-data"><%= event.Provider %>,</span> 
-                                                        
-                                                                                            <span class="glyphicon glyphicon-signal"></span>
-                                                                                            <span >Ηλικίες: &nbsp;</span>
-                                                                                            <span id="age-data" class="result-data"><%= event.Ages %>,</span> 
-                                                        
-                                                                                            <span class="glyphicon glyphicon-earphone"></span> 
-                                                                                            <span>Τηλέφωνο Επικοινωνίας: &nbsp;</span>
-                                                                                            <span id="phone-data" class="result-data"><%= event.PhoneNumber %></span>                                         
-                                                                                </div>
-                                                                                <div class="col-xs-12">
-                                                                                        <hr>
-                                                                                            <span class="glyphicon glyphicon-remove"></span> 
-                                                                                            <span>Αρχική Τιμή: </span>
-                                                                                            <span id="price-data" class="result-data"><%= event.InitialPrice %></span>
-                                                                                            &nbsp;
-                                                                                            <span class="glyphicon glyphicon-ok"></span> 
-                                                                                            <span>Τιμή HappyKidz: </span>
-                                                                                            <span id="price-data" class="result-data"><%= event.FinalPrice %></span>
-                                                                                    </div>
-
-                                                                                 	<div class="col-xs-12">
-                                                                                 		<div id = "<%= event.BarchartID %>"  style = " height: 40px;"></div>
-                                                                                    </div>
-                                                                            </div>
                                                                     </div>
-                                                        </div>
+                                                                </div>
+                                                                <!-- </center> -->
+                                                            </div>
+                                                            <div class="col-sm-1"></div>
+                                                            <% }) %>
+                                                            <!-- &nbsp; -->
+
+
+
+                                                        </div>                        
+
+
+                                                    </div>
                                                 </div>
-											<% }) %>
+                                                <div class="tab-pane fade in well main-well" id="tab3">
+                                                	<div class="row">
+                                                		<% CurrentEventsList.forEach(function(event){ %>
+                                                		<div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border:1px solid #e0e0e0; margin-bottom:20px; border-radius:20px;">
+                                                			<div class="row" style="height: 170px; margin-top: 15px">
+                                                				<div class="col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="text-align: center;">
+                                                					<img src="<%=event.ImgUrl %>" alt="" style="width:100%; height: 150px;">
+                                                				</div>
+                                                				<div id="info-container" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">   
+                                                					<div class="row">                            
+
+                                                						<div class="col-12 col-xs-12">
+                                                							<h3><a href="/events/<%=event.eventId%>"><%= event.Title %></a></h3>
+                                                						</div>
+                                                						<div class="col-12 col-xs-12">
+
+                                                							<span class="glyphicon glyphicon-calendar"></span> 
+                                                							<span >Ημερομηνία: &nbsp;</span>
+                                                							<span id="date-data" class="result-data"><%= event.Date %>,</span>
+
+                                                							<span class="glyphicon glyphicon-time"></span> 
+                                                							<span >Ώρα: &nbsp;</span>
+                                                							<span id="time-data" class="result-data"><%= event.Hours %>,</span> 
+
+                                                							<span class="glyphicon glyphicon-map-marker"></span> 
+                                                							<span>Διεύθυνση: &nbsp;</span>
+                                                							<span id="adress-data" class="result-data"><%= event.Address %>,</span>
+
+                                                							<span class="glyphicon glyphicon-briefcase"></span>
+                                                							<span >Πάροχος: &nbsp;</span>
+                                                							<span id="provider-data" class="result-data"><%= event.Provider %>,</span> 
+
+                                                							<span class="glyphicon glyphicon-signal"></span>
+                                                							<span >Ηλικίες: &nbsp;</span>
+                                                							<span id="age-data" class="result-data"><%= event.Ages %>,</span> 
+
+                                                							<span class="glyphicon glyphicon-earphone"></span> 
+                                                							<span>Τηλέφωνο Επικοινωνίας: &nbsp;</span>
+                                                							<span id="phone-data" class="result-data"><%= event.PhoneNumber %></span>                                         
+                                                						</div>
+                                                						<div class="col-xs-12">
+                                                							<hr>
+                                                							<span class="glyphicon glyphicon-remove"></span> 
+                                                							<span>Αρχική Τιμή: </span>
+                                                							<span id="price-data" class="result-data"><%= event.InitialPrice %></span>
+                                                							&nbsp;
+                                                							<span class="glyphicon glyphicon-ok"></span> 
+                                                							<span>Τιμή HappyKidz: </span>
+                                                							<span id="price-data" class="result-data"><%= event.FinalPrice %></span>
+                                                						</div>
+
+                                                						<div class="col-xs-12">
+                                                							<div id = "<%= event.BarchartID %>"  style = " height: 40px;"></div>
+                                                						</div>
+                                                					</div>
+                                                				</div>
+                                                			</div>
+                                                		</div>
+                                                		<% }) %>
+
+                                                	</div>
+                                                </div>
 
                                             </div>
-                    </div>
-                  
-                  </div>
-                </div>
-                
-
-
-
-           
+                                        </div>
 
 
 
 
-                </div>
-                <div class="col-sm-2"></div>
-            </div>
-            
-                
-</body>
+
+
+
+
+
+                                    </div>
+                                    <div class="col-sm-2"></div>
+                                </div>
+
+
+                            </body>
+
+
+
+
 
 
 <script>
@@ -307,26 +310,35 @@ $(document).ready(function() {
         if (this.id == "about-btn"){
             $("#tab1").addClass("active");
             $("#tab2").removeClass("active");
-            $("#tab3").removeClass("active");
-            $("#tab4").removeClass("active");
-            
+            $("#tab3").removeClass("active");        
         }
         else if (this.id == "events-btn"){
             $("#tab2").addClass("active");
             $("#tab1").removeClass("active");
-            $("#tab3").removeClass("active");
-            $("#tab4").removeClass("active");
-            
+            $("#tab3").removeClass("active");         
         }
         else if (this.id == "running-events-btn"){
             $("#tab3").addClass("active");
             $("#tab1").removeClass("active");
-            $("#tab2").removeClass("active");
-            $("#tab4").removeClass("active");
-            
+            $("#tab2").removeClass("active");          
         }
-        
+        else if(this.id == "analytics-btn"){
+            $("#tab3").removeClass("active");
+            $("#tab1").removeClass("active");
+            $("#tab2").removeClass("active");
+        }
 	
+	
+	
+
+
+   
+});
+});
+
+
+
+
 
 
 
@@ -334,4 +346,4 @@ $(document).ready(function() {
 </script>
 
 
-</html>
+    </html>
