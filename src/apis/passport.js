@@ -92,7 +92,7 @@ function(req, email, password, done) {
                     password : bcrypt.hashSync(password,10),
                     description: "",
                     phone: req.body.legalBusinessPhone,
-                    webpage: "", 
+                    webpage: req.body.businessSite, 
                     avgRating: 0, 
                     avatar: "",
                     isVerified: false,

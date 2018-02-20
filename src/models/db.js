@@ -77,7 +77,7 @@ var db = {
 }
 
 //initialize tables if they don't exist
-sequelize.sync({force:true})
+sequelize.sync({force: true})
 .then(() =>seedDB.seedDatabase(db));
 
 
