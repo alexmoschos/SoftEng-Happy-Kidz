@@ -120,7 +120,8 @@ router.get('/:providerId', function(req, res) {
 			});
 		}
 		else {
-			res.send("thats not me");
+			res.send("Coming soon... ");
+
 		}
 	}
 	else {
