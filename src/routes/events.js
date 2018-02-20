@@ -42,12 +42,12 @@ router.get('/:id', function(req, res, next) {
 
                         var startDate = new Date(event.startTime*1000);
                         var imglist = [];
-                        path = './public/files/' + event.eventId + "/";
+                        path = './public/files/events/' + event.eventId + "/";
                         fs.readdir(path, function(err, items) {
                             //console.log(items);
                             if(!err){
                                 for (var i=0; i<items.length; i++) {
-                                    imglist.push('/files/' + event.eventId + '/' + items[i]);
+                                    imglist.push('/files/events/' + event.eventId + '/' + items[i]);
                                 }
                             }
                             if(imglist.length === 0){
@@ -91,7 +91,7 @@ router.get('/:id', function(req, res, next) {
 
 //edw thelei elastic kai sto delete kai sto put
 router.delete('/:eventId', auth.isUserAdmin, function(req, res){
-    eventId = utilities.checkInt(req.params.providerId);
+    eventId = utilities.checkInt(req.params.eventId);
     if (!eventId) { res.render('no_page', {user: req.user});}
 
     db.Event.findById(eventId)
@@ -114,7 +114,7 @@ router.delete('/:eventId', auth.isUserAdmin, function(req, res){
 
 router.put('/:eventId', auth.isUserAdmin, function(req, res){
 
-    eventId = utilities.checkInt(req.params.providerId);
+    eventId = utilities.checkInt(req.params.eventId);
     if (!eventId) { res.render('no_page', {user: req.user});}
 
     db.Event.findById(req.params.eventId)

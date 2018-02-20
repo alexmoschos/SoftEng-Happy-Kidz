@@ -3,19 +3,10 @@ var router = express.Router();
 var passport = require('../apis/passport');
 var db = require('../models/db');
 var auth = require('../apis/authentication');
-var mail = require('../apis/mail')
+var mail = require('../apis/mail');
+var utilities = require('../apis/utilities');
 var bcrypt = require('bcrypt');
 
-
-function makeid(len) {
-  var text = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for (var i = 0; i < len; i++)
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-  return text;
-}
 
 /* GET create event page. */
 router.get('/', function(req, res, next) {
@@ -28,25 +19,25 @@ router.post('/reset', function(req, res, next) {
     var find = auth.findUserByEmail(req.body.email, function(result) {
       if (result){
           //create new random 12 digit password
-          var newPassword = makeid(12);
+          var newPassword = utilities.makeid(12);
           var update = result.user.update({password: bcrypt.hashSync(newPassword,10)});
           update.then( (succ) => {
             //stelnoume mail
             if (succ) {
               var finalRes = mail.sendTextEmail('Αλλαγή Κωδικού', result.user.email, 'Ο νέος σας κωδικός είναι: ' + newPassword);
-              finalRes.then( (info, error) => {
-                if (!error) {
+              finalRes.then( (succ1) => {
+                if (succ1) {
                   res.render('successReset', {user: req.user});
                 }
                 else{
-                  console.log(error);
-                  res.redirect('/');
+                  console.log('error in mail');
+                  res.render('/');
                 }
 
               });
             }
             else{
-              console.log('Shit');
+              console.log('error in update');
               res.redirect('/');
             }
 

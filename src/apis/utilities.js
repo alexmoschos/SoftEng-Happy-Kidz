@@ -1,6 +1,7 @@
+//checks if given input is integer
 function checkInt(x){
 
-	for (i = 0; i < x.length; i++) {
+	for (var i = 0; i < x.length; i++) {
 		var check = isNaN(x.charAt(i));
 		if (check){
 			return false;
@@ -9,8 +10,20 @@ function checkInt(x){
 	return parseInt(x);
 }
 
+//returns a random string of size len
+function makeid(len) {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < len; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
 utilities = {
-	checkInt: checkInt
+	checkInt: checkInt,
+	makeid: makeid
 }
 
 module.exports = utilities;

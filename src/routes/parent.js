@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var db = require('../models/db');
 var auth = require('../apis/authentication');
+var utilities = require('../apis/utilities');
+
 
 
 /* GET parent profile. */
@@ -84,7 +86,10 @@ router.post('/:parentId/settings', function(req, res){
 });
 
 router.delete('/:parentId', auth.isUserAdmin,  function(req, res){
-	db.Parent.findById(req.params.parentId)
+
+	parentId = utilities.checkInt(req.params.parentId);
+
+	db.Parent.findById(parentId)
 	.then( (parent) => {
 		if (parent) {
 			return parent.destroy();

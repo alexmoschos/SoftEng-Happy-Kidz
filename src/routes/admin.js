@@ -8,19 +8,6 @@ var utilities = require('../apis/utilities');
 var auth = require('../apis/authentication');
 
 
-
-
-function makeid(len) {
-  var text = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for (var i = 0; i < len; i++)
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-  return text;
-}
-
-
 router.get('/', auth.isUserAdmin, function(req, res) {
     
 
@@ -62,25 +49,25 @@ router.put('/parent/:parentId/reset', auth.isUserAdmin, function(req, res) {
         if (parent) {
             console.log(parent.name + " password reset");
             //edw prepei na kanoume reset kai na steiloume mail
-            var newPassword = makeid(12);
+            var newPassword = utilities.makeid(12);
             var update = parent.update({password: bcrypt.hashSync(newPassword,10)});
             update.then( (succ) => {
             //stelnoume mail
             if (succ) {
               var finalRes = mail.sendTextEmail('Αλλαγή Κωδικού', parent.email, 'Ο νέος σας κωδικός είναι: ' + newPassword);
-              finalRes.then( (info, error) => {
-                if (!error) {
+              finalRes.then( (succ1) => {
+                if (succ1) {
                   res.redirect('/admin');
                 }
                 else{
-                  console.log(error);
+                  console.log('problem in mail');
                   res.redirect('/failReset');
                 }
 
               });
             }
             else{
-              console.log('Shit');
+              console.log('problem in table update');
               res.redirect('/failReset');
             }
 
@@ -104,25 +91,25 @@ router.put('/provider/:providerId/reset', auth.isUserAdmin, function(req, res) {
     .then( (provider) =>{
         if (provider) {
             console.log(provider.name + " password reset");
-            var newPassword = makeid(12);
+            var newPassword = utilities.makeid(12);
             var update = provider.update({password: bcrypt.hashSync(newPassword,10)});
             update.then( (succ) => {
             //stelnoume mail
             if (succ) {
               var finalRes = mail.sendTextEmail('Αλλαγή Κωδικού', provider.email, 'Ο νέος σας κωδικός είναι: ' + newPassword);
-              finalRes.then( (info, error) => {
-                if (!error) {
+              finalRes.then( (succ1) => {
+                if (succ1) {
                   res.redirect('/admin');
                 }
                 else{
-                  console.log(error);
+                  console.log('error in mail');
                   res.redirect('/failReset');
                 }
 
               });
             }
             else{
-              console.log('Shit');
+              console.log('fail in update');
               res.redirect('/failReset');
             }
 
