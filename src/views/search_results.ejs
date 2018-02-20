@@ -25,38 +25,11 @@
     crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/stylesheets/styles_search.css">
 
-<body>
-    <div id="wrapper">
-        <nav class="navbar navbar-fixed-top navbar-custom" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                        aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/">
-                        <span>
-                            <img src="icon2.png" alt="Party" height="25" width="27">
-                        </span> HappyKidz
-                    </a>
+<link rel="stylesheet" type="text/css" href="/stylesheets/navbar.css">
 
-                </div>
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active">
-                            <a href="/">Home</a>
-                        </li>
-                        <li>
-                            <a href="/search">Events</a>
-                        </li>
-                    </ul>
-                </div>
-                <!--/.nav-collapse -->
-            </div>
-        </nav>
+<body>
+    <%- include partials/navbar.ejs %>
+    <div id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <h3><center>Φίλτρα αναζήτησης</center></h3>
@@ -66,39 +39,38 @@
                 </a>
                 <hr>
                 <div class="search-filters">
-                    <form class="navbar-form" role="search" method="get" action="/search">
+                    <form class="navbar-form" id="filter-form" role="search" method="get" action="/search">
                         <div class="input-group">
                             <label for="Activity">Δραστηριότητα</label>
-                            <input type="text" class="form-control" placeholder="Search" name="q" <%= activity%> >
+                            <input type="text" class="form-control" placeholder="Search" name="q" value="<%= activity%>" >
                         </div>
                         <div class="input-group">
                             <label for="Location">Τοποθεσία</label>
-                            <input type="text" class="form-control" placeholder="Location" name="location"  <%= location %> >
+                            <input type="text" class="form-control" placeholder="Location" name="location"  value="<%= location %>" >
                         </div>
                         <div class="input-group">
                         <label for="Radius">Απόσταση απο τοποθεσία</label>
-                            <input type="number" class="form-control" placeholder="Απόσταση απο τοποθεσία σε χιλιόμετρα" name="radius" <%= radius %> >
+                            <input type="number" class="form-control" placeholder="Απόσταση απο τοποθεσία σε χιλιόμετρα" name="radius" value="<%= radius %>" >
                         </div>
 
                         <div class="form-group">
                             <label for="AgeGroup">Ηλικιακή Ομάδα</label>
-                            <select class="form-control " name="AgeGroup" id="age">
-                                <option value="one">3-5</option>
-                                <option value="two">6-8</option>
-                                <option value="three">9-12</option>
-                                <option value="four">>12</option>
+                            <select class="form-control " name="AgeGroup" id="age" value="<%= ageGroup %>" >
+                                <option value="3">3-5</option>
+                                <option value="6">6-8</option>
+                                <option value="9">9-12</option>
+                                <option value="13">>12</option>
                             </select>
                         </div>
                         <div class="input-group">
                         <label for="PriceRange">Τιμή</label>
                             <!-- <input type="number" class="form-control" placeholder="Minimum Price" name="startPrice"  > -->
-                            <input type="number" class="form-control" placeholder="Maximum Price" name="endPrice" <%= endPrice %> >
+                            <input type="number" class="form-control" placeholder="Maximum Price" name="endPrice" value="<%= endPrice %>" >
                         </div>
 
                         <div class="input-group">
                         <label for="Date">Ημερομηνία</label>
-                            <!-- <input type="date" class="form-control" placeholder="Start Date" name="startDate" <%= startDate %> > -->
-                            <input type="date" class="form-control" placeholder="End Date " name="endDate" <%= endDate %> >
+                            <input type="date" class="form-control" placeholder="End Date " name="endDate" value="<%= endDate %>" >
                         </div>
                         <div class="input-group" style="display: none;">
                         <label for="Date">Page</label>
@@ -134,11 +106,13 @@
                                 </button>
                                 </a>
                                 Σελίδα <%= page %>
+                                <% if (obj.length > 0)  {%>
                                 <a id="next-page">
                                 <button class="btn btn-default" type="submit">
                                     Επομενη σελίδα
                                 </button>
                                 </a>
+                                <% } %>
                             </a>
                             </div>
 
@@ -159,7 +133,7 @@
                                                                         <div class="row">
 
                                                                             <div class="col-12 col-xs-12">
-                                                                                <h3><a href="/events/<%=it.title%> " style="color: #29335c"><%= it.title %></a></h3>
+                                                                                <h3><a href="/events/<%=it.eventId%> " style="color: #29335c"><%= it.title %></a></h3>
                                                                             </div>
                                                                                 <div class="col-12 col-xs-12">
                                                                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -176,7 +150,7 @@
                                                                                             &nbsp;
                                                                                             <span class="glyphicon glyphicon-briefcase"></span>
                                                                                             <span >Πάροχος: </span>
-                                                                                            <span id="provider-data" class="result-data"><a href="/provider_page/"><%= it.providerName %></a>,</span>
+                                                                                            <span id="provider-data" class="result-data"><a href="/provider/<%= it.providerId %>"><%= it.providerName %></a>,</span>
                                                                                             &nbsp;
                                                                                             <span class="glyphicon glyphicon-signal"></span>
                                                                                             <span >Ηλικίες: </span>
@@ -192,10 +166,6 @@
                                                                                 </div>
                                                                                 <div class="col-xs-12">
                                                                                     <hr>
-                                                                                        <span class="glyphicon glyphicon-remove"></span>
-                                                                                        <span>Αρχική Τιμή: </span>
-                                                                                        <span id="price-data" class="result-data"><%=it.startingPrice%></span>
-                                                                                        &nbsp;
                                                                                         <span class="glyphicon glyphicon-ok"></span>
                                                                                         <span>Τιμή HappyKidz: </span>
                                                                                         <span id="price-data" class="result-data"><%=it.finalPrice%></span>
@@ -288,7 +258,7 @@
                             </div>
                         <% }
                         else{ %>
-                            <p>ERROR</p>
+                            <p>Δεν υπάρχουν διαθέσιμα αποτελέσματα</p>
                         <% } %>
                     </div>
                 </div>
@@ -300,17 +270,19 @@
 <script>
     $("#age").val("<%= ageGroup %>").change();
     var page = <%= page %>;
-    // if(page == 0) {
-    //     $("#prev-page").disabled=true;
-    // }
+    
+    $("#filter-apply").click(function (event) {
+        $("#page-changer").val(0).change();
+    });
+
     $("#next-page").click(function(e){
         $("#page-changer").val(page+1).change();
-        $("#filter-apply").click();
+        $("#filter-form").submit();
     });
     $("#prev-page").click(function(e){
         if(page == 0) return;
         $("#page-changer").val(page-1).change();
-        $("#filter-apply").click();
+        $("#filter-form").submit();
     });
     /*Menu-toggle*/
     $("#menu-toggle").click(function (e) {

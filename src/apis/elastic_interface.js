@@ -114,6 +114,12 @@ function createQuery(filters, callback) {
             range: {startTime: {lte: parseInt(filters.max_time)}}
         });
     }
+
+    if (filters.age_group && filters.age_group.length != 0) {
+        query.bool.filter.push({
+            term: {minAge: parseInt(filters.age_group)}
+        });
+    }
   
     if (filters.address && filters.address.length != 0) {
         var dist = '10';
@@ -125,7 +131,7 @@ function createQuery(filters, callback) {
             query.bool.filter.push({
                 geo_distance: {
                         distance: dist + 'km',
-                        location: {
+                        geoLocation: {
                             lat: loc.lat,
                             lon: loc.lng
                         }

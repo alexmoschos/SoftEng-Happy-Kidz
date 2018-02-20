@@ -5,7 +5,7 @@
 
   #sidebar-wrapper {
     margin-left: -250px;
-    top: 51px;
+    top: 100px;
     left: 250px;
     width: 250px;
     background: #ffffff;
@@ -27,7 +27,7 @@
 
   #page-content-wrapper {
     width: 100%;
-    padding-top: 70px;
+    padding-top: 25px;
     transition: all 0.4s ease 0s;
     color:#29335c;
   }

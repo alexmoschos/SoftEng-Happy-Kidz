@@ -2,21 +2,17 @@ var express = require('express');
 var router = express.Router();
 var elastic = require('../apis/elastic_interface');
 var geocoding = require('../apis/geocoding');
-var db = require('../models/db');
 const request = require('request');
 var conf = require('../config');
 var auth = require('../apis/authentication');
 var db = require('../models/db');
 const Sequelize = require('sequelize');
-var auth = require('../apis/authentication');
 
-
-const Op = Sequelize.Op;
-
+const Op = Sequelize.Op;  
 
 /* GET create event page. */
-router.get('/:providerId', function(req, res, next) {
-	var providerId = req.params.providerId;
+router.get('/:id', function(req, res, next) {
+	var providerId = id;
 	console.log(req.user.user.organizerId);
   	db.Organizer.findAll({
 		where: {
@@ -28,7 +24,7 @@ router.get('/:providerId', function(req, res, next) {
 		db.Event.findAll({
 			where: {
 				organizerId: providerId,
-				startTime:{
+				endTime:{
 					[Op.lt]: currtime
 				}
 			}
@@ -48,8 +44,7 @@ router.get('/:providerId', function(req, res, next) {
 				var stringDate = numberdate + "/"+month+"/"+year;
 				PastEventsArray[i]= 
 					{
-					eventId : event.eventId,
-					ImgUrl: "../files/events/"+event.eventId +"/0",
+					ImgUrl: "files/events/"+event.eventId +"/0",
 					Title: event.title,
 					Date: stringDate,
 					Hours: time,
@@ -84,8 +79,7 @@ router.get('/:providerId', function(req, res, next) {
 				var stringDate = numberdate + "/"+month+"/"+year;
 				CurrentEvents[i]= 
 					{
-					eventId : event.eventId,
-					ImgUrl: "../files/events/"+event.eventId +"/0",
+					ImgUrl: "files/events/"+event.eventId +"/0",
 					Title: event.title,
 					Date: stringDate,
 					Hours: time,
@@ -108,8 +102,7 @@ router.get('/:providerId', function(req, res, next) {
 											ProviderPhoneNumber: result.phone,
 											ProviderAddress : "25ης Μαρτίου 10, Βριλήσσια"},
 					PastEventsList: PastEventsArray,
-					CurrentEventsList: CurrentEvents,
-					user: req.user
+					CurrentEventsList: CurrentEvents
 			
 				};
 				res.render('ProviderPage', ProviderInfo);
@@ -118,49 +111,32 @@ router.get('/:providerId', function(req, res, next) {
 	});
 });
 
-/* Create a new provider */
+/* POST create event page */
 router.post('/', function(req, res, next) {
     var event = req.body;
     console.log(event);
-
+    /*geocoding(event.location, function(loc) {
+        event.location = {
+            lat: loc.lat,
+            lon: loc.lng
+        };
+	console.log(event);
+        event.tickets = parseInt(event.tickets);
+        event.price = parseFloat(event.price);
+        event.start_time = parseInt(event.start_time);
+        event.end_time = parseInt(event.end_time);
+	
+        elastic.insert('events', event, function (err, resp, status) {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.send("ok");
+            }
+        });
+    });*/
     res.send("You have submitted an event!");
     
-});
-
-/* Route to delete a provider */
-router.delete('/:providerId', auth.isUserAdmin, function(req, res){
-	providerId = utilities.checkInt(req.params.providerId);
-    if (!providerId) { res.render('no_page', {user: req.user});}
-
-	db.Organizer.findById(providerId)
-	.then( (provider) => {
-		if (provider) {
-			return provider.destroy();
-		} else {
-			res.render('no_page',{user: req.user})
-		}
-	}  )
-	.then( (succ) => res.redirect("/admin") );
-
-});
-
-/* Route to accept a provider */
-
-router.put('/:providerId', auth.isUserAdmin, function(req, res){
-
-	providerId = utilities.checkInt(req.params.providerId);
-    if (!providerId) { res.render('no_page', {user: req.user});}
-	
-    db.Event.findById(providerId)
-    .then( (provider) => {
-        if (provider && provider.isVerified === false) {
-            return provider.update({isVerified: true});
-        }  
-        else {
-                    res.render('no_page', {user: req.user});
-        }
-    })
-    .then ( (succ) => res.redirect("/admin")); 
 });
 
 module.exports = router;
