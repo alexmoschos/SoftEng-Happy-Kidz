@@ -28,7 +28,9 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
-<link rel="stylesheet" href="/stylesheets/styles.css">
+
+<link rel="stylesheet" href="/stylesheets/styles_provider.css">
+
 <link rel="stylesheet" type="text/css" href="/stylesheets/navbar.css">
 
 <%- include partials/navbar.ejs %>
@@ -46,9 +48,9 @@
                 
                 <div class="card hovercard">
 
-                   
-										 <a id="NewEvent-btn" class="btn btn-primary" href="/event_create">New Event</a>
-                   	<a id="Papers" class="btn btn-primary" href="/upload_files" style="float: right;">Submit deko</a>
+                   <!-- moved buttons in personal info tab -->
+										 <!-- <a id="NewEvent-btn" class="btn btn-primary" href="/event_create">New Event</a>
+                   	<a id="Papers" class="btn btn-primary" href="/upload_files" style="float: right;">Submit deko</a> -->
                         <!-- <button id="subscribe-btn" type="button" class="btn btn-primary">Subscribe</button> -->
 <!--                         
                     <div class="card-background">
@@ -61,6 +63,7 @@
                     <div class="card-info"> <span class="card-title">Όνομα παρόχου</span>
             
                     </div> -->
+                    <h2 class="username"><%= PersonalInfo.ProviderName %></h2>
 
 
 
@@ -69,7 +72,7 @@
                 
                 <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
                     <div class="btn-group" role="group">
-                        <button type="button" id="about-btn" class="btn btn-primary"  data-toggle="tab" href="search/#tab1"><i class="fa fa-info-circle" aria-hidden="true"></i>
+                        <button type="button" id="about-btn" class="btn btn-info"  data-toggle="tab" href="search/#tab1"><i class="fa fa-info-circle" aria-hidden="true"></i>
                             
                             <div class="hidden-xs">Γενικές πληροφορίες</div>
                         </button>
@@ -133,6 +136,8 @@
                                             <%= PersonalInfo.ProviderAddress %>
                                         </span>
                                     </div>
+                                    <a   id="NewEvent-btn" href="/event_create" class="btn btn-info btn-md ">Προσθήκη νέου event</a>
+                                    <a id="Papers" class="btn btn-info btn-md" href="/upload_files" style="float: right;">Submit deko</a>
                                 </div>
 
                     </div>
@@ -242,6 +247,7 @@
                     								</div>
 										</div>
                     <div class="tab-pane fade in well main-well" id="tab3">
+                            <div class="row">
 											<% CurrentEventsList.forEach(function(event){ %>
                       <div class="col-12 col-xs-12 col-sm-5 col-md-12 col-lg-12" style="border:1px solid #e0e0e0; margin-bottom:20px; border-radius:20px;">
                                                         <div class="row" style="height: 170px; margin-top: 15px">
@@ -300,7 +306,7 @@
                                                 </div>
 											<% }) %>
 
-                       
+                                            </div>
                     </div>
                     <div class="tab-pane fade in well main-well col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12"  id="tab4">  
                     	<div class="panel-body">
@@ -344,41 +350,41 @@
 
 <script>
 $(document).ready(function() {
-$(".btn-pref .btn").click(function () {
-    $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
-
-    //  $(".tab").addClass("active"); // instead of this do the below 
-    $(this).removeClass("btn-default").addClass("btn-primary");   
-
-
-    if (this.id == "about-btn"){
-        $("#tab1").addClass("active");
-        $("#tab2").removeClass("active");
-        $("#tab3").removeClass("active");
-        $("#tab4").removeClass("active");
-        
-    }
-    else if (this.id == "events-btn"){
-        $("#tab2").addClass("active");
-        $("#tab1").removeClass("active");
-        $("#tab3").removeClass("active");
-        $("#tab4").removeClass("active");
-        
-    }
-    else if (this.id == "running-events-btn"){
-        $("#tab3").addClass("active");
-        $("#tab1").removeClass("active");
-        $("#tab2").removeClass("active");
-        $("#tab4").removeClass("active");
-        
-    }
-    else if(this.id == "analytics-btn"){
-    	$("#tab4").addClass("active");
-    	$("#tab3").removeClass("active");
-        $("#tab1").removeClass("active");
-        $("#tab2").removeClass("active");
-
-    }
+    $(".btn-pref .btn").click(function () {
+        $(".btn-pref .btn").removeClass("btn-info").addClass("btn-default");
+    
+        //  $(".tab").addClass("active"); // instead of this do the below 
+        $(this).removeClass("btn-default").addClass("btn-info");   
+    
+    
+        if (this.id == "about-btn"){
+            $("#tab1").addClass("active");
+            $("#tab2").removeClass("active");
+            $("#tab3").removeClass("active");
+            $("#tab4").removeClass("active");
+            
+        }
+        else if (this.id == "events-btn"){
+            $("#tab2").addClass("active");
+            $("#tab1").removeClass("active");
+            $("#tab3").removeClass("active");
+            $("#tab4").removeClass("active");
+            
+        }
+        else if (this.id == "running-events-btn"){
+            $("#tab3").addClass("active");
+            $("#tab1").removeClass("active");
+            $("#tab2").removeClass("active");
+            $("#tab4").removeClass("active");
+            
+        }
+        else if(this.id == "analytics-btn"){
+            $("#tab4").addClass("active");
+            $("#tab3").removeClass("active");
+            $("#tab1").removeClass("active");
+            $("#tab2").removeClass("active");
+    
+        }
 	
 	var charts = [], datas = [], ops = [];
     $.getJSON("/booked_seats",function(response){
