@@ -4,123 +4,87 @@ var db = require('../models/db');
 const Sequelize = require('sequelize');
 var auth = require('../apis/authentication');
 
-// var ratings= [
-//     {name: "John", content:"It sucks", rating:2},
-//     {name: "John", content:"It sucks", rating:3},
-//     {name: "John", content:"It sucks", rating:5},
-//     {name: "John", content:"It sucks", rating:4},
-//     {name: "John", content:"It sucks", rating:0},
-//     {name: "John", content:"It sucks", rating:1},
-// ]
 
+
+
+var fs = require('fs');
 
 
 router.get('/:id', function(req, res, next) {
-    console.log(req.params.id);
-    db.Event.findAll({
-        where: {
-            eventId:  parseInt(req.params.id)
-        }
-    }).then(events => {
-        //console.log(events);
-        var event = events[0];
-        db.Organizer.findAll({
-            where : {
-                organizerId : parseInt(event.organizerId)
+    //console.log(req.params.id);
+    if(!isNaN(req.params.id) && req.params.id == parseInt(req.params.id)){
+        req.params.id = parseInt(req.params.id);
+        db.Event.findById(req.params.id).then(event => {
+            if( event == null ) {
+                res.render('no_page');
+                return;
             }
-        }).then(providers => {
-            var provider = providers[0];
-            const reviews = db.Review.findAll({
-                where : {
-                    eventId : parseInt(req.params.id)
-                }
-            }).then(reviews => {
-                console.log("I have entered");
-                console.log(reviews);
-                var ratings = [];
-                //DUMMY OBJECT
-                reviews = [
-                    {
-                        parentId : 1,
-                        text : "42",
-                        rating : 4
-                    },
-                    {
-                        parentId : 1,
-                        text : "42",
-                        rating : 4
-                    },
-                    {
-                        parentId : 1,
-                        text : "42",
-                        rating : 4
-                    },
-                ]
-                var promises = [];
-                reviews.forEach(review => {
-                    promises.push( db.Parent.findAll({
-                        where : {
-                            parentId : review.parentId
-                        }
-                    }).then(parent => {
-                        console.log("HERE");
-                        ratings.push({
-                            name : parent[0].name,
-                            content : review.text,
-                            rating : review.rating
-                        });
-                    }) )
-                });
-                console.log(promises);
-                Promise.all(promises).then(function() {
-                    var startDate = new Date(event.startTime*1000);
-                    var imglist = [];
-                    obj = {
-                        title : event.title,
-                        date : startDate.toLocaleDateString(),
-                        time : startDate.toLocaleTimeString(),
-                        address : event.geoAddress,
-                        geolon : event.geoLon,
-                        geolat: event.geoLat,
-                        providerName: provider.name,
-                        startingPrice : event.ticketPrice * 100 / (100 - event.discount),
-                        finalPrice: event.ticketPrice,
-                        phone: provider.phone,
-                        agegroups: event.minAge + "-" + (event.minAge + 2).toString(),
-                        description: event.description,
-                        images: imglist,
-                        eventId: req.params.id,
-                        ticketCount: event.ticketCount,
-                        ratings
+            //Increment the event clickNumber for provider statistics
+            event.increment('clickNumber',{by : 1});
+            db.Organizer.findById(event.organizerId).then(provider => {
+                const reviews = db.Review.findAll({
+                    where : {
+                        eventId : req.params.id
                     }
-                    console.log(obj);
-                    res.render('events',obj);
+                }).then(reviews => {
+                    var ratings = [];
+                    var promises = [];
+                    reviews.forEach(review => {
+                        promises.push( db.Parent.findById(review.parentId).then(parent => {
+                            ratings.push({
+                                name : parent.name,
+                                content : review.text,
+                                rating : review.rating
+                            });
+                        }));
+                    });
+                    Promise.all(promises).then(function() {
+
+                        var startDate = new Date(event.startTime*1000);
+                        var imglist = [];
+                        path = './public/files/' + event.eventId + "/";
+                        fs.readdir(path, function(err, items) {
+                            //console.log(items);
+                            if(!err){
+                                for (var i=0; i<items.length; i++) {
+                                    imglist.push('/files/' + event.eventId + '/' + items[i]);
+                                }
+                            }
+                            if(imglist.length === 0){
+                                console.log(42);
+                                imglist.push('/happy.png');
+                            }
+                            obj = {
+                                eventId : event.eventId,
+                                organizerId : event.organizerId,
+                                title : event.title,
+                                date : startDate.toLocaleDateString(),
+                                time : startDate.toLocaleTimeString(),
+                                address : event.geoAddress,
+                                geolon : event.geoLon,
+                                geolat: event.geoLat,
+                                providerName: provider.name,
+                                startingPrice : (event.ticketPrice * 100 / (100 - event.discount)).toFixed(2),
+                                finalPrice: event.ticketPrice.toFixed(2),
+                                phone: provider.phone,
+                                agegroups: event.minAge + "-" + (event.minAge + 2).toString(),
+                                description: event.description,
+                                ticketCount : event.ticketCount,
+                                images: imglist,
+                                ratings,
+                                user : req.user
+                            };
+                            res.render('events',obj);
+                        });
+
+                    });
                 });
-
             });
-
-
-
-        })
-    });
-    console.log("Something went wrong");
-    // obj={
-    //     title: "Alex Kalom",
-    //     date: "14/12/1999",
-    //     time: "14:49",
-    //     address: "Iroon Polutexneiou 1 Athens",
-    //     geolon: 23.7349,
-    //     geolat: 37.9755,
-    //     providerName: "Kostis Sagonas",
-    //     startingPrice : "42",
-    //     finalPrice: "24",
-    //     phone: "6982532427086",
-    //     agegroups:"16-21",
-    //     description: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt eius ut, quod consectetur laboriosam incidunt Ipsa iure, voluptate ipsam molestiae obcaecati quis fugit? Quae distinctio asperiores iusto voluptatumvoluptatibus aliquam Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt eius ut, quod consectetur laboriosam incidunt?",
-    //     images: ["https://i.ndtvimg.com/i/2016-11/sleeping_620x350_51479727691.jpg","url2","url3"],
-    //     ratings
-    // }
-    //res.render('events',obj);
+        });
+    } else {
+        console.log(42);
+        res.render('no_page');
+    }
 });
 
 /* Route to delete an event */
@@ -135,10 +99,11 @@ router.delete('/:eventId', auth.isUserAdmin, function(req, res){
         if (event && event.isVerified === false) {
             return event.destroy();
         } else {
-                    res.render('no_page', {user: req.user});
+            res.render('no_page', {user: req.user});
         }
-    }  )
-    .then( (succ) => res.redirect("/admin") );
+    }).then( (succ) =>
+    res.redirect("/admin")
+    );
 
 });
 
@@ -156,12 +121,13 @@ router.put('/:eventId', auth.isUserAdmin, function(req, res){
     .then( (event) => {
         if (event && event.isVerified === false) {
             return event.update({isVerified: true});
-        }  
+        }
         else {
-                    res.render('no_page', {user: req.user});
+            res.render('no_page', {user: req.user});
+
         }
     })
-    .then ( (succ) => res.redirect("/admin")); 
+    .then ( (succ) => res.redirect("/admin"));
 
 });
 
