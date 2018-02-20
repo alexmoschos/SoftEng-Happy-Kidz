@@ -16,7 +16,13 @@ function seedDatabase(db) {
             }
         }).catch(err => { console.log(err); });
     });
-    var parentobj = [];
+    var parentobj = [{
+        name : 'Γιωργης',
+        email : 'george@example.com',
+        password : bcrypt.hashSync('123456',10),
+        wallet: 0,
+        mailNotifications : false
+    }];
     for(var i = 0; i < 15; ++i){
         parentobj.push(
             {
@@ -145,6 +151,29 @@ function seedDatabase(db) {
             });
         }
     }
+    membershipobj = [{
+        parentId: 1,
+        startDate: Math.floor(Date.now() / 1000),
+        expiryDate: Math.floor(Date.now() / 1000 + 36000),
+        membershipTier: 1,
+        maxTicketsPerEvent: 100
+    },
+    {
+        parentId: 2,
+        startDate: Math.floor(Date.now() / 1000),
+        expiryDate: Math.floor(Date.now() / 1000 + 36000),
+        membershipTier: 1,
+        maxTicketsPerEvent: 100
+    }]
+    for(var i = 3; i < 15; i+=2){
+        membershipobj.push ({
+            parentId: i,
+            startDate: Math.floor(Date.now() / 1000),
+            expiryDate: Math.floor(Date.now() / 1000 + 36000),
+            membershipTier: getRandomInt(1,3),
+            maxTicketsPerEvent: 100
+        })
+    }
     //console.log(reviewobj);
     db.Parent.bulkCreate(parentobj)
         .then((succ) => db.Organizer.bulkCreate(providerobj))
@@ -202,22 +231,7 @@ function seedDatabase(db) {
                 });
 
             })
-        .then((succ) => db.Membership.bulkCreate(
-            [{
-                parentId: 1,
-                startDate: Math.floor(Date.now() / 1000),
-                expiryDate: Math.floor(Date.now() / 1000 + 36000),
-                membershipTier: 1,
-                maxTicketsPerEvent: 100
-            },
-            {
-                parentId: 2,
-                startDate: Math.floor(Date.now() / 1000),
-                expiryDate: Math.floor(Date.now() / 1000 + 36000),
-                membershipTier: 1,
-                maxTicketsPerEvent: 100
-            }]
-        ))
+        .then((succ) => db.Membership.bulkCreate(membershipobj))
         .catch((err) => console.log(err));
 
 }

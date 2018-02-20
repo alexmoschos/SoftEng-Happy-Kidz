@@ -47,27 +47,8 @@
                 
                 
                 <div class="card hovercard">
-
-                   <!-- moved buttons in personal info tab -->
-										 <!-- <a id="NewEvent-btn" class="btn btn-primary" href="/event_create">New Event</a>
-                   	<a id="Papers" class="btn btn-primary" href="/upload_files" style="float: right;">Submit deko</a> -->
-                        <!-- <button id="subscribe-btn" type="button" class="btn btn-primary">Subscribe</button> -->
-<!--                         
-                    <div class="card-background">
-                        <img class="card-bkimg" alt="provider-logo" src="happy.png">
-                       
-                    </div>
-                    <div class="useravatar">
-                        <img id="circle-logo" alt="provider-logo" src="happy2.png">
-                    </div>
-                    <div class="card-info"> <span class="card-title">Όνομα παρόχου</span>
-            
-                    </div> -->
                     <h2 class="username"><%= PersonalInfo.ProviderName %></h2>
-
-
-
-                   
+              
                 </div>
                 
                 <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
@@ -89,12 +70,7 @@
                             <div class="hidden-xs">Τρέχοντα Events</div>
                         </button>
                     </div>
-                    <div class="btn-group" role="group">
-                        <button type="button" id="analytics-btn" class="btn btn-default" href="search/#tab4" data-toggle="tab"><i class="fa fa-bar-chart" aria-hidden="true"></i>
-                            
-                            <div class="hidden-xs">Στατιστικά Στοιχεία</div>
-                        </button>
-                    </div>
+                    
                 </div>
             
              
@@ -230,15 +206,6 @@
 																						<% }) %>
                                             <!-- &nbsp; -->
                                             
-                                            
-                                            
-
-
-
-
-
-
-
 
                                    
                                           </div>                        
@@ -308,27 +275,7 @@
 
                                             </div>
                     </div>
-                    <div class="tab-pane fade in well main-well col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12"  id="tab4">  
-                    	<div class="panel-body">
-                    		<form >
-                    	
-                    			<div class="form-group col-md-6 col-sm-6">
-	    		        			<label for="event-name">Από:  </label>
-    	        					<input type="date" name = "from" class="form-control input-sm" id="from-date" value="2018-01-01">
-    							</div>
-    							<div class="form-group col-md-6 col-sm-6">
-	    		        			<label for="event-name">Έως: </label>
-    	        					<input type="date" name = "to" class="form-control input-sm" id="to-date" value="2018-03-01">
-    							</div>
-    							<button  type = "button" id = "StatisticsButton" class="btn btn-default">Εφαρμογή </button>
-    						
-                    		</form>
-                    	</div>
-                    	         	
-                    	<div  id="piechart"  style = " height: 500px;"></div>	
-                    	<div  id="piechart2"  style = " height: 500px;"></div>
-                        <div id = "chart_div" style="height: 500px;"></div>
-                    </div>
+                  
                   </div>
                 </div>
                 
@@ -378,125 +325,8 @@ $(document).ready(function() {
             $("#tab4").removeClass("active");
             
         }
-        else if(this.id == "analytics-btn"){
-            $("#tab4").addClass("active");
-            $("#tab3").removeClass("active");
-            $("#tab1").removeClass("active");
-            $("#tab2").removeClass("active");
-    
-        }
+        
 	
-	var charts = [], datas = [], ops = [];
-    $.getJSON("/booked_seats",function(response){
-		CurrentEventsList = response.CurrentEventsList;
-		google.charts.load('current', {'packages':['corechart']});
-      		google.charts.setOnLoadCallback(drawChart);
-		function drawChart() {
-			CurrentEventsList.forEach(function(event){
-				var data = google.visualization.arrayToDataTable(event.ChartData);
-				var options = event.ChartOptions;
-				datas.push(data);
-				ops.push(options);
-				var chart = new google.visualization.BarChart(document.getElementById(event.BarchartID));
-				chart.draw(data, options);
-				charts.push(chart);
-			});
-		}
-		
-	});
-				
-	var data, data2,chart,chart2,options,options2;		
-    $.getJSON("/chart_data",            //we load the data for the default values of from-date and to-date
-            { from : $("#from-date")[0].value,
-              to : $("#to-date")[0].value
-            },      
-            function(response){
-                setTimeout(function () {
-                    data = google.visualization.arrayToDataTable(response.TopicChart.Data);
-                    data2 = google.visualization.arrayToDataTable(response.AgesChart.Data);
-                    var width = .6 * window.innerWidth;
-                    var height = .8 * window.innerHeight;
-                    options = response.TopicChart.Options;
-                    options2 = response.AgesChart.Options;
-                    chart = new google.visualization.PieChart(document.getElementById('piechart'));
-                    chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
-                    chart.draw(data, options);
-                    chart2.draw(data2, options2);
-                },3000); //we wait for 3 seconds in order for google visualization to load properly
-            }, false);
-	
-	$("#StatisticsButton").click(function(){
-		
-		console.log($("#from-date")[0].value);
-		console.log($("#to-date")[0].value);
-		$.getJSON("/chart_data",
-			{ from : $("#from-date")[0].value,
-			  to : $("#to-date")[0].value
-			},		
-			function(response){
-                console.log(response.TopicChart.Data);
-				data = google.visualization.arrayToDataTable(response.TopicChart.Data);
-				data2 = google.visualization.arrayToDataTable(response.AgesChart.Data);
-        			var width = .6 * window.innerWidth;
-    				var height = .8 * window.innerHeight;
-	    			options = response.TopicChart.Options;
-				    options2 = response.AgesChart.Options;
-        			chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        			chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
-	        		chart.draw(data, options);
-        			chart2.draw(data2, options2);
-				
-			}, false);
-	});
-    var chart3,data3,options3;
-    $.getJSON("/chart_data/bar_chart",function(response){
-
-        google.charts.load('current', {packages: ['corechart', 'bar']});
-        google.charts.setOnLoadCallback(drawBasic);
-
-        function drawBasic() {
-
-              data3 = new google.visualization.DataTable();
-              data3.addColumn('string', 'Title');
-              data3.addColumn('number', 'Number of clicks');
-              data3.addRows(response.Rows);
-
-              var options3 = {
-                title: 'Most Popular Events',
-                hAxis: {
-                  title: 'Title',
-                  viewWindow: {
-                    min: [7, 30, 0],
-                    max: [17, 30, 0]
-                  }
-                },
-                vAxis: {
-                  title: 'Clicks'
-                }
-              };
-
-              chart3 = new google.visualization.ColumnChart(
-                document.getElementById('chart_div'));
-
-              chart3.draw(data3, options3);
-              window.onresize = drawBasic;
-            }
-    });
-    window.addEventListener('resize', function() {
-            chart.draw(data, options);
-            chart2.draw(data2,options2);
-            chart3.draw(data3,options3);
-            for(var i=0;i<charts.length;i++){
-                            charts[i].draw(datas[i],ops[i]);
-                    }
-        },false);
-
-});
-});
-
-
-
-
 
 
 

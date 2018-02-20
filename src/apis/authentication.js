@@ -91,10 +91,24 @@ function isUserParentId(req, res, next) {
     }
 }
 
+
 function isUserOrganizer(req, res, next) {
     if (req.isAuthenticated() && req.user.type === 'organizer')
         return next();
     return res.render('no_page');
+}
+
+function isUserOrganizerId(req, res, next) {
+    if (req.isAuthenticated()) {
+        if ((req.user.type === 'organizer') && (req.user.user.organizerId === req.params.id)) {
+                return next();
+        } else {
+            // HTTP Code 403
+            res.send('Access Denied');
+        }
+    } else {
+        res.redirect('/login');
+    }
 }
 
 function isUserAdmin(req, res, next) {
@@ -134,6 +148,7 @@ var auth = {
     isUserParent: isUserParent,
     isUserParentId: isUserParentId,
     isUserOrganizer: isUserOrganizer,
+    isUserOrganizerId: isUserOrganizerId,
     isUserAdmin: isUserAdmin,
     isUserMemberParent: isUserMemberParent,
     isUserVerifiedOrganizer: isUserVerifiedOrganizer

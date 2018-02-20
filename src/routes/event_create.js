@@ -8,7 +8,7 @@ var fs = require('fs');
 var conf = require('../config');
 var auth = require('../apis/authentication');
 var db = require('../models/db');
-var watermark = require('../apis/watermark/watermark.js');
+var watermark = require('watermarkmodule');
 
 var info = {};
 
