@@ -151,27 +151,6 @@ router.post('/', auth.isUserVerifiedOrganizer,  function(req, res, next) {
                 }
             }
 
-            //for now we should also add the newEvent to elasticSearch.
-            newEvent.geoLocation = {
-                lat: newEvent.geoLat,
-                lon: newEvent.geoLon
-            };
-            delete newEvent.geoLat;
-            delete newEvent.geoLon;
-
-            newEvent.providerName = req.user.user.name;
-            newEvent.providerPhone = req.user.user.phone;
-            newEvent.eventId = event.eventId.toString();
-
-            elastic.insert('events', newEvent, function( err, resp, status){
-                if (err) {
-                    console.log(err);
-                }
-                else {
-                    console.log("insertion to elastic completed");
-                }
-            });
-
             res.redirect('/provider/' + req.user.user.organizerId);
 
         }).catch(err => {
