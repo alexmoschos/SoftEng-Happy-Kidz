@@ -1,10 +1,70 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('../apis/passport');
+var db = require('../models/db');
+var auth = require('../apis/authentication');
+var mail = require('../apis/mail')
+var bcrypt = require('bcrypt');
+
+
+function makeid(len) {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < len; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
 
 /* GET create event page. */
 router.get('/', function(req, res, next) {
-    res.render('login', {});
+    res.render('login', {user: req.user});
+});
+
+router.post('/reset', function(req, res, next) {
+
+  if (typeof req.body.email === 'string' || req.body.email instanceof String){
+    var find = auth.findUserByEmail(req.body.email, function(result) {
+      if (result){
+          //create new random 12 digit password
+          var newPassword = makeid(12);
+          var update = result.user.update({password: bcrypt.hashSync(newPassword,10)});
+          update.then( (succ) => {
+            //stelnoume mail
+            if (succ) {
+              var finalRes = mail.sendTextEmail('Αλλαγή Κωδικού', result.user.email, 'Ο νέος σας κωδικός είναι: ' + newPassword);
+              finalRes.then( (info, error) => {
+                if (!error) {
+                  res.render('successReset', {user: req.user});
+                }
+                else{
+                  console.log(error);
+                  res.redirect('/');
+                }
+
+              });
+            }
+            else{
+              console.log('Shit');
+              res.redirect('/');
+            }
+
+          });
+        }
+        else {
+          res.render('failReset',{user: req.user});
+        }
+      }
+      , console.log);
+  }
+  else{
+    res.redirect('failReset',{user: req.user});
+  }
+});
+
+router.get('/reset', function(req, res, next) {
+  res.render('loginReset', {user: req.user});
 });
 
 router.post('/', function(req, res, next) {
@@ -13,7 +73,7 @@ router.post('/', function(req, res, next) {
         return next(err); // will generate a 500 error
       }
       if (!user) {
-        return res.status(409).render('login', {errMsg: info.errMsg});
+        return res.status(409).render('login', {errMsg: info.errMsg, user: req.user});
       }
       req.login(user, function(err){
         if(err){

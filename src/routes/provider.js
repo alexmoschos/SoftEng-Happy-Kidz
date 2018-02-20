@@ -8,8 +8,11 @@ var conf = require('../config');
 var auth = require('../apis/authentication');
 var db = require('../models/db');
 const Sequelize = require('sequelize');
+var auth = require('../apis/authentication');
+
 
 const Op = Sequelize.Op;
+
 
 /* GET create event page. */
 router.get('/', function(req, res, next) {
@@ -122,13 +125,16 @@ router.post('/', function(req, res, next) {
 });
 
 /* Route to delete a provider */
-router.delete('/:providerId', function(req, res){
-	db.Organizer.findById(req.params.providerId)
+router.delete('/:providerId', auth.isUserAdmin, function(req, res){
+	providerId = utilities.checkInt(req.params.providerId);
+    if (!providerId) { res.render('no_page', {user: req.user});}
+
+	db.Organizer.findById(providerId)
 	.then( (provider) => {
 		if (provider) {
 			return provider.destroy();
 		} else {
-			res.send('No such user!')
+			res.render('no_page',{user: req.user})
 		}
 	}  )
 	.then( (succ) => res.redirect("/admin") );
@@ -137,15 +143,18 @@ router.delete('/:providerId', function(req, res){
 
 /* Route to accept a provider */
 
-router.put('/:providerId', function(req, res){
+router.put('/:providerId', auth.isUserAdmin, function(req, res){
+
+	providerId = utilities.checkInt(req.params.providerId);
+    if (!providerId) { res.render('no_page', {user: req.user});}
 	
-    db.Event.findById(req.params.providerId)
+    db.Event.findById(providerId)
     .then( (provider) => {
         if (provider && provider.isVerified === false) {
             return provider.update({isVerified: true});
         }  
         else {
-            res.send('No such provider!')
+                    res.render('no_page', {user: req.user});
         }
     })
     .then ( (succ) => res.redirect("/admin")); 

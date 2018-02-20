@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var db = require('../models/db');
 const Sequelize = require('sequelize');
+var auth = require('../apis/authentication');
+
 // var ratings= [
 //     {name: "John", content:"It sucks", rating:2},
 //     {name: "John", content:"It sucks", rating:3},
@@ -10,6 +12,7 @@ const Sequelize = require('sequelize');
 //     {name: "John", content:"It sucks", rating:0},
 //     {name: "John", content:"It sucks", rating:1},
 // ]
+
 
 
 router.get('/:id', function(req, res, next) {
@@ -121,13 +124,16 @@ router.get('/:id', function(req, res, next) {
 /* Route to delete an event */
 
 //edw thelei elastic kai sto delete kai sto put
-router.delete('/:eventId', function(req, res){
-    db.Event.findById(req.params.eventId)
+router.delete('/:eventId', auth.isUserAdmin, function(req, res){
+    eventId = utilities.checkInt(req.params.providerId);
+    if (!eventId) { res.render('no_page', {user: req.user});}
+
+    db.Event.findById(eventId)
     .then( (event) => {
         if (event && event.isVerified === false) {
             return event.destroy();
         } else {
-            res.send('No such event!')
+                    res.render('no_page', {user: req.user});
         }
     }  )
     .then( (succ) => res.redirect("/admin") );
@@ -139,7 +145,10 @@ router.delete('/:eventId', function(req, res){
 //edw thelei elastic kai sto delete kai sto put
 
 
-router.put('/:eventId', function(req, res){
+router.put('/:eventId', auth.isUserAdmin, function(req, res){
+
+    eventId = utilities.checkInt(req.params.providerId);
+    if (!eventId) { res.render('no_page', {user: req.user});}
 
     db.Event.findById(req.params.eventId)
     .then( (event) => {
@@ -147,7 +156,7 @@ router.put('/:eventId', function(req, res){
             return event.update({isVerified: true});
         }  
         else {
-            res.send('No such event!')
+                    res.render('no_page', {user: req.user});
         }
     })
     .then ( (succ) => res.redirect("/admin")); 

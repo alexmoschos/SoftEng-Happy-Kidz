@@ -2,83 +2,136 @@ var express = require('express');
 var router = express.Router();
 var db = require('../models/db');
 var mail = require('../apis/mail');
-var nodeMailer = require('nodemailer');
+var auth = require('../apis/authentication');
+var bcrypt = require('bcrypt');
+var utilities = require('../apis/utilities');
+var auth = require('../apis/authentication');
 
 
 
-router.get('/', function(req, res, next) {
+
+function makeid(len) {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < len; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
+
+router.get('/', auth.isUserAdmin, function(req, res) {
     
 
 
-    // db.Parent.findAll()
-    // .then( (parents) => parents.forEach( (parent) => console.log(parent.name) )
-    // );
+    db.Parent.findAll()
+    .then( (parents) => parents.forEach( (parent) => console.log(parent.name) )
+    );
 
-    // var promise1 = db.Parent.findAll();
-    // var promise2 = db.Organizer.findAll();
-    // var promise3 = db.Event.findAll({
-    //     where: {
-    //         isVerified: false
-    //     }
-    // });
-    // /* test gia na doume an itan swsto to accept */
-    // //var promise3 = db.Event.findAll();
-
-    // var obj;
-
-    // Promise.all([promise1,promise2,promise3])
-    // .then( (values) => {
-    //         obj = { user: values[0], provider: values[1], event: values[2]};
-    //         res.render('admin',obj);
-    // });
-
-
-    var promise = mail.sendTextEmail('geia sou','gvelegkas41@gmail.com', 'eimai ena mail');
-
-    promise.then( (error, succ) => {
-        if (error) {
-            console.log('Error');
-            console.error(error);
-            res.redirect('/search');
-
+    var promise1 = db.Parent.findAll();
+    var promise2 = db.Organizer.findAll();
+    var promise3 = db.Event.findAll({
+        where: {
+            isVerified: false
         }
-        else{
-            res.redirect('/');
-        }
-
     });
+    /* test gia na doume an itan swsto to accept */
+    //var promise3 = db.Event.findAll();
+
+    var obj;
+
+    Promise.all([promise1,promise2,promise3])
+    .then( (values) => {
+            obj = { parent: values[0], provider: values[1], event: values[2], user: req.user};
+            res.render('admin',obj);
+    });
+
+
 
 });
 
 // ******************** Reset passwords, isws meta mpei san put sto antistoixo object //
-router.put('/parent/:parentId/reset', function(req, res, next) {
+router.put('/parent/:parentId/reset', auth.isUserAdmin, function(req, res) {
 
-    db.Parent.findById(req.params.parentId)
+    parentId = utilities.checkInt(req.params.parentId);
+    if (!parentId) { res.render('no_page', {user: req.user});}
+
+    db.Parent.findById(parentId)
     .then( (parent) =>{
         if (parent) {
             console.log(parent.name + " password reset");
             //edw prepei na kanoume reset kai na steiloume mail
-            res.redirect("/admin");
+            var newPassword = makeid(12);
+            var update = parent.update({password: bcrypt.hashSync(newPassword,10)});
+            update.then( (succ) => {
+            //stelnoume mail
+            if (succ) {
+              var finalRes = mail.sendTextEmail('Αλλαγή Κωδικού', parent.email, 'Ο νέος σας κωδικός είναι: ' + newPassword);
+              finalRes.then( (info, error) => {
+                if (!error) {
+                  res.redirect('/admin');
+                }
+                else{
+                  console.log(error);
+                  res.redirect('/failReset');
+                }
+
+              });
+            }
+            else{
+              console.log('Shit');
+              res.redirect('/failReset');
+            }
+
+          });
+
+            // res.redirect("/admin");
         }
         else {
-            res.send("no such parent!");
+            res.render('no_page',{user: req.user});
         }
 
     });
 });
 
-router.put('/provider/:providerId/reset', function(req, res, next) {
+router.put('/provider/:providerId/reset', auth.isUserAdmin, function(req, res) {
 
-    db.Organizer.findById(req.params.providerId)
+    providerId = utilities.checkInt(req.params.providerId);
+    if (!providerId) { res.render('no_page', {user: req.user});}
+
+    db.Organizer.findById(providerId)
     .then( (provider) =>{
         if (provider) {
             console.log(provider.name + " password reset");
-            //edw prepei na kanoume reset kai na steiloume mail
-            res.redirect("/admin");
+            var newPassword = makeid(12);
+            var update = provider.update({password: bcrypt.hashSync(newPassword,10)});
+            update.then( (succ) => {
+            //stelnoume mail
+            if (succ) {
+              var finalRes = mail.sendTextEmail('Αλλαγή Κωδικού', provider.email, 'Ο νέος σας κωδικός είναι: ' + newPassword);
+              finalRes.then( (info, error) => {
+                if (!error) {
+                  res.redirect('/admin');
+                }
+                else{
+                  console.log(error);
+                  res.redirect('/failReset');
+                }
+
+              });
+            }
+            else{
+              console.log('Shit');
+              res.redirect('/failReset');
+            }
+
+          });
+
 
         }
         else {
-            res.send("no such provider!");
+            res.render('no_page',{user: req.user});
         }
 
     });
@@ -88,42 +141,52 @@ router.put('/provider/:providerId/reset', function(req, res, next) {
 // ******************** View Events, Providers //
 
 
-router.get('/events/:eventId', function(req, res, next) {
+router.get('/events/:eventId', auth.isUserAdmin, function(req, res) {
 
-    db.Event.findById(req.params.eventId)
+    eventId = utilities.checkInt(req.params.eventId);
+    if (!eventId) { res.render('no_page', {user: req.user});}
+
+    db.Event.findById(eventId)
     .then( (event) => {
         if (event) {
-            db.Organizer.findById(event.organizerId)
+            organizerId = utilities.checkInt(event.organizerId);
+            if (!organizerId) { res.render('no_page', {user: req.user});}
+
+            db.Organizer.findById(organizerId)
             .then( (provider) => {
                 if (event && event.isVerified === false) {
                     console.log(event.name + " found event");
                     event.provider = provider;
                     console.log(event);
                     obj = event;
-                    res.render("adminEvent", {obj});
+                    res.render("adminEvent", {obj, user: req.user});;
                     //res.redirect('/admin');
                 }
                 else {
-                    res.send("no such event!");
+                    res.render('no_page', {user: req.user});
                 }
             });
         }
         else {
-            res.send("no such event!");
+                    res.render('no_page', {user: req.user});
         }
     });
 });
 
-router.get('/provider/:providerId', function(req, res, next) {
+router.get('/provider/:providerId', auth.isUserAdmin, function(req, res) {
 
-    db.Organizer.findById(id)
+    providerId = utilities.checkInt(req.params.providerId);
+    if (!providerId) { res.render('no_page', {user: req.user});}
+
+    db.Organizer.findById(providerId)
     .then( (provider) => {
         if (provider) {
             console.log(provider.name + " found provider");
+            provider.user = req.user;
             res.render("adminProvider", provider);
         }
         else {
-            res.send("no such provider!");
+                    res.render('no_page', {user: req.user});
         }
 
     });
