@@ -49,32 +49,32 @@
             <div class="col-md-6 col-sm-12"  >
                 <div class="form-group col-md-12 col-sm-12">
                     <label for="event-name">Τίτλος Event </label>
-                    <input type="text" class="form-control input-sm" id="event-name" name="EventName">
+                    <input type="text" class="form-control input-sm" id="event-name" name="EventName" value="<%= event.title %>">
                 </div>
                 <div class =" form-group col-md-12 col-sm-12">
                     <label for ="categoryName">Κατηγορία Event</label>
                     <select class="form-control col-sm-2" name="categoryName" id="categoryName">
                                 <% categories.forEach(function(category, idx) { %>
-                                    <option value"<%= category %>"><%= category %> </option>
+                                    <option <% if (category === event.categoryName) { %> selected='selected' <% } %> value"<%= category %>"><%= category %> </option>
 
                                 <% }); %>
                         </select>
                 </div>
                 <div class="form-group col-md-12 col-sm-12" >
                     <label for="Description">Περιγραφή Event</label>
-                    <textarea  maxlength = "5000" placeholder="το πολύ 5000 χαρακτήρες" cols = "40" rows = "20" class="form-control input-sm" id="Description" name="Description"></textarea>
+                    <textarea  maxlength = "5000" placeholder="το πολύ 5000 χαρακτήρες" cols = "40" rows = "20" class="form-control input-sm" id="Description" name="Description"><%= event.description %></textarea>
                 </div>
                 <div class="form-group col-md-6 col-sm-6">
                     <label for="event-date">Ημερομηνία </label>
-                    <input type="date" class="form-control input-sm" name="Date" id="event-date" >
+                    <input type="date" class="form-control input-sm" name="Date" id="event-date" <% if (event.startTime) { %> value="<%= new Date(event.startTime * 1000).toISOString().split('T')[0] %>" <% } %>  >
                 </div>
                 <div class="form-group col-md-6 col-sm-6">
                     <label for="AgeGroup">Ηλικιακή Ομάδα Παιδιών</label>
-                    <select class="form-control col-sm-2" name="AgeGroup" id="AgeGroup">
-                                <option value="3">3-5</option>
-                                <option value="6">6-8</option>
-                                <option value="9">9-12</option>
-                                <option value="13">>12</option>
+                    <select class="form-control col-sm-2" name="AgeGroup" id="AgeGroup" >
+                                <option <% if (event.minAge === 3) { %> selected='selected' <% } %> value="3">3-5</option>
+                                <option <% if (event.minAge === 6) { %> selected='selected' <% } %>   value="6">6-8</option>
+                                <option <% if (event.minAge === 9) { %> selected='selected' <% } %> value="9">9-12</option>
+                                <option <% if (event.minAge === 13) { %> selected='selected' <% } %> value="13">>12</option>
                             </select>
           
                 </div>
@@ -90,7 +90,7 @@
 
         <div class="form-group">
             <label for="latlng">Εισάγετε την τοποθεσία του Event(θα γίνει αναζήτηση στο χάρτη)</label>
-            <input id="latlng" type="text" name = "location" class="form-control input-sm">
+            <input id="latlng" type="text" name = "location" class="form-control input-sm" value = "<%= event.geoAddress %>">
         </div>
         <div class="form-group">
             <button type="button" id = "submit" class="btn btn-default" >Αναζήτηση</button>
@@ -146,7 +146,7 @@
     
         <div class="form-group ">
             <label for="event-date">Αριθμός Εισιτηρίων </label>
-            <input type="number" name="TicketNum" class="form-control input-sm" id="TicketNum" >
+            <input type="number" name="TicketNum" class="form-control input-sm" id="TicketNum" value="<%= event.ticketCount %>">
     </div>
 
         <div class="form-group ">
@@ -157,13 +157,13 @@
         
     
         <div class="form-group col-md-6 col-sm-6">
-            <label for="Price">Τιμή ανά Εισιτήριο (&euro;) </label>
-            <input type="number" step="0.1" class="form-control input-sm" name = "Price" id="Price" placeholder="">
+            <label for="Price">Τελική τιμή ανά Εισιτήριο (&euro;) </label>
+            <input type="number" step="0.1" class="form-control input-sm" name = "Price" id="Price" placeholder="" value="<%= event.ticketPrice %>">
         </div>
 
         <div class="form-group col-md-6 col-sm-6">
             <label for="discount">Έκπτωση (%)</label>
-            <input type="number" step="0.1" class="form-control input-sm" name = "Discount" id="Discount" placeholder="">
+            <input type="number" step="0.1" class="form-control input-sm" name = "Discount" id="Discount" placeholder="" value="<%= event.discount %>">
         </div>
         
         <input type="number" style="display:none;" name="pictures" id = "pictures" value = "0" />

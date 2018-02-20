@@ -10,29 +10,71 @@ var auth = require('../apis/authentication');
 var db = require('../models/db');
 var watermark = require('../apis/watermark/watermark.js');
 
+var info = {};
+
 function validNewEvent(newEvent) {
 
-    if (newEvent.title.length == 0)
+    if (newEvent.title.length == 0) {
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα", event: newEvent};
         return false;
+    }
 
-    if (isNaN(newEvent.startTime))
+    if (isNaN(newEvent.startTime)) {
+        delete newEvent.startTime;
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα",event: newEvent};
         return false;
+    }
 
-    if (newEvent.description.length == 0) 
+    if (newEvent.description.length == 0) {
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα",event: newEvent};
         return false;
+    }
 
-    if (newEvent.geoAddress.length == 0)
+    if (newEvent.geoAddress.length == 0) {
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα",event: newEvent};
         return false;
+    }
 
-    if (isNaN(newEvent.ticketPrice))
+    if (!newEvent.categoryName) {
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα",event: newEvent};
         return false;
+    }
 
-    if (isNaN(newEvent.ticketCount))
+    if (isNaN(newEvent.ticketPrice)) {
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα",event: newEvent};
         return false;
+    }
+
+    if (isNaN(newEvent.ticketCount)) {
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα",event: newEvent};
+        return false;
+    }
     
-    if (isNaN(newEvent.discount))
+    if (isNaN(newEvent.discount)) {
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα",event: newEvent};
         return false;
+    }
 
+    if (newEvent.ticketPrice < 0) {
+        delete newEvent.ticketPrice;
+        info = {errMsg : "Η τιμή του εισιτηρίου δεν μπορεί να είναι αρνητική",event: newEvent};
+        return false;
+    }
+
+    if (newEvent.ticketCount <= 0) {
+        delete newEvent.ticketCount;
+        info = {errMsg : "Δεν υπάρχουν διαθέσιμα εισιτήρια",event: newEvent};
+        return false;
+    }
+
+    if (newEvent.discount<0 || newEvent.discount > 100) {
+        delete newEvent.discount;
+        info = {errMsg : "Η έκπτωση πρέπει να είναι ποσοστό επί της εκατό",event: newEvent};
+        return false;
+    }
+
+
+    info = {event: newEvent};
     return true;
 }
 
@@ -40,7 +82,7 @@ function validNewEvent(newEvent) {
 
 /* GET create event page. */
 router.get('/', auth.isUserVerifiedOrganizer, function(req, res, next) {
-  res.render('newevent', {categories: conf.supportedCategories, user: req.user});
+  res.render('newevent', {categories: conf.supportedCategories, user: req.user, event: {}});
 });
 
 /* POST create event page */
@@ -70,8 +112,11 @@ router.post('/', auth.isUserVerifiedOrganizer,  function(req, res, next) {
 
 
     //here we have collected all necessary fields we should validate them.
-    if (!validNewEvent(newEvent))
-        return res.send("Please fill all the necessary fields correctly");
+    if (!validNewEvent(newEvent)) {
+        info.user = req.user;
+        info.categories = conf.supportedCategories;
+        return res.render('newevent', info);
+    }
 
     geocoding(newEvent.geoAddress, function(loc) {
         newEvent.geoLat = loc.lat;
