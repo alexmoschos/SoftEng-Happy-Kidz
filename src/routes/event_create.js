@@ -73,8 +73,13 @@ function validNewEvent(newEvent) {
         return false;
     }
 
+    if (newEvent.startTime <= (new Date().getTime() /1000)) {
+        info = {errMsg : "Το event δεν μπορεί να ξεκινά σε παρελθοντικό χρόνο", event: newEvent}
+        return false;
+    }
 
-    info = {event: newEvent};
+
+    info = {event: newEvent, errMsg: undefined};
     return true;
 }
 
@@ -82,7 +87,7 @@ function validNewEvent(newEvent) {
 
 /* GET create event page. */
 router.get('/', auth.isUserVerifiedOrganizer, function(req, res, next) {
-  res.render('newevent', {categories: conf.supportedCategories, user: req.user, event: {}});
+  res.render('newevent', {categories: conf.supportedCategories, user: req.user, event: {}, errMsg: undefined});
 });
 
 /* POST create event page */
@@ -167,11 +172,11 @@ router.post('/', auth.isUserVerifiedOrganizer,  function(req, res, next) {
                 }
             });
 
-            res.send("You have submitted an event!");
+            res.redirect('/provider/' + req.user.user.organizerId);
 
         }).catch(err => {
             console.log(err);
-            res.send("There was an error please try again.", {user: req.user});
+            res.render('newevent', {categories: conf.supportedCategories,user: req.user, errMsg : "There was an error please try again", event:newEvent});
         });
     });
 });
