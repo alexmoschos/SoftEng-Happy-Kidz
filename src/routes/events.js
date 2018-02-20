@@ -4,9 +4,7 @@ var db = require('../models/db');
 const Sequelize = require('sequelize');
 var auth = require('../apis/authentication');
 var mail = require('../apis/mail');
-
-
-
+var elastic = require('../apis/elastic_interface');
 
 
 var fs = require('fs');
@@ -148,12 +146,47 @@ router.delete('/:eventId', auth.isUserAdmin, function(req, res){
 router.put('/:eventId', auth.isUserAdmin, function(req, res){
 
     var eventId = utilities.checkInt(req.params.eventId);
+
     if (!eventId) { res.render('no_page', {user: req.user});}
 
     db.Event.findById(req.params.eventId)
     .then( (event) => {
         if (event && event.isVerified === false) {
-            return event.update({isVerified: true});
+            return event.update({isVerified: true}).then(() => {
+                var newEvent = {};
+
+                newEvent.organizerId = event.organizerId;
+
+                newEvent.title = event.title;
+                newEvent.startTime = event.startTime;
+                newEvent.endTime = event.endTime; // this field should probably go
+                newEvent.description = event.description;
+                newEvent.categoryName = event.categoryName;
+                newEvent.geoAddress = event.geoAddress;
+                newEvent.ticketPrice = event.ticketPrice;
+                newEvent.ticketCount = event.ticketCount
+                newEvent.initialTicketCount = event.initialTicketCount;
+                newEvent.minAge = event.minAge;
+                newEvent.maxAge = event.maxAge;
+                newEvent.discount = event.discount;
+                newEvent.pictures = event.pictures;
+                newEvent.geoLocation = {
+                    lat: parseFloat(event.geoLat),
+                    lon: parseFloat(event.geoLon)
+                };
+
+                newEvent.eventId = event.eventId.toString();
+
+                db.Organizer.findOne({ where: { organizerId: event.organizerId } }).then((provider) => {
+                    newEvent.providerName = provider.name;
+                    newEvent.providerPhone = provider.phone;
+
+                    elastic.insert('events', newEvent, function (err,resp, status) {
+                        if (err) 
+                            console.log(err);
+                    });
+                });  
+            });
         }
         else {
             res.render('no_page', {user: req.user});

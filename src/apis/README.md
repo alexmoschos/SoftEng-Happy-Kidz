@@ -150,7 +150,8 @@ options = {
     ticket_id: 04464053,
     number_of_tickets: 3,
     address: 'Αριστοτέλους 23, Πυλαία, Θεσσαλονίκη',
-    event_img_src: 'public/files/redhood.jpg'
+    event_img_src: 'public/files/redhood.jpg',
+    qr_code_src: 'public/qrcodes/0.jpg'
 }
 
 pdf.save_pdf(options);

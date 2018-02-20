@@ -38,7 +38,12 @@
 
 <body>
 <%- include partials/navbar.ejs %>
-<div class="container">    
+<div class="container"> 
+<% if (errMsg) { %>
+<div class="alert alert-warning">
+    <strong>Warning!</strong> <%= errMsg %>.
+</div>
+<% } %>       
 <div class="panel panel-primary" style="margin: 20px; ">
     <div class="panel-heading">
             <h3 class="panel-title">Δημιουργία Νέου Event</h3>
@@ -66,7 +71,7 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-6">
                     <label for="event-date">Ημερομηνία </label>
-                    <input type="date" class="form-control input-sm" name="Date" id="event-date" <% if (event.startTime) { %> value="<%= new Date(event.startTime * 1000).toISOString().split('T')[0] %>" <% } %>  >
+                    <input type="datetime-local" class="form-control input-sm" name="Date" id="event-date" <% if (event.startTime) { %> value="<%= new Date(event.startTime * 1000).toISOString().split(".")[0] %>" <% } %>  >
                 </div>
                 <div class="form-group col-md-6 col-sm-6">
                     <label for="AgeGroup">Ηλικιακή Ομάδα Παιδιών</label>
