@@ -23,7 +23,7 @@ var availMemberships = [{
 
 // Utility function to check if membership is valid
 function isMembershipValid(membership) {
-    if (membership && (membership.endTime < Math.floor(Date.now()))) {
+    if (membership && (membership.expiryDate < Math.floor(Date.now()))) {
         return true;
     } else {
         return false;
@@ -41,7 +41,7 @@ router.get('/', auth.isUserParent, function (req, res) {
         switch (item.type) {
             case 'ticket':
                 db.Event.findById(item.eventId)
-                    .then((event) => res.render('payment', { description: tier.quantity + 'x Εισιτήριο για ' + event.title, amount: event.ticketPrice, quantity: tier.quantity }));
+                    .then((event) => res.render('payment', { description: item.quantity + 'x Εισιτήριο για ' + event.title, amount: event.ticketPrice, quantity: item.quantity }));
                 break;
             case 'membership':
                 res.render('payment', { description: availMemberships[item.tier - 1].description, amount: availMemberships[item.tier - 1].amount });
@@ -66,14 +66,15 @@ router.post('/', auth.isUserParent, function (req, res) {
         switch (item.type) {
             case 'ticket':
                 // Check if parent has a valid membership
-                db.Membership.findOne({ parentId: userSession.passport.user.id })
+                db.Membership.findById(userSession.passport.user.id)
                     .then((membership) => {
                         if (!isMembershipValid(membership)) {
                             res.redirect('/membership');
                         } else {
                             db.sequelizeConnection.transaction(function (t) {
-                                // Chain all transaction queries
+                                // Transaction to purchase tickets for an event
                                 return db.Event.findById(item.eventId, { transaction: t })
+                                    // Remove wanted tickets from event
                                     .then((event) => {
                                         console.log('Event found: ' + event);
                                         let newTicketCount = event.ticketCount - item.quantity;
@@ -83,32 +84,43 @@ router.post('/', auth.isUserParent, function (req, res) {
                                             throw new Error("Not enough tickets");
                                         }
                                     })
-                                    .then((event) => db.BoughtTickets.create({
-                                        eventId: event.eventId,
-                                        parentId: userSession.passport.user.id,
-                                        transactionId: '54541',
-                                        startTime: event.startTime,
-                                        endTime: event.endTime,
-                                        price: event.ticketPrice
-                                    }, { transaction: t }))
-                                    .then((ticket) => db.Parent.findById(userSession.passport.user.id, { transaction: t }))
+                                    // Create the bought tickets
+                                    .then((event) => {
+                                        let ticketItem = {
+                                            eventId: event.eventId,
+                                            parentId: userSession.passport.user.id,
+                                            transactionId: '54541',
+                                            startTime: event.startTime,
+                                            endTime: event.endTime,
+                                            price: event.ticketPrice
+                                        };
+                                        let ticketArray = [];
+                                        for (let i = 0; i < item.quantity; i++) {
+                                            ticketArray.push(ticketItem);
+                                        }
+                                        db.BoughtTickets.bulkCreate(ticketArray, { transaction: t });
+                                    })
+                                    // Find parent and update wallet
+                                    // TODO: Generate QRCode -> PDF -> Send Email
+                                    .then((tickets) => db.Parent.findById(userSession.passport.user.id, { transaction: t }))
                                     .then((parent) => parent.update({ wallet: parent.wallet + item.quantity * 100 }, { transaction: t }))
                             })
-                            .then((result) => { 
-                                console.log('Successful transaction '+ result);
-                                res.redirect('/payment/success');
-                            })
-                            .catch((err) => {
-                                console.log('Unsuccessful transaction ' + err);
-                                res.send('Not enough tickets')
-                            });
+                                .then((result) => {
+                                    console.log('Successful transaction ' + result);
+                                    res.redirect('/payment/success');
+                                })
+                                .catch((err) => {
+                                    console.log('Unsuccessful transaction ' + err);
+                                    res.send('Not enough tickets')
+                                });
                         }
                     })
 
                 break;
             case 'membership':
                 console.log('Creating new membership' + JSON.stringify(userSession.passport.user));
-                db.Membership.create({
+                // Insert new or update existing membership
+                db.Membership.upsert({
                     parentId: userSession.passport.user.id,
                     startDate: Math.floor(Date.now() / 1000),
                     expiryDate: Math.floor(Date.now() / 1000 + 60 * 60 * 24 * 10 * availMemberships[item.tier].duration),
@@ -132,42 +144,42 @@ router.post('/events/:id', auth.isUserParent, function (req, res) {
     /* Add ticket for event to cart */
     console.log('Adding ticket to cart - session ' + req.user.type);
     // Check if parent has a valid membership
-    db.Membership.findOne({ parentId: req.session.passport.user.id })
-    .then((membership) => {
-        if (!isMembershipValid(membership)) {
-            res.redirect('/membership');
-        } else {
-            req.session.cart = {
-                type: 'ticket',
-                eventId: req.params.id,
-                quantity: req.body.quantity
+    db.Membership.findById(req.session.passport.user.id)
+        .then((membership) => {
+            if (!isMembershipValid(membership)) {
+                res.redirect('/membership');
+            } else {
+                req.session.cart = {
+                    type: 'ticket',
+                    eventId: req.params.id,
+                    quantity: req.body.quantity
+                }
+                res.redirect('/payment');
             }
-            res.redirect('/payment');
-        }
-    });
+        });
 });
 
 // Membership purchase forms should post here
 router.post('/membership/:id', auth.isUserParent, function (req, res) {
-    /* Add ticket for event to cart */
+    // Add ticket for event to cart
     console.log('Adding membership to cart - session ' + req.user);
     // Check if parent already has a valid membership
     db.Membership.findById(req.session.passport.user.id)
-    .then((membership) => {
-        if (!isMembershipValid(membership)) {
-            req.session.cart = {
-                type: 'membership',
-                tier: req.params.id
+        .then((membership) => {
+            if (!isMembershipValid(membership)) {
+                req.session.cart = {
+                    type: 'membership',
+                    tier: req.params.id
+                }
+                res.redirect('/payment');
+            } else {
+                res.redirect('/');
             }
-            res.redirect('/payment');
-        } else {
-            res.redirect('/');
-        }
-    });
+        });
 });
 
-router.get('/success', function(req, res){
-    res.render('successPayment');
+router.get('/success', function (req, res) {
+    res.render('successPayment', { user: req.user });
 });
 
 module.exports = router;

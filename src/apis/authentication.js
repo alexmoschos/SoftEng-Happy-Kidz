@@ -11,10 +11,10 @@ var Types = ['parent', 'organizer', 'admin'];
 function whereClause(type, idx, obj) {
     switch (type) {
         case 'email':
-            return {where: {email: obj}};
-        case 'id': 
-            return {where: JSON.parse('{"' + Tables[idx].primaryKeyAttribute + '":' + obj + '}')};
-        default: 
+            return { where: { email: obj } };
+        case 'id':
+            return { where: JSON.parse('{"' + Tables[idx].primaryKeyAttribute + '":' + obj + '}') };
+        default:
             return {};
     }
 }
@@ -23,11 +23,11 @@ function lookUpTables(idx, type, val, succ, fail) {
     if (idx == Tables.length) return succ(null);
     Tables[idx].findOne(whereClause(type, idx, val)).then(
         function (user) {
-            if (user) 
-                return succ({user: user, type: Types[idx]});
-            lookUpTables(idx+1, type, val, succ, fail);
+            if (user)
+                return succ({ user: user, type: Types[idx] });
+            lookUpTables(idx + 1, type, val, succ, fail);
         }
-    ).catch(err => {fail(err);});
+    ).catch(err => { fail(err); });
 }
 
 function findUserByEmail(email, succ, fail) {
@@ -56,24 +56,37 @@ function isUserParent(req, res, next) {
     return res.render('no_page');
 }
 
-function isUserMemberParent(req, res, next){
+function isUserMemberParent(req, res, next) {
     if (req.isAuthenticated()) {
         if (req.user.type == 'parent') {
             Membership.findById(req.user.user.parentId)
-            .then((membership) => {
-                if (membership) {
-                    return next();
-                } else {
-                    // Parent without membership
-                    res.redirect('/membership');
-                }
-            });
+                .then((membership) => {
+                    if (membership) {
+                        return next();
+                    } else {
+                        // Parent without membership
+                        res.redirect('/membership');
+                    }
+                });
         } else {
             // HTTP Code 403 - Not a parent
             res.send('Access Denied');
         }
     } else {
         // Not an authenticated user
+        res.redirect('/login');
+    }
+}
+
+function isUserParentId(req, res, next) {
+    if (req.isAuthenticated()) {
+        if ((req.user.type === 'parent') && (req.user.user.parentId === req.params.id)) {
+                return next();
+        } else {
+            // HTTP Code 403
+            res.send('Access Denied');
+        }
+    } else {
         res.redirect('/login');
     }
 }
@@ -93,16 +106,16 @@ function isUserAdmin(req, res, next) {
 // TODO: Implement HTTP 403 
 function isUserVerifiedOrganizer(req, res, next) {
     if (req.isAuthenticated()) {
-        if (req.user.type == 'organizer') {
+        if (req.user.type === 'organizer') {
             Organizer.findById(req.user.user.organizerId)
-            .then((organizer) => {
-                if (organizer.isVerified) {
-                    return next();
-                } else {
-                    // Not verified provider page
-                    res.send('You are not verified yet');
-                }
-            });
+                .then((organizer) => {
+                    if (organizer.isVerified) {
+                        return next();
+                    } else {
+                        // Not verified provider page
+                        res.send('You are not verified yet');
+                    }
+                });
         } else {
             // HTTP Code 403
             res.send('Access Denied');
@@ -113,11 +126,13 @@ function isUserVerifiedOrganizer(req, res, next) {
 }
 
 
+
 var auth = {
     findUserByEmail: findUserByEmail,
     findUserOfTypeById: findUserOfTypeById,
-    isLoggedIn: isLoggedIn, 
+    isLoggedIn: isLoggedIn,
     isUserParent: isUserParent,
+    isUserParentId: isUserParentId,
     isUserOrganizer: isUserOrganizer,
     isUserAdmin: isUserAdmin,
     isUserMemberParent: isUserMemberParent,

@@ -1,0 +1,90 @@
+#navbar-logo {
+    padding: 5px;
+}
+
+#navbar-logo-img {
+    height: 100%;
+    width: auto;
+}
+
+nav .search-form {
+    width: 100%;
+    border-radius: 33px;
+}
+
+nav .btn {
+    width: auto;
+    border-radius: 33px;
+}
+
+.navbar-brand,
+nav .form-group,
+.navbar-nav li a {
+    height: 70px;
+    line-height: 70px;
+    padding: 0px 15px;
+}
+
+.navbar-form {
+    width: 100%;
+    display: inline-block;
+}
+
+nav .form-group {
+    width: 100%;
+}
+
+nav .form-group .form-control {
+    width: 100%;
+}
+
+.navbar-form {
+    margin: 0;
+}
+
+nav .profile-pic {
+    height: 100%;
+    border-radius: 50%;
+}
+
+#navbar-happy-kidz {
+    padding: 10px 20px;
+    -webkit-box-shadow: 0px 1px 11px -2px rgba(76, 137, 212, 0.72);
+    -moz-box-shadow: 0px 1px 11px -2px rgba(76, 137, 212, 0.72);
+    box-shadow: 0px 1px 11px -2px rgba(76, 137, 212, 0.72);
+}
+
+#span-search-divider {
+    padding: 0px 10px 0px 10px;
+    color: #777;
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+
+    #span-search-divider {
+        display: inline-block;
+    }
+
+    nav .form-group {
+        width: 40%;
+    }
+    .navbar-form {
+        width: 70%;
+    }
+}
+
+#profile-dropdown:focus{
+    background-color: transparent;
+}
+
+#profile-dropdown:active{
+    background-color: transparent;
+}
+
+
+.dropdown-menu > li > a {
+    line-height: 40px;
+    height: 100%
+}
+

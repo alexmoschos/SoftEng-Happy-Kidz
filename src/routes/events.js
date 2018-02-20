@@ -86,6 +86,8 @@ router.get('/:id', function(req, res, next) {
                         agegroups: event.minAge + "-" + (event.minAge + 2).toString(),
                         description: event.description,
                         images: imglist,
+                        eventId: req.params.id,
+                        ticketCount: event.ticketCount,
                         ratings
                     }
                     console.log(obj);
