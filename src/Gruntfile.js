@@ -13,6 +13,18 @@ module.exports = function (grunt) {
           }
         },
       },
+      jshint : {
+        options: {
+            jshintrc: '.jshintrc'
+        },
+        gruntfile: {
+            src: 'Gruntfile.js'
+        },
+        lib: {
+            src: ['routes/*.js','models/*.js','*.js']
+        },
+
+      },
       watch: {
         frontend: {
           options: {
@@ -58,6 +70,7 @@ module.exports = function (grunt) {
     grunt.registerTask('web', 'launch webserver and watch tasks', [
       'parallel:web',
     ]);
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     grunt.registerTask('default', ['web']);
   };

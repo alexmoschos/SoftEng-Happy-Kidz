@@ -21,63 +21,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/stylesheets/styles_event.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- <link rel="stylesheet" href="http://getbootstrap.com.vn/examples/equal-height-columns/equal-height-columns.css"> -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- <script src="/jquery.matchHeight.js" type="text/javascript"></script> -->
 </head>
 <body>
-    <nav id="my-navbar" class="navbar navbar-custom" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">
-                <span>
-                    <img src="/icon2.png" alt="Party" height="25" width="27">
-                </span> HappyKidz
-            </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active">
-                    <a href="/">Home</a>
-                </li>
-                <li>
-                    <a href="/search">Events</a>
-                </li>
-            </ul>
-            <div class="col-sm-5 col-md-5">
-                <form class="navbar-form" role="search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="q">
-                        <span class="input-group-addon">@</span>
-                        <input type="text" class="form-control" placeholder="Location" name="l">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default" type="submit">
-                                <i class="glyphicon glyphicon-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="/register">Register</a>
-                </li>
-                <li>
-                    <a href="/login">Login</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </nav>
+    <%- include ./partials/navbar.ejs %>
 
     <br>
 
@@ -90,9 +41,13 @@
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="border:1px solid #29335c; border-radius:1px">
                     <!-- Indicators -->
                     <ol class="carousel-indicators">
-                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    <% images.forEach(function(image,index) {
+                        if(index === 0){ %>
+                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <% } else { %>
+                            <li data-target="#carousel-example-generic" data-slide-to="<%=index%>"></li>
+                        <% }
+                    }); %>
                     </ol>
 
                     <!-- Wrapper for slides -->
@@ -101,16 +56,10 @@
                             if(index === 0){ %>
                                 <div class="item active">
                                     <img src="<%=image%>" alt="..." style="width:100%; height: 100%;">
-                                    <div class="carousel-caption">
-                                        <h3><%=image%></h3>
-                                    </div>
                                 </div>
                             <% } else { %>
                                 <div class="item">
                                     <img src="<%=image%>" alt="..." style="width:100%; height: 100%;">
-                                    <div class="carousel-caption">
-                                        <h3><%=image%></h3>
-                                    </div>
                                 </div>
                             <% }
                         }); %>
@@ -176,7 +125,7 @@
                         </div>
                         <div class="col-xs-10">
                             <h4>Πάροχος</h4>
-                            <p><a href="/provider_page"><%= providerName %></a></p>
+                            <p><a href="/provider_page/<%= organizerId %>"><%= providerName %></a></p>
                         </div>
                     </div>
 
@@ -306,8 +255,9 @@
                     </h4>
                     <div class="col-xs-12">
                         <p><%= it.content %></p>
+                        <hr>
                     </div>
-                    <hr>
+
                 </div>
                 <% }); %>
 
