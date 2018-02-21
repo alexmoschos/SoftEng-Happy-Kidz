@@ -1,31 +1,67 @@
 var express = require('express');
 var router = express.Router();
-var ratings= [
-    {name: "John", content:"It sucks", rating:2},
-    {name: "John", content:"It sucks", rating:3},
-    {name: "John", content:"It sucks", rating:5},
-    {name: "John", content:"It sucks", rating:4},
-    {name: "John", content:"It sucks", rating:0},
-    {name: "John", content:"It sucks", rating:1},
-]
+var db = require('../models/db');
+var auth = require('../apis/authentication');
 
-
-router.post("/", function(req, res){
-    console.log(req.body);
-    // comm = {
-    //     name: "zark",
-    //     content: "lala",
-    //     rating: 5
-    // };
-    // ratings.push(comm);
-    // res.redirect('/events/hello');
+router.post("/:eventId/:parentId", auth.isUserParentIdAndBoughtTicket, function(req, res, next){
+    db.Review.findOne({
+        where: {
+            parentId: req.params.parentId,
+            eventId: req.params.eventId
+        }
+    })
+    .then( review => {
+        var newReview = {
+            parentId: req.params.parentId,
+            eventId: req.params.eventId,
+            text: req.body.description,
+            rating: req.body.rating,
+            date: Math.floor(Date.now() / 1000)
+        };
+        console.log(newReview.date);
+        if(!review){
+            db.Review.create(newReview).then( review2 => {
+                res.redirect('/events/' + req.params.eventId);
+            }) 
+        }
+        else{
+            review.update(newReview).then( review3 => {
+                res.redirect('/events/' + req.params.eventId);
+            })
+        }
+    })   
 });
 
-router.get('/', function(req, res, next) {
-    obj={
-        title: "Alex Kalom"
-    }
-    res.render('review',obj);
+router.get('/:eventId/:parentId', auth.isUserParentIdAndBoughtTicket, function(req, res, next) {
+    db.Parent.findById(req.params.parentId)
+	.then( (parent) => {
+        db.Event.findById(req.params.eventId)
+        .then( (event) => {
+            db.Review.findOne({
+                where: {
+                    parentId: req.params.parentId,
+                    eventId: req.params.eventId
+                }
+            })
+            .then( review => {
+                var descr = "";
+                if(review){
+                    descr = review.text;
+                }
+                obj={
+                    user: req.user,
+                    eventId: req.params.eventId,
+                    parentId: parent.parentId,
+                    name: parent.name,
+                    email: parent.email,
+                    title: event.title,
+                    prevDescription: descr
+                };
+                res.render('review',obj);
+            })
+            
+        })
+    })
 });
 
 module.exports = router;

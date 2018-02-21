@@ -80,16 +80,46 @@ function isUserMemberParent(req, res, next) {
 
 function isUserParentId(req, res, next) {
     if (req.isAuthenticated()) {
-        if ((req.user.type === 'parent') && (req.user.user.parentId === req.params.id)) {
+        if ((req.user.type === 'parent') && (req.user.user.parentId === parseInt(req.params.parentId))) {
                 return next();
         } else {
             // HTTP Code 403
+            console.log(req.user.user.parentId);
+            console.log(req.params.parentId);
+            console.log(req.user.type);
             res.send('Access Denied');
         }
     } else {
         res.redirect('/login');
     }
 }
+
+function isUserParentIdAndBoughtTicket(req, res, next) {
+    if (req.isAuthenticated()) {
+        db.BoughtTickets.findOne({
+            where: {
+                parentId: req.params.parentId,
+                eventId: req.params.eventId
+            }
+        })
+        .then( tickets => {
+            if ((req.user.type === 'parent') && (req.user.user.parentId === parseInt(req.params.parentId)) && tickets) {
+                return next();
+            } else {
+                // HTTP Code 403
+                console.log(req.user.user.parentId);
+                console.log(req.params.parentId);
+                console.log(req.user.type);
+                res.send('Access Denied');
+            }
+        })
+        .catch(err => { console.log(err); })
+        
+    } else {
+        res.redirect('/login');
+    }
+}
+
 
 
 function isUserOrganizer(req, res, next) {
@@ -161,7 +191,8 @@ var auth = {
     isUserAdmin: isUserAdmin,
     isUserMemberParent: isUserMemberParent,
     isUserVerifiedOrganizer: isUserVerifiedOrganizer,
-    isNotUserLoggedIn: isNotUserLoggedIn
+    isNotUserLoggedIn: isNotUserLoggedIn,
+    isUserParentIdAndBoughtTicket: isUserParentIdAndBoughtTicket
 };
 
 module.exports = auth;

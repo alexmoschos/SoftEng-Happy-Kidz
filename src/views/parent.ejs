@@ -129,13 +129,15 @@ crossorigin="anonymous"></script>
                                                                <h3><a href="/events/<%=it.event.eventId%> " style="color: #29335c"><%= it.event.title %></a></h3>
                                                            </div>
                                                                <div class="col-12 col-xs-12">
+                                                                 <center>
                                                                            <span class="glyphicon glyphicon-calendar"></span>
                                                                            <span>Ημερομηνία: </span>
-                                                                           <span id="date-data" class="result-data"><%=it.event.date%>,</span>
+                                                                           <span id="date-data" class="result-data"><%var startTime_ = new Date(it.event.startTime*1000); %>
+                                                                            <%= startTime_.toLocaleDateString()%>,</span>
                                                                            &nbsp;
                                                                            <span class="glyphicon glyphicon-time"></span>
                                                                            <span >Ώρα: </span>
-                                                                           <span id="time-data" class="result-data"><%=it.event.startTime%>,</span>
+                                                                           <span id="time-data" class="result-data"><%= startTime_.toLocaleTimeString() %></span>
                                                                            &nbsp;
                                                                            <span class="glyphicon glyphicon-map-marker"></span>
                                                                            <span>Διεύθυνση: </span>
@@ -147,31 +149,37 @@ crossorigin="anonymous"></script>
                                                                            &nbsp;
                                                                            <span class="glyphicon glyphicon-signal"></span>
                                                                            <span >Ηλικίες: </span>
-                                                                           <span id="age-data" class="result-data"><%=it.event.minAge%>,</span>
+                                                                           <span id="age-data" class="result-data"><%= it.event.minAge.toString() + "-" + it.event.maxAge.toString() %>,</span>
                                                                            &nbsp;
-                                                                           <!-- <span class="glyphicon glyphicon-euro"></span>
-                                                                           <span>Τιμή: </span>
-                                                                           <span id="price-data" class="result-data">10,</span>
-                                                                           &nbsp; -->
+                                                             
                                                                            <!-- <span class="glyphicon glyphicon-earphone"></span>
                                                                            <span>Τηλέφωνο Επικοινωνίας: </span>
                                                                            <span id="phone-data" class="result-data"><%=it.phone%></span> -->
+                                                                </center>
                                                                </div>
                                                                <div class="col-xs-12">
                                                                    <hr>
+                                                                   <center>
                                                                        <span class="glyphicon glyphicon-remove"></span>
                                                                        <span>Αρχική Τιμή: </span>
-                                                                       <span id="price-data" class="result-data"><%=it.event.ticketPrice%></span>
+                                                                       <span id="price-data" class="result-data"><%=(it.event.ticketPrice * 100 / (100 - it.event.discount)).toFixed(2)%></span>
                                                                        &nbsp;
                                                                        <span class="glyphicon glyphicon-ok"></span>
                                                                        <span>Τιμή HappyKidz: </span>
                                                                        <span id="price-data" class="result-data"><%=it.event.ticketPrice%></span>
+                                                                      </center>
                                                                        <!-- <br> -->
                                                                </div>
- 
-                                                               <!-- <div class="col-xs-10">
-                                                                   <p>20€</p>
-                                                               </div> -->
+                                                               
+                                                               <%if(Math.floor(Date.now() / 1000) > it.event.startTime){%>
+                                                                <div class="col-xs-12" style="padding-bottom: 15px;">
+                                                                  <hr> 
+                                                                  <center>
+                                                                    <a href="/review/<%= it.event.eventId%>/<%= id%>" >Αξιολογήστε </a>  
+                                                                  </center>                                                                   
+                                                                </div>
+                                                                <%}%> 
+                                                               
                                                            </div>
                                                    </div>
                                        </div>
