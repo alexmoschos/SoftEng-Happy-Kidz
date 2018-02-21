@@ -37,7 +37,7 @@ router.get('/', function (req, res, next) {
 
 
 
-router.post('/:type', function (req, res, next) {
+router.post('/:type', upload.any(),function (req, res, next) {
   var type = req.params.type;
   if (type == 'user') {
     // Do some checks here (all form fields have to be valid)
