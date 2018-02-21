@@ -7,7 +7,7 @@ var mail = require('../apis/mail');
 
 
 var bcrypt = require('bcrypt');
-var HashMap = require('HashMap');
+var HashMap = require('hashmap');
 
 
 
