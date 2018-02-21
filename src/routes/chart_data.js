@@ -11,41 +11,20 @@ const Op = Sequelize.Op;
 
 /* GET create event page. */
 router.get('/', function(req, res, next) {
-	var temp = req.query.from.split("-"), temp2 = req.query.to.split("-");
-	if((req.query.from === "") || (req.query.to === "")){
-		res.send({});
-		return;
-	}
-	var organizerId = req.user.user.organizerId;
-	var fromdate = new Date(req.query.from).getTime()/1000, todate = new Date(req.query.to).getTime()/1000;
-	console.log(fromdate);
-	console.log(todate);
-	db.Event.findAll({
-			attributes: [
-				"categoryName",
-				[Sequelize.fn('COUNT',Sequelize.col("categoryName")), 'num']
-			],
-			where: {
-				organizerId: organizerId,
-				startTime:{
-					[Op.lt]: todate,
-					[Op.gt]: fromdate
-				}
-			},
-			group: [
-				"categoryName"
-			]
-		}).then(categories => {
-			// console.log(categories);
-			var Data = [['Task', 'Hours per Day']];
-			categories.forEach(function(element,i){
-				var cat = element.dataValues;
-				Data[i+1] = [cat.categoryName, Number(cat.num)];
-			})
-			db.Event.findAll({
+	if (req.isAuthenticated() && req.user.type === 'organizer'){
+		var temp = req.query.from.split("-"), temp2 = req.query.to.split("-");
+		if((req.query.from === "") || (req.query.to === "")){
+			res.send({});
+			return;
+		}
+		var organizerId = req.user.user.organizerId;
+		var fromdate = new Date(req.query.from).getTime()/1000, todate = new Date(req.query.to).getTime()/1000;
+		console.log(fromdate);
+		console.log(todate);
+		db.Event.findAll({
 				attributes: [
-					"minAge",
-					[Sequelize.fn('COUNT',Sequelize.col("minAge")), 'num']
+					"categoryName",
+					[Sequelize.fn('COUNT',Sequelize.col("categoryName")), 'num']
 				],
 				where: {
 					organizerId: organizerId,
@@ -55,37 +34,62 @@ router.get('/', function(req, res, next) {
 					}
 				},
 				group: [
-					"minAge"
+					"categoryName"
 				]
-			}).then(Ages => {
-				var AgesData = [['Age','Kids per Age']];
-				Ages.forEach(function(element,i){
-					var age = element.dataValues;
-					var agestring;
-					if(age.minAge == 3)agestring = "3-5";
-					else if(age.minAge == 6)agestring = "6-8";
-					else if (age.minAge == 9)agestring = "9-12"
-					else agestring = ">12";
-					AgesData[i+1] = [agestring, Number(age.num)];
-				});
-				var obj = {
-					TopicChart : {
-						Data: Data,
-						Options:{
-			        		title: 'Θεματικές των Events'
-			    		}
-					},
-					AgesChart:{
-						Data: AgesData,
-						Options: {
-							title: 'Ηλικιακές κατηγορίες'
+			}).then(categories => {
+				// console.log(categories);
+				var Data = [['Task', 'Hours per Day']];
+				categories.forEach(function(element,i){
+					var cat = element.dataValues;
+					Data[i+1] = [cat.categoryName, Number(cat.num)];
+				})
+				db.Event.findAll({
+					attributes: [
+						"minAge",
+						[Sequelize.fn('COUNT',Sequelize.col("minAge")), 'num']
+					],
+					where: {
+						organizerId: organizerId,
+						startTime:{
+							[Op.lt]: todate,
+							[Op.gt]: fromdate
 						}
-					}
-				};
-				res.send(obj);
+					},
+					group: [
+						"minAge"
+					]
+				}).then(Ages => {
+					var AgesData = [['Age','Kids per Age']];
+					Ages.forEach(function(element,i){
+						var age = element.dataValues;
+						var agestring;
+						if(age.minAge == 3)agestring = "3-5";
+						else if(age.minAge == 6)agestring = "6-8";
+						else if (age.minAge == 9)agestring = "9-12"
+						else agestring = ">12";
+						AgesData[i+1] = [agestring, Number(age.num)];
+					});
+					var obj = {
+						TopicChart : {
+							Data: Data,
+							Options:{
+				        		title: 'Θεματικές των Events'
+				    		}
+						},
+						AgesChart:{
+							Data: AgesData,
+							Options: {
+								title: 'Ηλικιακές κατηγορίες'
+							}
+						}
+					};
+					res.send(obj);
 
-			});
-		})
+				});
+			})
+		}
+		else {res.redirect("/login");
+		}
 			
 })
 
