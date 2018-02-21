@@ -2,14 +2,13 @@ var express = require('express');
 var router = express.Router();
 var db = require('../models/db');
 var auth = require('../apis/authentication');
-<<<<<<< HEAD
 var utilities = require('../apis/utilities');
 var mail = require('../apis/mail');
 
-=======
+
 var bcrypt = require('bcrypt');
 var HashMap = require('HashMap');
->>>>>>> parent_auth
+
 
 
 /* GET parent profile. */
