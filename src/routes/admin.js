@@ -17,17 +17,17 @@ function makeid(len) {
   for (var i = 0; i < len; i++)
     text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-  return text;
+return text;
 }
 
 
 router.get('/', auth.isUserAdmin, function(req, res) {
-    
+
 
 
     db.Parent.findAll()
     .then( (parents) => parents.forEach( (parent) => console.log(parent.name) )
-    );
+        );
 
     var promise1 = db.Parent.findAll();
     var promise2 = db.Organizer.findAll();
@@ -43,8 +43,8 @@ router.get('/', auth.isUserAdmin, function(req, res) {
 
     Promise.all([promise1,promise2,promise3])
     .then( (values) => {
-            obj = { parent: values[0], provider: values[1], event: values[2], user: req.user};
-            res.render('admin',obj);
+        obj = { parent: values[0], provider: values[1], event: values[2], user: req.user};
+        res.render('admin',obj);
     });
 
 
@@ -71,20 +71,20 @@ router.put('/parent/:parentId/reset', auth.isUserAdmin, function(req, res) {
               finalRes.then( (info, error) => {
                 if (!error) {
                   res.redirect('/admin');
-                }
-                else{
+              }
+              else{
                   console.log(error);
                   res.redirect('/failReset');
-                }
-
-              });
-            }
-            else{
-              console.log('Shit');
-              res.redirect('/failReset');
-            }
+              }
 
           });
+          }
+          else{
+              console.log('Shit');
+              res.redirect('/failReset');
+          }
+
+      });
 
             // res.redirect("/admin");
         }
@@ -113,20 +113,20 @@ router.put('/provider/:providerId/reset', auth.isUserAdmin, function(req, res) {
               finalRes.then( (info, error) => {
                 if (!error) {
                   res.redirect('/admin');
-                }
-                else{
+              }
+              else{
                   console.log(error);
                   res.redirect('/failReset');
-                }
-
-              });
-            }
-            else{
-              console.log('Shit');
-              res.redirect('/failReset');
-            }
+              }
 
           });
+          }
+          else{
+              console.log('Shit');
+              res.redirect('/failReset');
+          }
+
+      });
 
 
         }
@@ -168,7 +168,7 @@ router.get('/events/:eventId', auth.isUserAdmin, function(req, res) {
             });
         }
         else {
-                    res.render('no_page', {user: req.user});
+            res.render('no_page', {user: req.user});
         }
     });
 });
@@ -204,13 +204,15 @@ router.get('/provider/:providerId', auth.isUserAdmin, function(req, res) { //fir
         var result = provider[0].dataValues;
         var ProviderInfo =  {
             PersonalInfo: { ProviderName : result.name, 
-                            ProviderText : result.description,
-                            ProviderEmail : result.email,
-                            ProviderPage :result.webpage,
-                            ProviderPhoneNumber: result.phone,
-                            ProviderAddress : "25ης Μαρτίου 10, Βριλήσσια"},
-                            user: req.user
-                            }; 
+                ProviderText : result.description,
+                ProviderEmail : result.email,
+                ProviderPage :result.webpage,
+                ProviderPhoneNumber: result.phone,
+                ProviderAddress : "25ης Μαρτίου 10, Βριλήσσια",
+                isVerified : result.isVerified,
+                user: req.user
+            }
+        }; 
             res.render('providerPageAsAdmin', ProviderInfo);  //render page for admin depending if he was accepted or not           
         });
 

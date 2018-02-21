@@ -14,6 +14,7 @@ var auth = require('../apis/authentication');
 const Op = Sequelize.Op;
 
 
+
 /* GET create event page. */
 router.get('/:providerId', function(req, res) {
 	var providerId = req.params.providerId;
