@@ -11,21 +11,32 @@ router.get('/', function(req, res, next) {
     if (isNaN(endDate))
         endDate = undefined;
 
+    var radius = req.query.radius;
+    if (!radius)    
+        radius=10;
+    
+    var age_group = req.query.AgeGroup;
+    if (age_group === 'u')
+        age_group = undefined;
+
+    var price = req.query.endPrice;
+    if (!price) 
+        price = 50;
+
     filters = {
         free_text : req.query.q,
-        price : req.query.endPrice,
-        distance : req.query.radius,
+        price : price,
+        distance : radius,
         tickets : 1,
         address : req.query.location,
         page : req.query.page,
         max_time: endDate,
-        age_group: req.query.AgeGroup
+        age_group: age_group
     }
 
     var page = req.query.page;
     if (req.query.page == null)
         page = 0;
-
 
 
     elastic.search('events',filters, (hits) => {
@@ -69,10 +80,10 @@ router.get('/', function(req, res, next) {
             obj : obj,
             activity : req.query.q,
             location : req.query.location,
-            ageGroup : req.query.AgeGroup,
+            ageGroup : age_group,
             // startPrice : startPrice,
-            radius : req.query.radius,
-            endPrice : req.query.endPrice,
+            radius : radius,
+            endPrice : price,
             //startDate : startDate,
             endDate : req.query.endDate,
             page : page,
@@ -80,7 +91,7 @@ router.get('/', function(req, res, next) {
     
         };
         // console.log(info);
-        res.render('search_results', info);
+        res.render('search_results2', info);
 
     });
 });
