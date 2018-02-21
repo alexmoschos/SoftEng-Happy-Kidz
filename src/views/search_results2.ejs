@@ -1,83 +1,88 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>HappyKidz - Search</title>
-    <meta charset="UTF-8">
+    <head>
+        <title>HappyKidz - Search</title>
+        <meta charset="UTF-8">
 
-</head>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-    crossorigin="anonymous"></script>
 
-<!-- Latest compiled and minified CSS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-    crossorigin="anonymous">
+        <!-- Latest compiled and minified CSS -->
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-    crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous">
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
-<link rel="stylesheet" href="/stylesheets/styles_search.css">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+            crossorigin="anonymous">
 
-<link rel="stylesheet" type="text/css" href="/stylesheets/navbar.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/stylesheets/styles_search.css">
+
+        <link rel="stylesheet" type="text/css" href="/stylesheets/navbar.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/search_filters.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
 
 
 <%- include partials/navbar.ejs %>
     <div id="wrapper">
         <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <h3><center>Φίλτρα αναζήτησης</center></h3>
+        <div id="sidebar-wrapper" style="background: rgb(190, 186, 186); height: 520px; margin-top:80px; margin-right:15px; width:235px; padding-top:10px;" >
             <div class="container-fluid">
-                <a id="menu-toggle-side" href="#" class="btn-menu toggle" style="width:100%">
-                    <button class="btn btn-default btn-block">Close Filters</button>
+                <a id="menu-toggle-side" href="#" class="h4 filters-close-button toggle" style="width:100%">
+                    <!-- <button class="btn btn-default btn-block">Close Filters</button> -->
+                    <span class="glyphicon glyphicon-remove" arial-hidden="true"></span>
                 </a>
-                <hr>
+                <!-- <hr> -->
                 <div class="search-filters">
-                    <form class="navbar-form" id="filter-form" role="search" method="get" action="/search">
+                    <form class="" id="filter-form" role="search" method="get" action="/search">
                         <div class="input-group">
                             <label for="Activity">Δραστηριότητα</label>
-                            <input type="text" class="form-control" placeholder="Search" name="q" value="<%= activity%>" >
+                            <input style="width: 205px" type="text" class="form-control" placeholder="Search" name="q" value="<%= activity%>" >
                         </div>
                         <div class="input-group">
                             <label for="Location">Τοποθεσία</label>
-                            <input type="text" class="form-control" placeholder="Location" name="location"  value="<%= location %>" >
+                            <input style="width: 205px" type="text" class="form-control" placeholder="Location" name="location"  value="<%= location %>" >
                         </div>
                         <div class="input-group">
                         <label for="Radius">Απόσταση απο τοποθεσία</label>
-                            <input type="number" class="form-control" placeholder="Απόσταση απο τοποθεσία σε χιλιόμετρα" name="radius" value="<%= radius %>" >
+                            <p><span id="distance_text"><%= radius %></span> km</p>
+                            <input id = "distance" style="width: 205px" type="range" class="form-control" min=0 max=100 step=5 name="radius" value="<%= radius %>" >
                         </div>
-
+    
                         <div class="form-group">
                             <label for="AgeGroup">Ηλικιακή Ομάδα</label>
-                            <select class="form-control " name="AgeGroup" id="age" value="<%= ageGroup %>" >
-                                <option value="3">3-5</option>
-                                <option value="6">6-8</option>
-                                <option value="9">9-12</option>
-                                <option value="13">>12</option>
+                            <select style="width: 205px" class="form-control " name="AgeGroup" id="age" >
+                                    <option value="u">--</option>
+                                    <option <% if (ageGroup === '3') { %> selected='selected' <% } %> value="3">3-5</option>
+                                    <option <% if (ageGroup === '6') { %> selected='selected' <% } %>   value="6">6-8</option>
+                                    <option <% if (ageGroup === '9') { %> selected='selected' <% } %> value="9">9-12</option>
+                                    <option <% if (ageGroup === '13') { %> selected='selected' <% } %> value="13">>12</option>
                             </select>
                         </div>
                         <div class="input-group">
                         <label for="PriceRange">Τιμή</label>
                             <!-- <input type="number" class="form-control" placeholder="Minimum Price" name="startPrice"  > -->
-                            <input type="number" class="form-control" placeholder="Maximum Price" name="endPrice" value="<%= endPrice %>" >
+                            <p><span id="price_text"><%= endPrice %></span><span class="glyphicon glyphicon-eur" aria-hidden="true"></span></p>
+                            <input style="width: 205px" type="range" id="price" min=0 max=100 step=5 class="form-control" placeholder="Maximum Price" name="endPrice" value="<%= endPrice %>" >
                         </div>
-
+    
                         <div class="input-group">
                         <label for="Date">Ημερομηνία</label>
-                            <input type="date" class="form-control" placeholder="End Date " name="endDate" value="<%= endDate %>" >
+                            <input style="width: 205px"type="date" class="form-controλ" placeholder="End Date " name="endDate" value="<%= endDate %>" >
                         </div>
                         <div class="input-group" style="display: none;">
                         <label for="Date">Page</label>
                             <input type="number" class="form-control" name="page" id="page-changer" value=<%= page %>>
                         </div>
-                        <button class="btn btn-success btn-block" style="margin-top:10px" type="submit" id="filter-apply">Go!</button>
+                        <button class="btn btn-success btn-block filter-element" style="margin-top:10px" type="submit" id="filter-apply">Go!</button>
                     </form>
                 </div>
             </div>
@@ -87,9 +92,22 @@
             <div class="page-content">
                 <div class="container-fluid">
                     <div class="row">
-
+                        <a id="menu-toggle" href="#" class="btn-menu toggle" style="margin-left:10px;">
+                            <button class="btn filter-btn btn-lg">
+                                <span><i class="glyphicon glyphicon-list"></i></span>
+                                <span>Φίλτρα</span>
+                            </button>
+                        </a>
+                        <div class="controls">
+                            <button class="btn btn-primary prev-page">Προηγούμενη σελίδα</button> <span class="a">Σελίδα <%= page %> </span>
+                            <% if (obj.length >0 ) { %>
+                            <button class="btn btn-primary next-page">Επόμενη σελίδα</button>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-7 col-lg-7">
-                            <div class="btn-group" style="margin-bottom:20px; margin-left: 10px;">
+                            <!-- <div class="btn-group" style="margin-bottom:20px; margin-left: 10px;">
                                 <div class="row">
                                     <a id="menu-toggle" href="#" class="btn-menu toggle">
                                         <button class="btn filter-btn btn-lg">
@@ -115,7 +133,7 @@
                                 </a>
                                 <% } %>
                             </a>
-                            </div>
+                            </div> -->
 
                             <!-- <hr> -->
                             <!-- <div class="container" style="border:1px solid #29335c; border-radius:1px; backround-color: #ffffff;"> -->
@@ -262,6 +280,14 @@
                             <p>Δεν υπάρχουν διαθέσιμα αποτελέσματα</p>
                         <% } %>
                     </div>
+                    <div class="row">
+                        <div class="controls">
+                            <button class="btn btn-primary prev-page">Προηγούμενη σελίδα</button> <span class="a">Σελίδα <%= page %> </span>
+                            <% if (obj.length >0 ) { %>
+                            <button class="btn btn-primary next-page">Επόμενη σελίδα</button>
+                            <% } %>
+                        </div>	
+                    </div>
                 </div>
             </div>
         </div>
@@ -269,18 +295,27 @@
 </body>
 
 <script>
-    $("#age").val("<%= ageGroup %>").change();
     var page = <%= page %>;
+
+    $("#distance").change(function (event) {
+        var distance = $("#distance").val();
+        $("#distance_text").html(distance);
+    });
+
+    $("#price").change(function (event) {
+        var price = $("#price").val();
+        $("#price_text").html(price);
+    });
     
     $("#filter-apply").click(function (event) {
         $("#page-changer").val(0).change();
     });
 
-    $("#next-page").click(function(e){
+    $(".next-page").click(function(e){
         $("#page-changer").val(page+1).change();
         $("#filter-form").submit();
     });
-    $("#prev-page").click(function(e){
+    $(".prev-page").click(function(e){
         if(page == 0) return;
         $("#page-changer").val(page-1).change();
         $("#filter-form").submit();
