@@ -115,6 +115,17 @@ function createQuery(filters, callback) {
         });
     }
 
+    if (filters.min_time && filters.min_time.length != 0) {
+        query.bool.filter.push({
+            range: {startTime: {lge: parseInt(filters.min_time)}}
+        });
+    } else {
+        var curr_time = new Date().getTime() / 1000;
+        query.bool.filter.push({
+            range: {startTime: {gte: curr_time}}
+        });
+    }
+
     if (filters.age_group && filters.age_group.length != 0) {
         query.bool.filter.push({
             term: {minAge: parseInt(filters.age_group)}

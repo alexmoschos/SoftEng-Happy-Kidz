@@ -1,0 +1,29 @@
+.filters {
+	/*position:fixed;
+	left: 0px;*/
+	background: rgb(190, 186, 186);
+	height: 520px;
+	/*width: 0px;*/
+	z-index: 10000;
+}
+
+
+.filters-close-button {
+	margin-top: 10px;
+	margin-left: 190px;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.js-filter-btn {
+	margin-left:20px;
+	margin-top:10px;
+}
+
+.controls {
+	width: 360px;
+	margin:auto;
+	margin-bottom: 30px;
+}

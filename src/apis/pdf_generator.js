@@ -8,7 +8,7 @@ function build_ticket(doc, options) {
 
     // add qrcode
     //TODO: change this to be dynamic
-    doc.image('public/qrcode.png', 0, 150, {width: 150});
+    doc.image(options.qr_code_src, 0, 150, {width: 150});
 
     //add event title
     doc.fontSize(18);

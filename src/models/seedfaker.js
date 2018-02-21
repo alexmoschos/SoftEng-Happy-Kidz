@@ -197,36 +197,38 @@ function seedDatabase(db) {
 
                 db.Event.findAll().then(hits => {
                     hits.forEach(function (event) {
-                        var newEvent = {};
+                        if (event.isVerified) {
+                            var newEvent = {};
 
-                        newEvent.organizerId = event.organizerId;
+                            newEvent.organizerId = event.organizerId;
 
-                        newEvent.title = event.title;
-                        newEvent.startTime = event.startTime;
-                        newEvent.endTime = event.endTime; // this field should probably go
-                        newEvent.description = event.description;
-                        newEvent.categoryName = event.categoryName;
-                        newEvent.geoAddress = event.geoAddress;
-                        newEvent.ticketPrice = event.ticketPrice;
-                        newEvent.ticketCount = event.ticketCount
-                        newEvent.initialTicketCount = event.initialTicketCount;
-                        newEvent.minAge = event.minAge;
-                        newEvent.maxAge = event.maxAge;
-                        newEvent.discount = event.discount;
-                        newEvent.pictures = event.pictures;
-                        newEvent.geoLocation = {
-                            lat: event.geoLat,
-                            lon: event.geoLon
-                        };
+                            newEvent.title = event.title;
+                            newEvent.startTime = event.startTime;
+                            newEvent.endTime = event.endTime; // this field should probably go
+                            newEvent.description = event.description;
+                            newEvent.categoryName = event.categoryName;
+                            newEvent.geoAddress = event.geoAddress;
+                            newEvent.ticketPrice = event.ticketPrice;
+                            newEvent.ticketCount = event.ticketCount
+                            newEvent.initialTicketCount = event.initialTicketCount;
+                            newEvent.minAge = event.minAge;
+                            newEvent.maxAge = event.maxAge;
+                            newEvent.discount = event.discount;
+                            newEvent.pictures = event.pictures;
+                            newEvent.geoLocation = {
+                                lat: parseFloat(event.geoLat),
+                                lon: parseFloat(event.geoLon)
+                            };
 
-                        newEvent.eventId = event.eventId.toString();
+                            newEvent.eventId = event.eventId.toString();
 
-                        db.Organizer.findOne({ where: { organizerId: event.organizerId } }).then((provider) => {
-                            newEvent.providerName = provider.name;
-                            newEvent.providerPhone = provider.phone;
+                            db.Organizer.findOne({ where: { organizerId: event.organizerId } }).then((provider) => {
+                                newEvent.providerName = provider.name;
+                                newEvent.providerPhone = provider.phone;
 
-                            elastic.insert('events', newEvent);
-                        });
+                                elastic.insert('events', newEvent);
+                            });
+                        }
                     });
                 });
 
