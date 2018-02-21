@@ -1,3 +1,4 @@
+// External Packages
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -9,7 +10,9 @@ var formidable = require('formidable');
 var methodOverride = require('method-override');
 var validator = require('express-validator');
 var passport = require('./apis/passport');
+var flash = require('express-flash');
 
+// Routes
 var chart_data = require('./routes/chart_data');
 var index = require('./routes/index');
 var parent = require('./routes/parent');
@@ -59,6 +62,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use(flash());
+
+// Configure each route to use corresponding file
 app.use('/', index);
 app.use('/login', login);
 app.use('/parent', parent);
@@ -66,7 +72,6 @@ app.use('/parent', parent);
 app.use('/chart_data', chart_data);
 app.use('/booked_seats', booked_seats);
 
-//app.use('/search', event_search);
 app.use('/ticket', ticket_route);
 app.use('/events', events);
 app.use('/search', search_results);

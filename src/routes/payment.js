@@ -69,6 +69,8 @@ router.post('/', auth.isUserParent, function (req, res) {
                 db.Membership.findById(userSession.passport.user.id)
                     .then((membership) => {
                         if (!isMembershipValid(membership)) {
+                            console.log("Not a valid membership");
+                            req.flash('error', 'Δεν έχετε συνδρομή είτε η συνδρομή σας έχει λήξει.');
                             res.redirect('/membership');
                         } else {
                             db.sequelizeConnection.transaction(function (t) {
@@ -147,6 +149,7 @@ router.post('/events/:id', auth.isUserParent, function (req, res) {
     db.Membership.findById(req.session.passport.user.id)
         .then((membership) => {
             if (!isMembershipValid(membership)) {
+                req.flash('error', 'Δεν έχετε συνδρομή είτε η συνδρομή σας έχει λήξει.');
                 res.redirect('/membership');
             } else {
                 req.session.cart = {
@@ -173,6 +176,7 @@ router.post('/membership/:id', auth.isUserParent, function (req, res) {
                 }
                 res.redirect('/payment');
             } else {
+                req.flash('error', 'Έχετε ήδη συνδρομή');
                 res.redirect('/');
             }
         });
