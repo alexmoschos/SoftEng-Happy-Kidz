@@ -69,7 +69,6 @@ router.post('/:parentId/settings', auth.isUserParentId,function(req, res){
 		db.Parent.findById(req.params.parentId)
 		.then( (parent) => { 
 			if (result && req.body.email !== parent.email){
-				console.log('$$$$$$$$$$$$$$$$$$$$$');
 				req.assert('email', 'Υπάρχει ήδη χρήστης με αυτό το email').equals(true);	
 			}
 			var temp = bcrypt.compareSync(req.body.oldPassword, parent.password);
