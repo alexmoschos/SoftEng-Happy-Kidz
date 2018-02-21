@@ -45,8 +45,7 @@ router.post('/reset', function(req, res, next) {
         else {
           res.render('failReset',{user: req.user});
         }
-      }
-      , console.log);
+      }, console.log);
 });
 
 router.get('/reset', function(req, res, next) {

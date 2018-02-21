@@ -146,6 +146,7 @@ router.delete('/:eventId', auth.isUserAdmin, function(req, res){
 router.put('/:eventId', auth.isUserAdmin, function(req, res){
 
     var eventId = utilities.checkInt(req.params.eventId);
+    var providerId, title;
 
     if (!eventId) { res.render('no_page', {user: req.user});}
 
@@ -154,6 +155,9 @@ router.put('/:eventId', auth.isUserAdmin, function(req, res){
         if (event && event.isVerified === false) {
             return event.update({isVerified: true}).then(() => {
                 var newEvent = {};
+
+                providerId = event.organizerId;
+                title = event.title;
 
                 newEvent.organizerId = event.organizerId;
 
@@ -164,7 +168,7 @@ router.put('/:eventId', auth.isUserAdmin, function(req, res){
                 newEvent.categoryName = event.categoryName;
                 newEvent.geoAddress = event.geoAddress;
                 newEvent.ticketPrice = event.ticketPrice;
-                newEvent.ticketCount = event.ticketCount
+                newEvent.ticketCount = event.ticketCount;
                 newEvent.initialTicketCount = event.initialTicketCount;
                 newEvent.minAge = event.minAge;
                 newEvent.maxAge = event.maxAge;
@@ -192,8 +196,30 @@ router.put('/:eventId', auth.isUserAdmin, function(req, res){
             res.render('no_page', {user: req.user});
 
         }
+    })                      //send email notification for acceptance, checks might be needed
+    .then ( (succ) => {
+        return db.Organizer.findById(providerId);
     })
-    .then ( (succ) => res.redirect("/admin"));
+    .then ( (provider) => {
+        if (provider){
+            return mail.sendTextEmail('Επικύρωση Εκδήλωσης', provider.email, 'Είμαστε στην ευχάριστη θέση να σας ενημερώσουμε ότι η εκδήλωσή σας ' + title + ' επικυρώθηκε.');
+        }
+        else {
+            console.log('error with db');
+            res.redirect('/admin');
+        }  
+
+    })
+    .then ((succ) => {
+        if (succ) {
+            res.redirect('/admin');
+        }
+        else {
+            console.log('error with email');
+            res.redirect('/admin');
+
+        }
+    });
 
 });
 

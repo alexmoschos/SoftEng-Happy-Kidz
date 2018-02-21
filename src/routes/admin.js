@@ -9,6 +9,9 @@ var auth = require('../apis/authentication');
 
 
 router.get('/', auth.isUserAdmin, function(req, res) {
+
+    console.log(Math.floor(Date.now() / 1000));
+
     
 
 
@@ -142,11 +145,9 @@ router.get('/events/:eventId', auth.isUserAdmin, function(req, res) {
             db.Organizer.findById(organizerId)
             .then( (provider) => {
                 if (event && event.isVerified === false) {
-                    console.log(event.name + " found event");
                     event.provider = provider;
-                    console.log(event);
                     obj = event;
-                    res.render("adminEvent", {obj, user: req.user});;
+                    res.render("adminEvent", {obj, user: req.user});
                     //res.redirect('/admin');
                 }
                 else {
@@ -168,12 +169,11 @@ router.get('/provider/:providerId', auth.isUserAdmin, function(req, res) {
     db.Organizer.findById(providerId)
     .then( (provider) => {
         if (provider) {
-            console.log(provider.name + " found provider");
             provider.user = req.user;
             res.render("adminProvider", provider);
         }
         else {
-                    res.render('no_page', {user: req.user});
+            res.render('no_page', {user: req.user});
         }
 
     });
