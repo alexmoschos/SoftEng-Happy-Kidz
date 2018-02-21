@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+
+<script src="https://use.fontawesome.com/899071ec86.js"></script>
+
+<title><%= PersonalInfo.ProviderName %></title>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="/stylesheets/styles_provider.css">
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/navbar.css">
+
+<%- include partials/navbar.ejs %>
+
+
+
+
+<body>
+
+
+	<div id="my-main-row" class="row">
+		<div class="col-sm-2"></div>
+		<div class="col-lg-8 col-sm-8">
+
+
+			<div class="card hovercard">
+				<h2 class="username"><%= PersonalInfo.ProviderName %></h2>
+
+			</div>
+
+			
+
+
+
+			<div class="">
+				<div class="tab-content">
+					<div  class="tab-pane fade in active well main-well" id="tab1">
+
+						<div class="general-info">
+
+
+							<!-- <h3>This is tab 1</h3> -->
+
+
+
+ 					<!-- 	PastEventsList.forEach(function(event){ 
+                       		event.
+                       }
+                   -->
+
+
+
+                   <h3><%= PersonalInfo.ProviderName %></h3>
+                   <p><%= PersonalInfo.ProviderText %> </p>
+
+
+
+                   <div class="personal-info">
+                    <span id="provider-email">
+                     <i class="fa fa-envelope" aria-hidden="true"></i>                                
+                     <a href="mailto:<%= PersonalInfo.ProviderEmail %>"><%= PersonalInfo.ProviderEmail %></a>
+                 </span>
+                 <br>
+                 <span id="provider-site">
+                     <i class="fa fa-internet-explorer" aria-hidden="true"></i>
+
+                     <a href="https://<%= PersonalInfo.ProviderPage %>/"><%= PersonalInfo.ProviderPage %></a>
+                 </span>
+                 <br>
+                 <span id="provider-telephone">
+                     <i class="fa fa-phone" aria-hidden="true"></i>
+                     <%= PersonalInfo.ProviderPhoneNumber %>
+                 </span>
+                 <br>
+                 <span id="provider-address">
+                     <i class="fa fa-map-marker" aria-hidden="true"></i>
+                     <%= PersonalInfo.ProviderAddress %>
+                 </span>
+                 <br>
+                 <span id="deko-button">
+                   <a id="view-papers" class="btn btn-info btn-md" href="/provider/<%=PersonalInfo.ProviderId%>/deko">Προβολή Δέκο Εγγράφου</a>
+               </span>
+
+           </div>
+
+
+             <!-- <% if(!(PersonalInfo.isVerified)) { %>
+             <div class="text-center"> 
+              <a   id="accept-btn" href="/event_create" class="btn btn-success btn-lg "> <span class="glyphicon glyphicon-ok"></span></a>
+              <a id="decline-btn" class="btn btn-danger btn-lg" href="/upload_files"><span class="glyphicon glyphicon-remove"></span></a>
+          </div>
+          <% } %> -->
+
+       <!--    <% if(!(PersonalInfo.isVerified)) { %>
+             <div class="text-center"> 
+              <a   id="accept-btn" href="/event_create" class="btn btn-success btn-lg "> <span class="glyphicon glyphicon-ok"></span></a>
+              <a id="decline-btn" class="btn btn-danger btn-lg" href="/upload_files"><span class="glyphicon glyphicon-remove"></span></a>
+          </div>
+          <% } %> -->
+
+          <% if(!(PersonalInfo.isVerified)) { %>
+          <div id="approve-buttons" class="text-center"> 
+            <form style ='display: inline-block;' role="form" action="/provider/<%=PersonalInfo.ProviderId%>?_method=PUT" method="POST">
+
+              <button   type="submit" id="accept-btn"  class="btn btn-success btn-lg "> <span class="glyphicon glyphicon-ok"></span></button>
+          </form>
+          <form style ='display: inline-block;' role="form" action="/provider/<%=PersonalInfo.ProviderId%>?_method=DELETE" method="POST">
+            <button  type="submit" id="decline-btn" class="btn btn-danger btn-lg" ><span class="glyphicon glyphicon-remove"></span></button>
+        </form>
+
+
+    </div>
+    <% } %> 
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+<div class="col-sm-2"></div>
+</div>
+
+
+</body>
+
+
+
+
+
+
+<script>
+
+</script>
+
+
+</html>
