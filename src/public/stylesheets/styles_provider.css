@@ -257,3 +257,23 @@ position: absolute;
 #Papers{
   margin-top: 22px;
 }
+
+#accept-btn{
+  margin-top: 48px;
+  border-radius: 50%;
+  padding:20px;
+  margin-right:10px;
+}
+
+
+#decline-btn{
+  margin-top: 48px;
+  border-radius: 50%;
+  padding:20px;
+    margin-left:10px;
+
+}
+
+#view-papers{
+  margin-top: 12px;
+}
