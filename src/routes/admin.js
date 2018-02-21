@@ -209,9 +209,9 @@ router.get('/provider/:providerId', auth.isUserAdmin, function(req, res) { //fir
                 ProviderPage :result.webpage,
                 ProviderPhoneNumber: result.phone,
                 ProviderAddress : "25ης Μαρτίου 10, Βριλήσσια",
-                isVerified : result.isVerified,
+                isVerified : result.isVerified },
                 user: req.user
-            }
+            
         }; 
             res.render('providerPageAsAdmin', ProviderInfo);  //render page for admin depending if he was accepted or not           
         });
