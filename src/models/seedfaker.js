@@ -78,7 +78,7 @@ function seedDatabase(db) {
     eventobj =  [{
         organizerId: 1,
         title: 'Παρτυ στο σπίτι του Βελεγκα χωρις τον Βελεγκα',
-        startTime: Math.floor(Date.now() / 1000),
+        startTime: Math.floor(Date.now() / 1000 + 24 * 3600),
         endTime: Math.floor(Date.now() / 1000 + 3600),
         description: '',
         categoryName: 'Αθλητισμός',
@@ -98,7 +98,7 @@ function seedDatabase(db) {
     {
         organizerId: 2,
         title: 'Παρτυ με τον Βελεγκα χωρις τον Βελεγκα',
-        startTime: Math.floor(Date.now() / 1000),
+        startTime: Math.floor(Date.now() / 1000 + 24 * 3600),
         endTime: Math.floor(Date.now() / 1000 + 3600),
         description: '',
         categoryName: 'Αθλητισμός',
