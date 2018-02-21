@@ -3,6 +3,9 @@ var db = require('../models/db');
 var auth = require('./authentication');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt');
+var path = require('path');
+var fs = require('fs');
+const request = require('request');
 
 function validatePassword(hash, pass) {
     return bcrypt.compareSync(pass, hash);
@@ -101,8 +104,30 @@ function(req, email, password, done) {
                 db.Organizer.create(newUser).then(user => {
                     console.log('New user successfully created...',user.name);
                     console.log('email',email);
-                    console.log(user);
+                    var files = req.files;
+
+                    var id = user.organizerId.toString(); //here goes the id of the organizer
+                    var newdir = path.join(__dirname, '../public/files/providers',  id);
+                    if (!fs.existsSync(newdir)){
+                         fs.mkdirSync(newdir);
+                     }
+                     console.log(files);
+                    count=0;
+                    for (i in files) {
+                           console.log("success");
+                           var newpath = path.join(newdir, 'deko');
+                           count++;
+                           fs.rename(files[i].path, newpath, function (err) {
+                               if (err) throw err;
+                        });
+                    }
+                    
+
+                      
+
                     return done(null, {user: user, type:'organizer'});
+                    console.log(user);
+
                 }).catch(err => {
                     console.log(err);
                 });

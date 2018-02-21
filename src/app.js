@@ -54,14 +54,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session({saveUninitialized: false}));
 
-app.use(validator());
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
+app.use(validator());
 app.use(flash());
 
 // Configure each route to use corresponding file
@@ -76,9 +76,9 @@ app.use('/ticket', ticket_route);
 app.use('/events', events);
 app.use('/search', search_results);
 app.use('/review', review);
-
-app.use('/provider', provider);
 app.use('/register', register);
+app.use('/provider', provider);
+
 app.use('/logout', logout);
 app.use('/payment', payment);
 
@@ -101,8 +101,10 @@ app.use(function(req, res, next) {
 });
 
 
+
 app.use('/file_upload', file_upload);
 app.use('/event_create', event_create);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
