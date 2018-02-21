@@ -80,44 +80,64 @@ crossorigin="anonymous"></script>
 
                    <div class="personal-info">
                     <span id="provider-email">
-                       <i class="fa fa-envelope" aria-hidden="true"></i>                                
-                       <a href="mailto:<%= PersonalInfo.ProviderEmail %>"><%= PersonalInfo.ProviderEmail %></a>
-                   </span>
-                   <br>
-                   <span id="provider-site">
-                       <i class="fa fa-internet-explorer" aria-hidden="true"></i>
-
-                       <a href="https://<%= PersonalInfo.ProviderPage %>/"><%= PersonalInfo.ProviderPage %></a>
-                   </span>
-                   <br>
-                   <span id="provider-telephone">
-                       <i class="fa fa-phone" aria-hidden="true"></i>
-                       <%= PersonalInfo.ProviderPhoneNumber %>
-                   </span>
-                   <br>
-                   <span id="provider-address">
-                       <i class="fa fa-map-marker" aria-hidden="true"></i>
-                       <%= PersonalInfo.ProviderAddress %>
-                   </span>
-                   <br>
-                   <span id="deko-button">
-                     <a id="view-papers" class="btn btn-info btn-md" href="/upload_files">Προβολή Δέκο Εγγράφου</a>
+                     <i class="fa fa-envelope" aria-hidden="true"></i>                                
+                     <a href="mailto:<%= PersonalInfo.ProviderEmail %>"><%= PersonalInfo.ProviderEmail %></a>
                  </span>
-                 
-             </div>
+                 <br>
+                 <span id="provider-site">
+                     <i class="fa fa-internet-explorer" aria-hidden="true"></i>
+
+                     <a href="https://<%= PersonalInfo.ProviderPage %>/"><%= PersonalInfo.ProviderPage %></a>
+                 </span>
+                 <br>
+                 <span id="provider-telephone">
+                     <i class="fa fa-phone" aria-hidden="true"></i>
+                     <%= PersonalInfo.ProviderPhoneNumber %>
+                 </span>
+                 <br>
+                 <span id="provider-address">
+                     <i class="fa fa-map-marker" aria-hidden="true"></i>
+                     <%= PersonalInfo.ProviderAddress %>
+                 </span>
+                 <br>
+                 <span id="deko-button">
+                   <a id="view-papers" class="btn btn-info btn-md" href="/provider/<%=PersonalInfo.ProviderId%>/deko">Προβολή Δέκο Εγγράφου</a>
+               </span>
+
+           </div>
 
 
-             <% if(!(PersonalInfo.isVerified)) { %>
+             <!-- <% if(!(PersonalInfo.isVerified)) { %>
              <div class="text-center"> 
               <a   id="accept-btn" href="/event_create" class="btn btn-success btn-lg "> <span class="glyphicon glyphicon-ok"></span></a>
               <a id="decline-btn" class="btn btn-danger btn-lg" href="/upload_files"><span class="glyphicon glyphicon-remove"></span></a>
           </div>
-          <% } %>
+          <% } %> -->
+
+       <!--    <% if(!(PersonalInfo.isVerified)) { %>
+             <div class="text-center"> 
+              <a   id="accept-btn" href="/event_create" class="btn btn-success btn-lg "> <span class="glyphicon glyphicon-ok"></span></a>
+              <a id="decline-btn" class="btn btn-danger btn-lg" href="/upload_files"><span class="glyphicon glyphicon-remove"></span></a>
+          </div>
+          <% } %> -->
+
+          <% if(!(PersonalInfo.isVerified)) { %>
+          <div id="approve-buttons" class="text-center"> 
+            <form style ='display: inline-block;' role="form" action="/provider/<%=PersonalInfo.ProviderId%>?_method=PUT" method="POST">
+
+              <button   type="submit" id="accept-btn"  class="btn btn-success btn-lg "> <span class="glyphicon glyphicon-ok"></span></button>
+          </form>
+          <form style ='display: inline-block;' role="form" action="/provider/<%=PersonalInfo.ProviderId%>?_method=DELETE" method="POST">
+            <button  type="submit" id="decline-btn" class="btn btn-danger btn-lg" ><span class="glyphicon glyphicon-remove"></span></button>
+        </form>
 
 
-      </div>
+    </div>
+    <% } %> 
 
-  </div>
+</div>
+
+</div>
 
 
 
@@ -150,20 +170,6 @@ crossorigin="anonymous"></script>
 
 
 <script>
-
-
-// $(document).ready(function() {
-    
-
-// });
-
-
-
-
-
-
-
-
 
 </script>
 
