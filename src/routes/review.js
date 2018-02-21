@@ -47,7 +47,6 @@ router.get('/:eventId/:parentId', auth.isUserParentIdAndBoughtTicket, function(r
                 if(review){
                     descr = review.text;
                 }
-                console.log(descr);
                 obj={
                     user: req.user,
                     eventId: req.params.eventId,
