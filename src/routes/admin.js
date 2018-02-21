@@ -195,12 +195,17 @@ router.get('/events/:eventId', auth.isUserAdmin, function(req, res) {
 
 
 router.get('/provider/:providerId', auth.isUserAdmin, function(req, res) { //first, be sure getter is an admin
-    var providerId = req.params.providerId;
+   var providerId = utilities.checkInt(req.params.providerId);
+  if (!providerId) { res.render('no_page', {user: req.user});}
+
+   
     db.Organizer.findAll({
         where: {
             organizerId : providerId
         }
     }).then(provider => {
+        console.log(provider);
+        if(provider.length > 0){
         var result = provider[0].dataValues;
         var ProviderInfo =  {
             PersonalInfo: { ProviderName : result.name, 
@@ -209,11 +214,16 @@ router.get('/provider/:providerId', auth.isUserAdmin, function(req, res) { //fir
                 ProviderPage :result.webpage,
                 ProviderPhoneNumber: result.phone,
                 ProviderAddress : "25ης Μαρτίου 10, Βριλήσσια",
-                isVerified : result.isVerified },
+                isVerified : result.isVerified,
+                ProviderId: result.organizerId},
                 user: req.user
             
         }; 
-            res.render('providerPageAsAdmin', ProviderInfo);  //render page for admin depending if he was accepted or not           
+            res.render('providerPageAsAdmin', ProviderInfo);  //render page for admin depending if he was accepted or not  
+            } 
+            else {
+                    res.render('no_page', {user: req.user});
+         }        
         });
 
 });

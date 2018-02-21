@@ -9,6 +9,7 @@ var auth = require('../apis/authentication');
 var db = require('../models/db');
 const Sequelize = require('sequelize');
 var auth = require('../apis/authentication');
+var utilities = require('../apis/utilities');
 
 
 const Op = Sequelize.Op;
@@ -17,7 +18,9 @@ const Op = Sequelize.Op;
 
 /* GET create event page. */
 router.get('/:providerId', function(req, res) {
-	var providerId = req.params.providerId;
+	 providerId = utilities.checkInt(req.params.providerId);
+    if (!providerId) { res.render('no_page', {user: req.user});}
+
 	if (req.isAuthenticated()){
 		console.log(req.user.user.organizerId);
 		db.Organizer.findAll({
@@ -25,6 +28,7 @@ router.get('/:providerId', function(req, res) {
 				organizerId : providerId
 			}
 		}).then(provider => {
+			 if (provider.length > 0) {
 			var currtime = new Date().getTime()/1000;
 			var result = provider[0].dataValues;
 			db.Event.findAll({
@@ -119,8 +123,13 @@ router.get('/:providerId', function(req, res) {
 								//Render a page for users-providers with other id-admins
 								res.render('providerPageAsUser', ProviderInfo);
 							}
+
 						});
 			});
+			} 
+            else {
+                    res.render('no_page', {user: req.user});
+         }      
 		});		
 	}
 	else {
