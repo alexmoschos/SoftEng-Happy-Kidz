@@ -165,7 +165,6 @@ router.get('/events/:eventId', auth.isUserAdmin, function(req, res) {
 router.get('/provider/:providerId', auth.isUserAdmin, function(req, res) { //first, be sure getter is an admin
    var providerId = utilities.checkInt(req.params.providerId);
   if (!providerId) { res.render('no_page', {user: req.user});}
-
    
     db.Organizer.findAll({
         where: {
@@ -193,7 +192,6 @@ router.get('/provider/:providerId', auth.isUserAdmin, function(req, res) { //fir
                     res.render('no_page', {user: req.user});
          }        
         });
-
 
 });
 
