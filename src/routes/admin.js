@@ -173,25 +173,48 @@ router.get('/events/:eventId', auth.isUserAdmin, function(req, res) {
     });
 });
 
-router.get('/provider/:providerId', auth.isUserAdmin, function(req, res) {
 
-    providerId = utilities.checkInt(req.params.providerId);
-    if (!providerId) { res.render('no_page', {user: req.user});}
+// router.get('/provider/:providerId', auth.isUserAdmin, function(req, res) {
 
-    db.Organizer.findById(providerId)
-    .then( (provider) => {
-        if (provider) {
-            console.log(provider.name + " found provider");
-            provider.user = req.user;
-            res.render("adminProvider", provider);
+//     providerId = utilities.checkInt(req.params.providerId);
+//     if (!providerId) { res.render('no_page', {user: req.user});}
+
+//     db.Organizer.findById(providerId)
+//     .then( (provider) => {
+//         if (provider) {
+//             console.log(provider.name + " found provider");
+//             provider.user = req.user;
+//             res.render("adminProvider", provider);
+//         }
+//         else {
+//                     res.render('no_page', {user: req.user});
+//         }
+
+//     });
+// });
+
+
+router.get('/provider/:providerId', auth.isUserAdmin, function(req, res) { //first, be sure getter is an admin
+    var providerId = req.params.providerId;
+    db.Organizer.findAll({
+        where: {
+            organizerId : providerId
         }
-        else {
-                    res.render('no_page', {user: req.user});
-        }
+    }).then(provider => {
+        var result = provider[0].dataValues;
+        var ProviderInfo =  {
+            PersonalInfo: { ProviderName : result.name, 
+                            ProviderText : result.description,
+                            ProviderEmail : result.email,
+                            ProviderPage :result.webpage,
+                            ProviderPhoneNumber: result.phone,
+                            ProviderAddress : "25ης Μαρτίου 10, Βριλήσσια"},
+                            user: req.user
+                            }; 
+            res.render('providerPageAsAdmin', ProviderInfo);  //render page for admin depending if he was accepted or not           
+        });
 
-    });
 });
-
 
 
 module.exports = router;
