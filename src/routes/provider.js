@@ -9,6 +9,8 @@ var auth = require('../apis/authentication');
 var db = require('../models/db');
 const Sequelize = require('sequelize');
 var auth = require('../apis/authentication');
+var mail = require('../apis/mail');
+
 
 
 const Op = Sequelize.Op;
@@ -140,38 +142,77 @@ router.post('/', function(req, res, next) {
 
 /* Route to delete a provider */
 router.delete('/:providerId', auth.isUserAdmin, function(req, res){
-	providerId = utilities.checkInt(req.params.providerId);
-    if (!providerId) { res.render('no_page', {user: req.user});}
+
+	var providerId = utilities.checkInt(req.params.providerId);
+	var email;
 
 	db.Organizer.findById(providerId)
 	.then( (provider) => {
 		if (provider) {
+			email = provider.email;
 			return provider.destroy();
 		} else {
-			res.render('no_page',{user: req.user})
+			res.send('No such provider!' + console.log(req.params.providerId))
 		}
-	}  )
-	.then( (succ) => res.redirect("/admin") );
-
+	})
+	.then( (succ) => {
+		if (succ){
+		 return mail.sendTextEmail('Διαγραφή Λογαριασμού', email, 'Είμαστε στη δυσάρεστη θέση να σας ενημερώσουμε ότι ο λογαριαμός σας διαγράφηκε.');
+		}
+		else{
+			console.log('error with deletion');
+			res.redirect('/admin');
+		}
+	})
+	.then( (succ) => {
+		if (succ) {
+			res.redirect('/admin');
+		}
+		else{
+			console.log('error with email');
+			res.redirect('/admin');
+		}
+	});
 });
 
 /* Route to accept a provider */
 
 router.put('/:providerId', auth.isUserAdmin, function(req, res){
 
-	providerId = utilities.checkInt(req.params.providerId);
+	var providerId = utilities.checkInt(req.params.providerId);
     if (!providerId) { res.render('no_page', {user: req.user});}
+    var email;
+
 	
-    db.Event.findById(providerId)
+    db.Organizer.findById(providerId)
     .then( (provider) => {
         if (provider && provider.isVerified === false) {
+        	email = provider.email;
             return provider.update({isVerified: true});
         }  
         else {
                     res.render('no_page', {user: req.user});
         }
     })
-    .then ( (succ) => res.redirect("/admin")); 
+    .then( (succ) => {
+		if (succ){
+		 return mail.sendTextEmail('Επιβεβαίωση Λογαριασμού', email, 'Είμαστε στην ευχάριστη θέση να σας ενημερώσουμε ότι ο λογαριαμός σας επιβεβαιώθηκε.');
+		}
+		else{
+			console.log('error with deletion');
+			res.redirect('/admin');
+		}
+	})
+	.then( (succ) => {
+		if (succ) {
+			res.redirect('/admin');
+		}
+		else{
+			console.log('error with email');
+			res.redirect('/admin');
+		}
+	});
 });
+    
 
 module.exports = router;

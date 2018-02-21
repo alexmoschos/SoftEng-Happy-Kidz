@@ -41,7 +41,7 @@ router.get('/', auth.isUserAdmin, function(req, res) {
 // ******************** Reset passwords, isws meta mpei san put sto antistoixo object //
 router.put('/parent/:parentId/reset', auth.isUserAdmin, function(req, res) {
 
-    parentId = utilities.checkInt(req.params.parentId);
+    var parentId = utilities.checkInt(req.params.parentId);
     if (!parentId) { res.render('no_page', {user: req.user});}
 
     db.Parent.findById(parentId)
@@ -84,7 +84,7 @@ router.put('/parent/:parentId/reset', auth.isUserAdmin, function(req, res) {
 
 router.put('/provider/:providerId/reset', auth.isUserAdmin, function(req, res) {
 
-    providerId = utilities.checkInt(req.params.providerId);
+    var providerId = utilities.checkInt(req.params.providerId);
     if (!providerId) { res.render('no_page', {user: req.user});}
 
     db.Organizer.findById(providerId)
@@ -130,7 +130,7 @@ router.put('/provider/:providerId/reset', auth.isUserAdmin, function(req, res) {
 
 router.get('/events/:eventId', auth.isUserAdmin, function(req, res) {
 
-    eventId = utilities.checkInt(req.params.eventId);
+    var eventId = utilities.checkInt(req.params.eventId);
     if (!eventId) { res.render('no_page', {user: req.user});}
 
     db.Event.findById(eventId)
@@ -162,7 +162,7 @@ router.get('/events/:eventId', auth.isUserAdmin, function(req, res) {
 
 router.get('/provider/:providerId', auth.isUserAdmin, function(req, res) {
 
-    providerId = utilities.checkInt(req.params.providerId);
+    var providerId = utilities.checkInt(req.params.providerId);
     if (!providerId) { res.render('no_page', {user: req.user});}
 
     db.Organizer.findById(providerId)

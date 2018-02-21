@@ -3,6 +3,7 @@ var router = express.Router();
 var db = require('../models/db');
 var auth = require('../apis/authentication');
 var utilities = require('../apis/utilities');
+var mail = require('../apis/mail');
 
 
 
@@ -87,17 +88,36 @@ router.post('/:parentId/settings', function(req, res){
 
 router.delete('/:parentId', auth.isUserAdmin,  function(req, res){
 
-	parentId = utilities.checkInt(req.params.parentId);
+	var parentId = utilities.checkInt(req.params.parentId);
+	var email;
 
 	db.Parent.findById(parentId)
 	.then( (parent) => {
 		if (parent) {
+			email = parent.email;
 			return parent.destroy();
 		} else {
 			res.send('No such parent!' + console.log(req.params.parentId))
 		}
-	}  )
-	.then( (succeed) => res.redirect("/admin") );
+	})
+	.then( (succ) => {
+		if (succ){
+		 return mail.sendTextEmail('Διαγραφή Λογαριασμού', email, 'Είμαστε στη δυσάρεστη θέση να σας ενημερώσουμε ότι ο λογαριαμός σας διαγράφηκε.');
+		}
+		else{
+			console.log('error with deletion');
+			res.redirect('/admin');
+		}
+	})
+	.then( (succ) => {
+		if (succ) {
+			res.redirect('/admin');
+		}
+		else{
+			console.log('error with email');
+			res.redirect('/admin');
+		}
+	});
 });
 
 module.exports = router;

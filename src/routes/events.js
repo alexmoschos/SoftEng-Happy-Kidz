@@ -3,6 +3,8 @@ var router = express.Router();
 var db = require('../models/db');
 const Sequelize = require('sequelize');
 var auth = require('../apis/authentication');
+var mail = require('../apis/mail');
+
 
 
 
@@ -104,20 +106,38 @@ router.get('/:id', function(req, res, next) {
 
 //edw thelei elastic kai sto delete kai sto put
 router.delete('/:eventId', auth.isUserAdmin, function(req, res){
-    eventId = utilities.checkInt(req.params.eventId);
+    var eventId = utilities.checkInt(req.params.eventId);
     if (!eventId) { res.render('no_page', {user: req.user});}
+    var providerId;
 
     db.Event.findById(eventId)
     .then( (event) => {
         if (event && event.isVerified === false) {
+            providerId = event.organizerId;
             return event.destroy();
         } else {
             res.render('no_page', {user: req.user});
         }
-    }).then( (succ) =>
-    res.redirect("/admin")
-    );
-
+    })
+    .then( (succ) =>
+        {return db.Organizer.findById(providerId);
+    })
+    .then( (provider) => {
+        if (provider){
+        return mail.sendTextEmail('Απόρριψη Εκδήλωσης', provider.email, 'Είμαστε στη δυσάρεστη θέση να σας ενημερώσουμε ότι η εκδήλωσή σας απορρίφθηκε.');
+        }
+        else{
+            console.log('error with provider');
+            res.redirect('/admin');
+        }
+    })
+    .then( (succ1) => {
+        if (succ1) {res.redirect('/admin');}
+        else{
+            console.log('error with email');
+            res.redirect('/admin');
+        }
+    });
 });
 
 /* Route to approve an event */
@@ -127,7 +147,7 @@ router.delete('/:eventId', auth.isUserAdmin, function(req, res){
 
 router.put('/:eventId', auth.isUserAdmin, function(req, res){
 
-    eventId = utilities.checkInt(req.params.eventId);
+    var eventId = utilities.checkInt(req.params.eventId);
     if (!eventId) { res.render('no_page', {user: req.user});}
 
     db.Event.findById(req.params.eventId)
