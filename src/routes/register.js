@@ -54,7 +54,7 @@ router.post('/:type',upload.any(), function(req, res, next) {
           		return next(err); // will generate a 500 error
         	}
         	if (!user) {
-          		return res.status(409).render('register', {errMsg: info.errMsg, errors:[], tab: userTab});
+          		return res.status(409).render('register', {errMsg: info.errMsg, errors:[], tab: "userTab"});
         	}
         	req.login(user, function(err){
           		if(err){
@@ -89,7 +89,7 @@ router.post('/:type',upload.any(), function(req, res, next) {
           	return next(err); // will generate a 500 error
         	}
         	if (!user) {
-          	return res.status(409).render('register', {errMsg: info.errMsg, errors:[], tab: providerTab});
+          	return res.status(409).render('register', {errMsg: info.errMsg, errors:[], tab: "providerTab"});
         	}
         	req.login(user, function(err){
           	if(err){
