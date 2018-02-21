@@ -4,22 +4,9 @@ var db = require('../models/db');
 var passport = require('../apis/passport');
 var auth = require('../apis/authentication');
 var bodyParser = require('body-parser');
+var configFile = require('../config'); 
 
-var availMemberships = [{
-    description: "Συνδρομή 3 μηνών",
-    duration: 3,
-    amount: 15
-},
-{
-    description: "Συνδρομή 6 μηνών",
-    duration: 6,
-    amount: 25
-},
-{
-    description: "Συνδρομή 12 μηνών",
-    duration: 12,
-    amount: 40
-}]
+var availMemberships = configFile.availMemberships;
 
 // Utility function to check if membership is valid
 function isMembershipValid(membership) {
@@ -41,10 +28,10 @@ router.get('/', auth.isUserParent, function (req, res) {
         switch (item.type) {
             case 'ticket':
                 db.Event.findById(item.eventId)
-                    .then((event) => res.render('payment', { description: item.quantity + 'x Εισιτήριο για ' + event.title, amount: event.ticketPrice, quantity: item.quantity }));
+                    .then((event) => res.render('payment/index', { description: item.quantity + 'x Εισιτήριο για ' + event.title, amount: event.ticketPrice, quantity: item.quantity }));
                 break;
             case 'membership':
-                res.render('payment', { description: availMemberships[item.tier - 1].description, amount: availMemberships[item.tier - 1].amount });
+                res.render('payment/index', { description: availMemberships[item.tier - 1].description, amount: availMemberships[item.tier - 1].amount });
                 break;
             default:
                 console.log('something definitely went wrong');
@@ -58,7 +45,7 @@ router.get('/', auth.isUserParent, function (req, res) {
 
 // Payment forms should post here
 router.post('/', auth.isUserParent, function (req, res) {
-    /* Retrieve item to buy */
+    // Retrieve item to buy 
     let userSession = req.session;
     if (userSession.cart) {
         let item = userSession.cart;
@@ -81,7 +68,7 @@ router.post('/', auth.isUserParent, function (req, res) {
                                         console.log('Event found: ' + event);
                                         let newTicketCount = event.ticketCount - item.quantity;
                                         if (newTicketCount >= 0) {
-                                            return event.update({ ticketCount: newTicketCount }, { transaction: t })
+                                            return event.update({ ticketCount: newTicketCount }, { transaction: t });
                                         } else {
                                             throw new Error("Not enough tickets");
                                         }
@@ -105,7 +92,7 @@ router.post('/', auth.isUserParent, function (req, res) {
                                     // Find parent and update wallet
                                     // TODO: Generate QRCode -> PDF -> Send Email
                                     .then((tickets) => db.Parent.findById(userSession.passport.user.id, { transaction: t }))
-                                    .then((parent) => parent.update({ wallet: parent.wallet + item.quantity * 100 }, { transaction: t }))
+                                    .then((parent) => parent.update({ wallet: parent.wallet + item.quantity * 100 }, { transaction: t }));
                             })
                                 .then((result) => {
                                     console.log('Successful transaction ' + result);
@@ -113,10 +100,10 @@ router.post('/', auth.isUserParent, function (req, res) {
                                 })
                                 .catch((err) => {
                                     console.log('Unsuccessful transaction ' + err);
-                                    res.send('Not enough tickets')
+                                    res.send('Not enough tickets');
                                 });
                         }
-                    })
+                    });
 
                 break;
             case 'membership':
@@ -156,7 +143,7 @@ router.post('/events/:id', auth.isUserParent, function (req, res) {
                     type: 'ticket',
                     eventId: req.params.id,
                     quantity: req.body.quantity
-                }
+                };
                 res.redirect('/payment');
             }
         });
@@ -173,7 +160,7 @@ router.post('/membership/:id', auth.isUserParent, function (req, res) {
                 req.session.cart = {
                     type: 'membership',
                     tier: req.params.id
-                }
+                };
                 res.redirect('/payment');
             } else {
                 req.flash('error', 'Έχετε ήδη συνδρομή');
@@ -183,7 +170,7 @@ router.post('/membership/:id', auth.isUserParent, function (req, res) {
 });
 
 router.get('/success', function (req, res) {
-    res.render('successPayment', { user: req.user });
+    res.render('payment/success', { user: req.user });
 });
 
 module.exports = router;
