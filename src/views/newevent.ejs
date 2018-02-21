@@ -192,12 +192,13 @@
 </body>
 
 <script type="text/javascript">
+    var count= 0;
     $(".cancel-btn").click(function (event) {
         history.back();
     });
     $('.add-new-image').click(function (event) {
       event.preventDefault();
-      var count= 0;
+      
       var newfield = "<input type=\"file\" class=\"form-control\" name=\"file" + count.toString() + "\" id=\"file" + count.toString() + "\">"
       count++;
       $("#files").html($("#files").html() + newfield);
