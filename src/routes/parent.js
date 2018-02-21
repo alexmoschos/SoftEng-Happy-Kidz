@@ -3,6 +3,8 @@ var router = express.Router();
 var db = require('../models/db');
 var auth = require('../apis/authentication');
 var bcrypt = require('bcrypt');
+var HashMap = require('HashMap');
+
 
 /* GET parent profile. */
 router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
@@ -16,6 +18,8 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 			where: { parentId: parent.parentId }
 		})
 		.then( tickets => { 
+			ticketMap = new HashMap(tickets.map( x => [x.eventId, x]));
+			tickets = ticketMap.values();
 			db.Membership.findById(req.params.parentId)
 			.then( member => {
 				if(member != null){

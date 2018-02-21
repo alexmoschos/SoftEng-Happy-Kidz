@@ -4,7 +4,6 @@ var db = require('../models/db');
 var auth = require('../apis/authentication');
 
 router.post("/:eventId/:parentId", auth.isUserParentIdAndBoughtTicket, function(req, res, next){
-    // console.log(req.body);
     db.Review.findOne({
         where: {
             parentId: req.params.parentId,
@@ -17,7 +16,9 @@ router.post("/:eventId/:parentId", auth.isUserParentIdAndBoughtTicket, function(
             eventId: req.params.eventId,
             text: req.body.description,
             rating: req.body.rating,
+            date: Math.floor(Date.now() / 1000)
         };
+        console.log(newReview.date);
         if(!review){
             db.Review.create(newReview).then( review2 => {
                 res.redirect('/events/' + req.params.eventId);
