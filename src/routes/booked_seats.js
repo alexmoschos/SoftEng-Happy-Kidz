@@ -11,66 +11,43 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 /* GET create event page. */
 router.get('/', function(req, res, next) {
-	var organizerId = req.user.user.organizerId;
-	var currtime = new Date().getTime()/1000;
-	db.Event.findAll({
-				where: {
-					organizerId: organizerId,
-					startTime:{
-						[Op.gt]: currtime
+	if (req.isAuthenticated() && req.user.type === 'organizer'){
+		var organizerId = req.user.user.organizerId;
+		var currtime = new Date().getTime()/1000;
+		db.Event.findAll({
+					where: {
+						organizerId: organizerId,
+						startTime:{
+							[Op.gt]: currtime
+						}
 					}
-				}
-		}).then(events => {
-			CurrentEvents = [];
-			events.forEach(function(element,i){
-				var event = element.dataValues;
-				CurrentEvents[i] = {
-					BarchartID: event.eventId,
-					ChartData: [
-        					['Genre', 'Ελεύθερες', 'Κρατημένες', { role: 'annotation' } ],
-        					['Θέσεις', event.ticketCount, event.initialTicketCount - event.ticketCount, '']
-      					],
-				ChartOptions: {
-					title: "Θέσεις",
-        				legend: { position: 'top', maxLines: 3 },
-        				bar: { groupWidth: '75%' },
-        				isStacked: 'percent',
-        				backgroundColor: '#e6ecf0'
-			 	}
-				};
-			});
-			var obj = {CurrentEventsList : CurrentEvents};
-	/*var obj = {CurrentEventsList: [
-			{
-				ImgUrl: "barcelona.png",
-				Title: "Ποδοσφαιρομάνια στο Μαρούσι",
-				Date: "17/10/2008",
-				Hours: "18:00-20:00",
-				Address: "Μαρούσι",
-				Provider: "Αθλητικός Όμιλος Αμαρουσίου",
-				Ages: "7-10",
-				PhoneNumber: "210-6814789",
-				InitialPrice: "10 €",
-				FinalPrice: "5 €",
-				EmptySeats: 15,
-				BookedSeats: 35,
-				BarchartID: "barchart1",
-				ChartData: [
-        ['Genre', 'Ελεύθερες', 'Κρατημένες', { role: 'annotation' } ],
-        ['Θέσεις', 10, 24, '']
-      ],
-				ChartOptions: {
-				title: "Θέσεις",
-        legend: { position: 'top', maxLines: 3 },
-        bar: { groupWidth: '75%' },
-        isStacked: 'percent',
-        backgroundColor: '#e6ecf0'
-			 }
-			}
-		],
-						};*/
-		res.send(obj);
-	});
+			}).then(events => {
+				CurrentEvents = [];
+				events.forEach(function(element,i){
+					var event = element.dataValues;
+					CurrentEvents[i] = {
+						BarchartID: event.eventId,
+						ChartData: [
+	        					['Genre', 'Ελεύθερες', 'Κρατημένες', { role: 'annotation' } ],
+	        					['Θέσεις', event.ticketCount, event.initialTicketCount - event.ticketCount, '']
+	      					],
+					ChartOptions: {
+						title: "Θέσεις",
+	        				legend: { position: 'top', maxLines: 3 },
+	        				bar: { groupWidth: '75%' },
+	        				isStacked: 'percent',
+	        				backgroundColor: '#e6ecf0'
+				 	}
+					};
+				});
+				var obj = {CurrentEventsList : CurrentEvents};
+				res.send(obj);
+		});
+	}
+	else {
+		res.redirect("/login");
+	}
+
 });
 
 /* POST create event page */
