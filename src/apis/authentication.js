@@ -34,6 +34,10 @@ function findUserByEmail(email, succ, fail) {
     lookUpTables(0, 'email', email, succ, fail);
 }
 
+function findProviderByEmail(email, succ, fail) {
+    lookUpTables(1, 'email', email, succ, fail);
+}
+
 function findUserOfTypeById(id, type, succ, fail) {
     var index = Types.indexOf(type);
     lookUpTables(index, 'id', id, function (user) {
@@ -181,6 +185,7 @@ function isNotUserLoggedIn(req, res, next) {
 
 
 var auth = {
+    findProviderByEmail : findProviderByEmail,
     findUserByEmail: findUserByEmail,
     findUserOfTypeById: findUserOfTypeById,
     isLoggedIn: isLoggedIn,

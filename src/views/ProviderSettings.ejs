@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>HappyKidz - Provider Settings</title>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+crossorigin="anonymous"></script>
+<!-- Latest compiled and minified CSS -->
+
+<script src="https://use.fontawesome.com/899071ec86.js"></script>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/stylesheets/styles_user.css">
+<link rel="stylesheet" href="/stylesheets/styles_provider.css">
+<link rel="stylesheet" type="text/css" href="/stylesheets/navbar.css">
+
+</head>
+
+<%- include partials/navbar.ejs %>
+
+
+
+
+<body>
+  
+
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+    <div class="container">
+
+  
+
+        <!-- <div class="row">
+          <div class="col-md-12 text-center ">
+            <div class="panel panel-default">
+              <div class="userprofile social ">
+                <div class="userpic"> <img src="https://www.shareicon.net/download/2015/09/18/103157_man_512x512.png" alt="User Avatar" class="userpicimg"> </div>
+                <h3 class="username"><%= name%></h3>
+                
+                
+              </div>
+              <div>
+                <ul class="nav nav-pills pull-left countlist" role="tablist">
+                  
+                  
+                  
+                </ul>
+                
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+
+          
+          <div class="col-md-12">  -->
+            <div class="card hovercard">
+
+                   <!-- moved buttons in personal info tab -->
+                     <!-- <a id="NewEvent-btn" class="btn btn-primary" href="/event_create">New Event</a>
+                    <a id="Papers" class="btn btn-primary" href="/upload_files" style="float: right;">Submit deko</a> -->
+                        <!-- <button id="subscribe-btn" type="button" class="btn btn-primary">Subscribe</button> -->
+<!--                         
+                    <div class="card-background">
+                        <img class="card-bkimg" alt="provider-logo" src="happy.png">
+                       
+                    </div>
+                    <div class="useravatar">
+                        <img id="circle-logo" alt="provider-logo" src="happy2.png">
+                    </div>
+                    <div class="card-info"> <span class="card-title">Όνομα παρόχου</span>
+            
+                    </div> -->
+                    <h3 class="username"><%= name %></h3>
+
+
+
+                   
+                </div>
+            
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h1 class="page-header small">Personal informations</h1>
+                  <!-- <form id="personal-settings-form" action="/MYPATH/" method="post">
+                  <p class="page-subtitle"><span>Username:</span><span style="margin-left: 10px;" id="user-username"><input type="text" size="30" name="user-name" value="Alexandros_Kalom7"> </input></span> </p>
+                  <p class="page-subtitle"><span>Name:</span><span style="margin-left: 10px;" id="user-name"><input type="text" size="30"  name="name" value="Alexandros Kalomoiros"> </input></span> </p>
+                  <p class="page-subtitle"><span>Email:</span><span style="margin-left: 10px;" id="user-email"><input type="text" size="30" name="email" value="Alexandros_Kalom7@gmail.com"> </input></span> </p>
+                  <p class="page-subtitle"><span>New Email:</span><span style="margin-left: 10px;" id="user-new-email"><input type="text" size="30" name="new-email" > </input></span> </p>
+                  <p class="page-subtitle"><span>New Password:</span><span style="margin-left: 10px;" id="user-new-password"><input type="text" size="30" name="new-password" > </input></span> </p>
+
+                  <button style="margin-top:20px;" id="submitButton" type="submit" class="btn btn-info">Save changes</button>  
+
+                </form> -->
+
+
+
+
+
+
+
+                <div class="row">
+                        <div class="col-sm-12 ">
+                            
+                        <form role="form" action="/provider/<%= id%>/settings" method="POST">
+                            <div class="form-group">
+                                <label>Όνομα</label>
+                                <input type="text" value="<%= name%>" class="form-control" readonly="readonly">
+                            </div>
+                            <div class="form-group">
+                                <label>Διεύθυνση ηλεκτρονικού ταχυδρομείου</label>
+                                <input type="text" id="email" name="email" value="<%= email%>" class="form-control">
+                            </div>
+                            <!-- <div class="form-group">
+                                <label>Νέα Διεύθυνση ηλεκτρονικού ταχυδρομίου</label>
+                                <input type="text" name='newEmail' class="form-control">
+                            </div>	   	    -->
+                            <div class="form-group">
+                              <label class="password">Κωδικός</label>
+                              <input type="password" id="oldPassword" name='oldPassword' class="form-control">
+                            </div>
+                            <div class="form-group">
+                                    <label class="password">Νέος Κωδικός</label>
+                                    <input type="password" id="newPassword" name='newPassword' class="form-control">
+                            </div>
+                            <div class="form-group">
+                                    <label class="password">Επαλήθευση Κωδικού</label>
+                                    <input type="password" id="newPasswordAgain" name='newPasswordAgain' class="form-control">
+                            </div>      
+                            <div class="text-center form-group">
+                                    <!-- <input id="loginButton" type="submit" class="btn btn-lg btn-primary btn-block" value="Είσοδος"> -->
+                                <button style="margin-top:20px;" id="submitButton" type="submit" class="btn btn-info">Save changes</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>    
+                <div class="clearfix"></div>
+              </div>
+      
+            
+          </div>
+
+
+
+
+
+
+            
+          </div>
+        </div>
+      
+      
+      
+      </div>
+
+
+
+
+</body>
+
+
+<script>
+
+$( document ).ready(function() {
+  var errorList = <%-JSON.stringify(errors)%>;
+  // var actualId = "";
+  errorList.forEach(function(myError){ 
+    $('#' + myError.param).addClass("error-input")
+    $('#' + myError.param).attr("placeholder", myError.msg) 
+  });
+});
+
+</script>
+
+</html>
