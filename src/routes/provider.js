@@ -8,9 +8,10 @@ var conf = require('../config');
 var auth = require('../apis/authentication');
 var db = require('../models/db');
 const Sequelize = require('sequelize');
-var auth = require('../apis/authentication');
 
 var mail = require('../apis/mail');
+var bcrypt = require('bcrypt');
+var HashMap = require('hashmap');
 
 
 var utilities = require('../apis/utilities');
@@ -112,6 +113,7 @@ router.get('/:providerId', function(req, res) {
 						});						
 						var ProviderInfo =  {
 							PersonalInfo: { ProviderName : result.name, ProviderText : result.description,
+								ProviderId : providerId,
 								ProviderEmail : result.email,
 								ProviderPage :result.webpage,
 								ProviderPhoneNumber: result.phone,
@@ -141,6 +143,81 @@ router.get('/:providerId', function(req, res) {
 		res.redirect('/login');
 	}
 });
+router.get('/:providerId/settings',function(req,res,next){
+	providerId = utilities.checkInt(req.params.providerId);
+	if (!providerId) { res.render('no_page', {user: req.user});}
+	if (req.isAuthenticated()){
+		if(req.user.type === 'organizer'){
+			if(providerId == req.user.user.organizerId){
+				// res.send("you hit the provider Settings!");
+				db.Organizer.findAll({
+					where: {
+						organizerId : providerId
+					}
+				}).then(provider => {
+					console.log(provider);
+					var result = provider[0].dataValues;
+					var ProviderInfo= {
+						name : result.name,
+						id : result.organizerId,
+						email : result.email,
+						errors : []
+					};
+					res.render('ProviderSettings',ProviderInfo);
+
+				});
+
+			}
+		}
+	}
+});
+
+router.post('/:providerId/settings',function(req,res,next){
+	providerId = utilities.checkInt(req.params.providerId);
+	if (!providerId) { return res.render('no_page', {user: req.user});}
+	var find = auth.findProviderByEmail(req.body.email, function(result) {
+		db.Organizer.findById(providerId)
+		.then( (provider) => {
+			if (provider){
+				if (result && req.body.email !== provider.email){
+					req.assert('email', 'Υπάρχει ήδη provider με αυτό το email').equals(true);	
+				}
+				var temp = bcrypt.compareSync(req.body.oldPassword, provider.password);
+				if(!temp){
+					req.assert('oldPassword', 'Λάθος Κωδικός').equals(true);			
+				}
+				req.assert('email', 'A valid email is required').isEmail(); 
+				req.assert('newPassword', 'passwords must be at least 8 chars long and contain one number')
+					.isLength({ min: 8 })
+					.matches(/\d/);
+				req.assert('newPasswordAgain', 'Passwords do not match').equals(req.body.newPassword);
+				var errors = req.validationErrors();
+				if( !errors){
+					provider.update({email: req.body.email})
+					.then ( (succ) => {
+						return succ.update({password: bcrypt.hashSync(req.body.newPassword,10)});
+					})
+					.then( (succe) => res.redirect("/provider/" + providerId));
+				}
+				else{
+					obj = {
+						user: req.user,
+						errors: errors,
+						id: provider.organizerId,
+						name: provider.name,
+						email: provider.email
+					};
+					res.render('ProviderSettings', obj);
+				}
+			}
+			else {
+				res.render('no_page',{user: req.user});
+			} 	
+		})
+	});
+});
+
+
 
 /* Create a new provider */
 router.post('/', function(req, res, next) {
