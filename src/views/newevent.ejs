@@ -73,9 +73,13 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-6">
                     <label for="event-date">Ημερομηνία </label>
-                    <input type="datetime-local" class="form-control input-sm" name="Date" id="event-date" <% if (event.startTime) { %> value="<%= new Date(event.startTime * 1000).toISOString().split(".")[0] %>" <% } %>  >
+                    <input type="date" class="form-control input-sm" name="Date" id="event-date" <% if (event.startTime) { %> value="<%= new Date(event.startTime * 1000).toISOString().split("T")[0] %>" <% } %>  >
                 </div>
                 <div class="form-group col-md-6 col-sm-6">
+                    <label for="event-time">Ώρα </label>
+                    <input type="time" class="form-control input-sm" name="Time" id="event-time" <% if (event.startTime) { %> value="<%= new Date(event.startTime * 1000).toISOString().split("T")[1].split(".")[0] %>" <% } %>  >
+                </div>
+                <div class="form-group col-md-12 col-sm-12">
                     <label for="AgeGroup">Ηλικιακή Ομάδα Παιδιών</label>
                     <select class="form-control col-sm-2" name="AgeGroup" id="AgeGroup" >
                                 <option <% if (event.minAge === 3) { %> selected='selected' <% } %> value="3">3-5</option>

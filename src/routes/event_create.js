@@ -100,7 +100,7 @@ router.post('/', auth.isUserVerifiedOrganizer,  function(req, res, next) {
     newEvent.organizerId = req.user.user.organizerId;
 
     newEvent.title = body.EventName;
-    newEvent.startTime = new Date(body.Date).getTime()/1000;
+    newEvent.startTime = new Date(body.Date + "T" + body.Time).getTime()/1000;
     newEvent.endTime = newEvent.startTime; // this field should probably go.
     newEvent.description = body.Description;
     newEvent.categoryName = body.categoryName;
