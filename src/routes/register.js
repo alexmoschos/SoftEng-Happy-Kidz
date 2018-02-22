@@ -109,7 +109,11 @@ console.log(req.files[0]);
           return next(err); // will generate a 500 error
         }
         if (!user) {
-          return res.status(409).render('register', { errMsg: info.errMsg, errors: [], tab: "providerTab" });
+          errors = [{
+              param: 'email',
+              msg: 'Email already exists'  
+          }];
+          return res.status(409).render('register', { errMsg: info.errMsg, errors: errors, tab: "providerTab" });
         }
         req.login(user, function (err) {
           if (err) {

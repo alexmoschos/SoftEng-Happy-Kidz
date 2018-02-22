@@ -293,6 +293,37 @@ router.put('/:providerId', auth.isUserAdmin, function(req, res){
 	.then ( (succ) => res.redirect("/admin")); 
 
 });
+
+
+
+
+router.get('/:providerId/deko', auth.isUserAdmin, function(req, res) {
+	var providerId = utilities.checkInt(req.params.providerId);
+    if (!providerId) { res.render('no_page', {user: req.user});}
+
+    db.Organizer.findById(providerId)
+	.then( (provider) => {
+		if (provider) {
+
+			res.render('deko_page', {providerId: providerId});
+		}  
+		else {
+			res.render('no_page', {user: req.user});
+		}
+	});
+	
+
+
+    
+
+    
+
+
+  
+
+
+
+});
     
 
 module.exports = router;

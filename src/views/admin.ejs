@@ -157,7 +157,7 @@
                     <tr>
                       <td><a href="/admin/provider/<%=it.organizerId%>"><%= it.name %></a></td>
                       <td><%= it.isVerified%></td>
-                      <td><a href="/admin/provider/<%=it.organizerId%>/deko"> Έγγραφο ΔΕΚΟ%></td>
+                      <td><a href="/provider/<%=it.organizerId%>/deko"> Έγγραφο ΔΕΚΟ%></td>
                         <td>
                           <form role="form" action="/provider/<%=it.organizerId%>?_method=DELETE" method="POST">
                             <input type="submit" class="btn btn-primary" name="delete" value="delete">
