@@ -4,9 +4,10 @@ var db = require('../models/db');
 var passport = require('../apis/passport');
 var auth = require('../apis/authentication');
 var bodyParser = require('body-parser');
-var configFile = require('../config'); 
+var configFile = require('../config');
+var utils = require('../apis/utilities');
 
-var availMemberships = configFile.availMemberships;
+var availableMemberships = configFile.availableMemberships;
 
 // Utility function to check if membership is valid
 function isMembershipValid(membership) {
@@ -31,7 +32,9 @@ router.get('/', auth.isUserParent, function (req, res) {
                     .then((event) => res.render('payment/index', { description: item.quantity + 'x Εισιτήριο για ' + event.title, amount: event.ticketPrice, quantity: item.quantity }));
                 break;
             case 'membership':
-                res.render('payment/index', { description: availMemberships[item.tier - 1].description, amount: availMemberships[item.tier - 1].amount });
+                if (availableMemberships[item.tier - 1]) {
+                    res.render('payment/index', { description: availableMemberships[item.tier - 1].description, amount: availableMemberships[item.tier - 1].amount });
+                }
                 break;
             default:
                 console.log('something definitely went wrong');
@@ -70,6 +73,8 @@ router.post('/', auth.isUserParent, function (req, res) {
                                         if (newTicketCount >= 0) {
                                             return event.update({ ticketCount: newTicketCount }, { transaction: t });
                                         } else {
+                                            req.flash('error', 'Δεν υπάρχουν όσα εισητήρια ζητήσατε !');
+                                            req.redirect('back');
                                             throw new Error("Not enough tickets");
                                         }
                                     })
@@ -112,7 +117,7 @@ router.post('/', auth.isUserParent, function (req, res) {
                 db.Membership.upsert({
                     parentId: userSession.passport.user.id,
                     startDate: Math.floor(Date.now() / 1000),
-                    expiryDate: Math.floor(Date.now() / 1000 + 60 * 60 * 24 * 10 * availMemberships[item.tier].duration),
+                    expiryDate: Math.floor(Date.now() / 1000 + 60 * 60 * 24 * 10 * availableMemberships[item.tier].duration),
                     membershipTier: item.tier,
                     maxTicketsPerEvent: 100
                 });
@@ -132,6 +137,11 @@ router.post('/', auth.isUserParent, function (req, res) {
 router.post('/events/:id', auth.isUserParent, function (req, res) {
     /* Add ticket for event to cart */
     console.log('Adding ticket to cart - session ' + req.user.type);
+    // Check if id is a valid integer
+    if (!utils.checkInt(req.params.id)) {
+        req.status(404).render('no_page');
+        return;
+    }
     // Check if parent has a valid membership
     db.Membership.findById(req.session.passport.user.id)
         .then((membership) => {
@@ -153,6 +163,16 @@ router.post('/events/:id', auth.isUserParent, function (req, res) {
 router.post('/membership/:id', auth.isUserParent, function (req, res) {
     // Add ticket for event to cart
     console.log('Adding membership to cart - session ' + req.user);
+    // Check if id is a valid integer
+    if (!utils.checkInt(req.params.id)) {
+        req.status(404).render('no_page');
+        return;
+    }
+    // Check if membership id is valid
+    if (!availableMemberships[req.params.id - 1]){
+        res.status(404).render('no_page');
+        return;
+    }
     // Check if parent already has a valid membership
     db.Membership.findById(req.session.passport.user.id)
         .then((membership) => {

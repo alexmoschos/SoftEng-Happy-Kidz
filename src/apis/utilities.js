@@ -24,6 +24,6 @@ function makeid(len) {
 utilities = {
 	checkInt: checkInt,
 	makeid: makeid
-}
+};
 
 module.exports = utilities;
