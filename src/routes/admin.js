@@ -147,8 +147,23 @@ router.get('/events/:eventId', auth.isUserAdmin, function(req, res) {
                 if (event && event.isVerified === false) {
                     event.provider = provider;
                     obj = event;
-                    res.render("adminEvent", {obj, user: req.user});
-                    //res.redirect('/admin');
+                    var startDate = new Date(event.startTime*1000);
+                        var imglist = [];
+                        path = './public/files/events/' + event.eventId + "/";
+                        fs.readdir(path, function(err, items) {
+                            //console.log(items);
+                            if(!err){
+                                for (var i=0; i<items.length; i++) {
+                                    imglist.push('/files/events/' + event.eventId + '/' + items[i]);
+                                }
+                            }
+                            if(imglist.length === 0){
+                                console.log(42);
+                                imglist.push('/happy.png');
+                            }
+                            res.render("adminEvent", {obj, user: req.user, images: imglist});
+                            //res.redirect('/admin');
+                        });
                 }
                 else {
                     res.render('no_page', {user: req.user});
