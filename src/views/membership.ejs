@@ -4,111 +4,79 @@
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>HappyKidz - Συνδρομή</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+	crossorigin="anonymous"></script>
+
+	<!-- Latest compiled and minified CSS -->
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+
+	<link rel="stylesheet" href="/stylesheets/styles_membership.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/navbar.css">
+
+	<script src="https://use.fontawesome.com/899071ec86.js"></script>
+
+
 </head>
-<title>HappyKidz - Συνδρομή</title>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-crossorigin="anonymous"></script>
 
-<!-- Latest compiled and minified CSS -->
+<%- include partials/navbar.ejs %>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-crossorigin="anonymous">
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
-
-<link rel="stylesheet" href="/stylesheets/styles_subscription.css">
-
-<nav class="navbar navbar-custom" role="navigation">
-	<!-- Brand and toggle get grouped for better mobile display -->
-	<div class="navbar-header">
-		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		</button>
-		<a class="navbar-brand" href="/">
-			<span>
-				<img src="icon2.png" alt="Party" height="25" width="27">
-			</span> HappyKidz
-		</a>
-	</div>
-
-	<!-- Collect the nav links, forms, and other content for toggling -->
-	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		<ul class="nav navbar-nav">
-			<li class="active">
-				<a href="/">Home</a>
-			</li>
-			<li>
-				<a href="/search">Events</a>
-			</li>
-		</ul>
-		<div class="col-sm-5 col-md-5">
-			<form class="navbar-form" role="search">
-				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Search" name="q">
-					<span class="input-group-addon">@</span>
-					<input type="text" class="form-control" placeholder="Location" name="l">
-					<div class="input-group-btn">
-						<button class="btn btn-default" type="submit">
-							<i class="glyphicon glyphicon-search"></i>
-						</button>
-					</div>
-				</div>
-			</form>
-		</div>
-		<ul class="nav navbar-nav navbar-right">
-			<li>
-				<a href="/register">Register</a>
-			</li>
-			<li>
-				<a href="/login">Login</a>
-			</li>
-		</ul>
-	</div>
-	<!-- /.navbar-collapse -->
-</nav>
 
 
 <div class="container" id="promo_">
 
-	<div style="background:transparent !important" class="jumbotron">
-		Think about a cloud. Just float around and be there. You have to make almighty decisions when you're the creator. There's
-		nothing wrong with having a tree as a friend. This is truly an almighty mountain. There it is. I'm sort of a softy,
-		I couldn't shoot Bambi except with a camera. Just a happy little shadow that lives in there. All you have to do is
-		let your imagination go wild. In your imagination you can go anywhere you want. This is the time to get out all your
-		flustrations, much better than kicking the dog around the house or taking it out on your spouse. Just take out whatever
-		you don't want. It'll change your entire perspective. I will take some magic white, and a little bit of Vandyke brown
-		and a little touch of yellow. When things happen - enjoy them. They're little gifts. It looks so good, I might as
-		well not stop. Nothing's gonna make your husband or wife madder than coming home and having a snow-covered dinner.
-		Each highlight must have it's own private shadow. Let's do that again. The little tiny Tim easels will let you down.
-		See there how easy that is. You can do it. Clouds are free they come and go as they please. Only God can make a tree
-		- but you can paint one. I'm a water fanatic. I love water. A beautiful little sunset. Maybe there's a happy little
-		Evergreen that lives here. A tree needs to be your friend if you're going to paint him. Even trees need a friend.
-		We all need friends. This is where you take out all your hostilities and frustrations. It's better than kicking the
-		puppy dog around and all that so. Automatically, all of these beautiful, beautiful things will happen. Now we'll
-		take the almighty fan brush. Nature is so fantastic, enjoy it. Let it make you happy.
+	<div style="background:transparent !important" class="jumbotron vertical-center">
+		<div class="panel-group">
+
+
+
+			<div class="panel panel-primary">
+				<div class="panel-heading">Πληροφορίες και Επιλογές Συνδρομής</div>
+				<div class="panel-body">Think about a cloud. Just float around and be there. You have to make almighty decisions when you're the creator. There's
+					nothing wrong with having a tree as a friend. This is truly an almighty mountain. There it is. I'm sort of a softy,
+					I couldn't shoot Bambi except with a camera. Just a happy little shadow that lives in there. All you have to do is
+					let your imagination go wild. In your imagination you can go anywhere you want. This is the time to get out all your
+					flustrations, much better than kicking the dog around the house or taking it out on your spouse. Just take out whatever
+					you don't want. It'll change your entire perspective. I will take some magic white, and a little bit of Vandyke brown
+					and a little touch of yellow. When things happen - enjoy them. They're little gifts. It looks so good, I might as
+					well not stop. Nothing's gonna make your husband or wife madder than coming home and having a snow-covered dinner.
+					Each highlight must have it's own private shadow. Let's do that again. The little tiny Tim easels will let you down.
+					See there how easy that is. You can do it. Clouds are free they come and go as they please. Only God can make a tree
+					- but you can paint one. I'm a water fanatic. I love water. A beautiful little sunset. Maybe there's a happy little
+					Evergreen that lives here. A tree needs to be your friend if you're going to paint him. Even trees need a friend.
+					We all need friends. This is where you take out all your hostilities and frustrations. It's better than kicking the
+					puppy dog around and all that so. Automatically, all of these beautiful, beautiful things will happen. Now we'll
+				take the almighty fan brush. Nature is so fantastic, enjoy it. Let it make you happy.</div>
+			</div>
+
+		</div>
+		
 	</div>
     <!--  <div class="jumbotron">
 
     </div> -->
 </div>
 
+<div style="width:860px; margin:0 auto;">
+
 <div id="pricing-table" class="clear align-items-center
 ">
-	<div class="col-md-4 col-sm-4 col-xs-12">
-		<div class="plan">
-			<h3>Enterprise<span>50€</span></h3>
-			<form action = "/payment/membership/1" method = "POST">
+<div class="col-md-4 col-sm-4 col-xs-12">
+	<div class="plan">
+		<h3>Enterprise<span>50€</span></h3>
+		<form action = "/payment/membership/1" method = "POST">
                                 <!-- <div class="row">
                                     <div class="col-6 col-xs-6">
                                         <button id="accept-btn" name="action" value="accept" class="btn btn-lg">
@@ -117,21 +85,21 @@ crossorigin="anonymous"></script>
                                             </div>
                                         </button>
                                     </div>
-                                    </div> -->
-                                    <button  name="plan" value="50" class="signup">Αγορά</button>
-                                </form>
-			<ul>
-				<li><b>10GB</b> Disk Space</li>
-				<li><b>100GB</b> Monthly Bandwidth</li>
-				<li><b>20</b> Email Accounts</li>
-				<li><b>Unlimited</b> subdomains</li>
-			</ul>
-		</div>
-	</div>
-	<div class="col-md-4 col-sm-4 col-xs-12">
-		<div class="plan">
-			<h3>Enterprise<span>100€</span></h3>
-			<form action = "/payment/membership/2" method = "POST">
+                                </div> -->
+                                <button  name="plan" value="50" class="signup">Αγορά</button>
+                            </form>
+                            <ul>
+                            	<li><b>10GB</b> Disk Space</li>
+                            	<li><b>100GB</b> Monthly Bandwidth</li>
+                            	<li><b>20</b> Email Accounts</li>
+                            	<li><b>Unlimited</b> subdomains</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                    	<div class="plan">
+                    		<h3>Enterprise<span>100€</span></h3>
+                    		<form action = "/payment/membership/2" method = "POST">
                                 <!-- <div class="row">
                                     <div class="col-6 col-xs-6">
                                         <button id="accept-btn" name="action" value="accept" class="btn btn-lg">
@@ -140,20 +108,20 @@ crossorigin="anonymous"></script>
                                             </div>
                                         </button>
                                     </div>
-                                    </div> -->
-                                    <button  name="plan" value="100" class="signup">Αγορά</button>
-                                </form>
-			<ul>
-				<li><b>10GB</b> Disk Space</li>
-				<li><b>100GB</b> Monthly Bandwidth</li>
-				<li><b>20</b> Email Accounts</li>
-				<li><b>Unlimited</b> subdomains</li>
-			</ul>
-		</div>
-	</div>
-	<div class="col-md-4 col-sm-4 col-xs-12">
-		<div class="plan">
-			<h3>Enterprise<span>200€</span></h3>
+                                </div> -->
+                                <button  name="plan" value="100" class="signup">Αγορά</button>
+                            </form>
+                            <ul>
+                            	<li><b>10GB</b> Disk Space</li>
+                            	<li><b>100GB</b> Monthly Bandwidth</li>
+                            	<li><b>20</b> Email Accounts</li>
+                            	<li><b>Unlimited</b> subdomains</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                    	<div class="plan">
+                    		<h3>Enterprise<span>200€</span></h3>
 
 			<!-- <form  action = "/payment/membership/" method = "PΟST">
 			<div class="row">
@@ -165,8 +133,8 @@ crossorigin="anonymous"></script>
                                         </button>
                                     </div>
                                     </div>
-			</form> -->
-			<form action = "/payment/membership/3" method = "POST">
+                                </form> -->
+                                <form action = "/payment/membership/3" method = "POST">
                                 <!-- <div class="row">
                                     <div class="col-6 col-xs-6">
                                         <button id="accept-btn" name="action" value="accept" class="btn btn-lg">
@@ -175,19 +143,23 @@ crossorigin="anonymous"></script>
                                             </div>
                                         </button>
                                     </div>
-                                    </div> -->
-                                    <button  name="plan" value="200" class="signup">Αγορά</button>
-                                </form>
-			<ul>
-				<li><b>10GB</b> Disk Space</li>
-				<li><b>100GB</b> Monthly Bandwidth</li>
-				<li><b>20</b> Email Accounts</li>
-				<li><b>Unlimited</b> subdomains</li>
-			</ul>
-		</div>
-	</div>
+                                </div> -->
+                                <button  name="plan" value="200" class="signup">Αγορά</button>
+                            </form>
+                            <ul>
+                            	<li><b>10GB</b> Disk Space</li>
+                            	<li><b>100GB</b> Monthly Bandwidth</li>
+                            	<li><b>20</b> Email Accounts</li>
+                            	<li><b>Unlimited</b> subdomains</li>
+                            </ul>
+                        </div>
+                    </div>
 
 
 
-</div>
+                </div>
+            </div>
+
+            </body>
+            </html>
 
