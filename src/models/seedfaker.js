@@ -76,7 +76,7 @@ function seedDatabase(db) {
             }
         );
     }
-    eventobj =  [{
+    var eventobj =  [{
         organizerId: 1,
         title: 'Παρτυ στο σπίτι του Βελεγκα χωρις τον Βελεγκα',
         startTime: Math.floor(Date.now() / 1000 + 24 * 3600),
@@ -117,12 +117,13 @@ function seedDatabase(db) {
         isVerified: false
     }];
     for(i = 0; i < 20; ++i){
+        var dateoffset = getRandomInt(-1,100);
         eventobj.push(
             {
                 organizerId: getRandomInt(1,9),
                 title: 'Παρτυ με τον ' + faker.name.firstName(),
-                startTime: Math.floor(Date.now() / 1000),
-                endTime: Math.floor(Date.now() / 1000 + 3600),
+                startTime: Math.floor(Date.now() / 1000 + dateoffset*24*3600),
+                endTime: Math.floor(Date.now() / 1000 + dateoffset*24*3600 + 3600),
                 description: faker.lorem.paragraph(),
                 categoryName: 'Αθλητισμός',
                 geoLon: 37.988930 + Math.random()*10,
@@ -140,7 +141,7 @@ function seedDatabase(db) {
             }
         );
     }
-    reviewobj = [];
+    var reviewobj = [];
     for(i = 1; i < 20; ++i){
         for(var k = 1; k < 5; ++k){
             reviewobj.push({
@@ -152,7 +153,7 @@ function seedDatabase(db) {
             });
         }
     }
-    membershipobj = [{
+    var membershipobj = [{
         parentId: 1,
         startDate: Math.floor(Date.now() / 1000),
         expiryDate: Math.floor(Date.now() / 1000 + 36000),
@@ -165,7 +166,7 @@ function seedDatabase(db) {
         expiryDate: Math.floor(Date.now() / 1000 + 36000),
         membershipTier: 1,
         maxTicketsPerEvent: 100
-    }]
+    }];
     for(i = 3; i < 15; i+=2){
         membershipobj.push ({
             parentId: i,
@@ -173,10 +174,10 @@ function seedDatabase(db) {
             expiryDate: Math.floor(Date.now() / 1000 + 36000),
             membershipTier: getRandomInt(1,3),
             maxTicketsPerEvent: 100
-        })
+        });
     }
     //console.log(reviewobj);
-    var ticketobj = []
+    var ticketobj = [];
     for(i = 1; i < 15; i+=2){
         var j = getRandomInt(0,19);
         ticketobj.push({
@@ -186,7 +187,7 @@ function seedDatabase(db) {
             startTime: eventobj[j].startTime,
             endTime: eventobj[j].endTime,
             price: eventobj[j].ticketPrice
-        })
+        });
     }
     console.log(ticketobj);
     db.Parent.bulkCreate(parentobj)
@@ -223,7 +224,7 @@ function seedDatabase(db) {
                             newEvent.categoryName = event.categoryName;
                             newEvent.geoAddress = event.geoAddress;
                             newEvent.ticketPrice = event.ticketPrice;
-                            newEvent.ticketCount = event.ticketCount
+                            newEvent.ticketCount = event.ticketCount;
                             newEvent.initialTicketCount = event.initialTicketCount;
                             newEvent.minAge = event.minAge;
                             newEvent.maxAge = event.maxAge;

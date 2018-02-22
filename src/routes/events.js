@@ -15,8 +15,8 @@ router.get('/:id', function(req, res, next) {
     if(!isNaN(req.params.id) && req.params.id == parseInt(req.params.id)){
         req.params.id = parseInt(req.params.id);
         db.Event.findById(req.params.id).then(event => {
-            if( event == null ) {
-                res.render('no_page');
+            if( event == null || !event.isVerified) {
+                res.render('no_page',{user : req.user});
                 return;
             }
             //Increment the event clickNumber for provider statistics
@@ -185,10 +185,10 @@ router.put('/:eventId', auth.isUserAdmin, function(req, res){
                     newEvent.providerPhone = provider.phone;
 
                     elastic.insert('events', newEvent, function (err,resp, status) {
-                        if (err) 
+                        if (err)
                             console.log(err);
                     });
-                });  
+                });
             });
         }
         else {
@@ -206,7 +206,7 @@ router.put('/:eventId', auth.isUserAdmin, function(req, res){
         else {
             console.log('error with db');
             res.redirect('/admin');
-        }  
+        }
 
     })
     .then ((succ) => {
