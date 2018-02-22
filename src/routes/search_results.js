@@ -57,6 +57,12 @@ router.get('/', function(req, res, next) {
                     agegroups = ">12"
             };
 
+            var path;
+            if (parseInt(element._source.pictures) > 0)
+                path = "files/events/" + element._source.eventId + "/0";
+            else
+                path = "/happy.png";
+
             obj.push ({
                 title : element._source.title,
                 date : new Date(element._source.startTime * 1000).toLocaleDateString(),
@@ -67,7 +73,7 @@ router.get('/', function(req, res, next) {
                 phone : element._source.providerPhone,
                 agegroups : agegroups,
                 images : [
-                    "files/events/" + element._source.eventId + "/0"
+                    path
                 ],
                 geolon : element._source.geoLocation.lon,
                 geolat : element._source.geoLocation.lat,
