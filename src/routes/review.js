@@ -35,32 +35,43 @@ router.post("/:eventId/:parentId", auth.isUserParentIdAndBoughtTicket, function(
 router.get('/:eventId/:parentId', auth.isUserParentIdAndBoughtTicket, function(req, res, next) {
     db.Parent.findById(req.params.parentId)
 	.then( (parent) => {
-        db.Event.findById(req.params.eventId)
-        .then( (event) => {
-            db.Review.findOne({
-                where: {
-                    parentId: req.params.parentId,
-                    eventId: req.params.eventId
+        if(parent){
+            db.Event.findById(req.params.eventId)
+            .then( (event) => {
+                if (event){
+                    db.Review.findOne({
+                        where: {
+                            parentId: req.params.parentId,
+                            eventId: req.params.eventId
+                        }
+                    })
+                    .then( review => {
+                        var descr = "";
+                        if(review){
+                            descr = review.text;
+                        }
+                        obj={
+                            user: req.user,
+                            eventId: req.params.eventId,
+                            parentId: parent.parentId,
+                            name: parent.name,
+                            email: parent.email,
+                            title: event.title,
+                            prevDescription: descr
+                        };
+                        res.render('review',obj);
+                    })
+                }
+                else {
+                    res.render('no_page',{user: req.user});
                 }
             })
-            .then( review => {
-                var descr = "";
-                if(review){
-                    descr = review.text;
-                }
-                obj={
-                    user: req.user,
-                    eventId: req.params.eventId,
-                    parentId: parent.parentId,
-                    name: parent.name,
-                    email: parent.email,
-                    title: event.title,
-                    prevDescription: descr
-                };
-                res.render('review',obj);
-            })
-            
-        })
+        }
+        else {
+            res.render('no_page',{user: req.user});
+        }
+
+        
     })
 });
 
