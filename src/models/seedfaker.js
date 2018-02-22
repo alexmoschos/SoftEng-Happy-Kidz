@@ -16,6 +16,7 @@ function seedDatabase(db) {
             }
         }).catch(err => { console.log(err); });
     });
+    var i;
     var parentobj = [{
         name : 'Γιωργης',
         email : 'george@example.com',
@@ -23,7 +24,7 @@ function seedDatabase(db) {
         wallet: 0,
         mailNotifications : false
     }];
-    for(var i = 0; i < 15; ++i){
+    for(i = 0; i < 15; ++i){
         parentobj.push(
             {
                 name : faker.name.findName(),
@@ -59,7 +60,7 @@ function seedDatabase(db) {
         documents: ''
     }
     ];
-    for(var i = 0; i < 10; ++i){
+    for(i = 0; i < 10; ++i){
         providerobj.push(
             {
                 name: faker.company.companyName(),
@@ -75,7 +76,7 @@ function seedDatabase(db) {
             }
         );
     }
-    eventobj =  [{
+    var eventobj =  [{
         organizerId: 1,
         title: 'Παρτυ στο σπίτι του Βελεγκα χωρις τον Βελεγκα',
         startTime: Math.floor(Date.now() / 1000 + 24 * 3600),
@@ -115,13 +116,14 @@ function seedDatabase(db) {
         clickNumber: 0,
         isVerified: false
     }];
-    for(var i = 0; i < 20; ++i){
+    for(i = 0; i < 20; ++i){
+        var dateoffset = getRandomInt(-1,100);
         eventobj.push(
             {
                 organizerId: getRandomInt(1,9),
                 title: 'Παρτυ με τον ' + faker.name.firstName(),
-                startTime: Math.floor(Date.now() / 1000),
-                endTime: Math.floor(Date.now() / 1000 + 3600),
+                startTime: Math.floor(Date.now() / 1000 + dateoffset*24*3600),
+                endTime: Math.floor(Date.now() / 1000 + dateoffset*24*3600 + 3600),
                 description: faker.lorem.paragraph(),
                 categoryName: 'Αθλητισμός',
                 geoLon: 37.988930 + Math.random()*10,
@@ -139,8 +141,8 @@ function seedDatabase(db) {
             }
         );
     }
-    reviewobj = [];
-    for(var i = 1; i < 20; ++i){
+    var reviewobj = [];
+    for(i = 1; i < 20; ++i){
         for(var k = 1; k < 5; ++k){
             reviewobj.push({
                 parentId: k,
@@ -151,7 +153,7 @@ function seedDatabase(db) {
             });
         }
     }
-    membershipobj = [{
+    var membershipobj = [{
         parentId: 1,
         startDate: Math.floor(Date.now() / 1000),
         expiryDate: Math.floor(Date.now() / 1000 + 36000),
@@ -164,17 +166,30 @@ function seedDatabase(db) {
         expiryDate: Math.floor(Date.now() / 1000 + 36000),
         membershipTier: 1,
         maxTicketsPerEvent: 100
-    }]
-    for(var i = 3; i < 15; i+=2){
+    }];
+    for(i = 3; i < 15; i+=2){
         membershipobj.push ({
             parentId: i,
             startDate: Math.floor(Date.now() / 1000),
             expiryDate: Math.floor(Date.now() / 1000 + 36000),
             membershipTier: getRandomInt(1,3),
             maxTicketsPerEvent: 100
-        })
+        });
     }
     //console.log(reviewobj);
+    var ticketobj = [];
+    for(i = 1; i < 15; i+=2){
+        var j = getRandomInt(0,19);
+        ticketobj.push({
+            eventId: j,
+            parentId: i,
+            transactionId: 10*i,
+            startTime: eventobj[j].startTime,
+            endTime: eventobj[j].endTime,
+            price: eventobj[j].ticketPrice
+        });
+    }
+    console.log(ticketobj);
     db.Parent.bulkCreate(parentobj)
         .then((succ) => db.Organizer.bulkCreate(providerobj))
         .then((succ) => db.Admin.bulkCreate(
@@ -193,7 +208,7 @@ function seedDatabase(db) {
         .then((succ) => db.Review.bulkCreate(reviewobj))
         .then(() => {
                 // add all events from postgres to elastic
-                console.log(reviewobj);
+                // console.log(reviewobj);
 
                 db.Event.findAll().then(hits => {
                     hits.forEach(function (event) {
@@ -209,7 +224,7 @@ function seedDatabase(db) {
                             newEvent.categoryName = event.categoryName;
                             newEvent.geoAddress = event.geoAddress;
                             newEvent.ticketPrice = event.ticketPrice;
-                            newEvent.ticketCount = event.ticketCount
+                            newEvent.ticketCount = event.ticketCount;
                             newEvent.initialTicketCount = event.initialTicketCount;
                             newEvent.minAge = event.minAge;
                             newEvent.maxAge = event.maxAge;
@@ -234,6 +249,7 @@ function seedDatabase(db) {
 
             })
         .then((succ) => db.Membership.bulkCreate(membershipobj))
+        .then((succ) => db.BoughtTickets.bulkCreate(ticketobj))
         .catch((err) => console.log(err));
 
 }
