@@ -54,7 +54,11 @@ router.post('/:type', upload.any(),function (req, res, next) {
           return next(err); // will generate a 500 error
         }
         if (!user) {
-          return res.status(409).render('register', { errMsg: info.errMsg, errors: [], tab: "userTab" });
+          errors = [{
+              param: 'email',
+              msg: 'Email already exists'  
+          }];
+          return res.status(409).render('register', { errMsg: info.errMsg, errors: errors, tab: "userTab" });
         }
         req.login(user, function (err) {
           if (err) {
@@ -90,7 +94,7 @@ console.log(req.files[0]);
        req.assert('file0', 'File should be an image').equals('dummyText');
     }
     var sizeInBytes = req.files[0].size;
-    var MAXBYTESALLOWED = 9000;
+    var MAXBYTESALLOWED = 50000;
     if (sizeInBytes > MAXBYTESALLOWED) {
       req.assert('file0', 'File should be less than ' + MAXBYTESALLOWED.toString() + ' bytes').equals('dummyText');
     }
