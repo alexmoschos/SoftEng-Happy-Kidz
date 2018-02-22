@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
         },
         transactionId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false
         },
         startTime: {
