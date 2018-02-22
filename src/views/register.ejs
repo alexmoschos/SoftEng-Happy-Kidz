@@ -123,7 +123,7 @@ crossorigin="anonymous"></script>
                   	<input name="file0" id="file0" type="file" class="form-control-file" id="deko-upload" aria-describedby="fileHelp" required>
                   </div>
 
-
+                  <p id="error-in-file"> </p>
 
                     <!-- <div class="form-group ">
                       <label for="city">Ανέβασμα deko</label>
@@ -200,9 +200,16 @@ $( document ).ready(function() {
   $("#Section2").addClass("active")
   $("#business-tab").addClass("active") 
   errorList.forEach(function(myError){ 
-    actualId = "business" + myError.param; 
-    $('#' + actualId).addClass("error-input")
-    $('#' + actualId).attr("placeholder", myError.msg) 
+  	if (myError.param != "file0") {
+    	actualId = "business" + myError.param; 
+    	$('#' + actualId).addClass("error-input")
+    	$('#' + actualId).attr("placeholder", myError.msg) 
+    }
+    else {
+    	$('#file0').addClass("error-input")
+    	$("#error-in-file").text(myError.msg)
+    	//$('#file0').attr("placeholder", myError.msg) 
+    }
   });
  }
  else if(whichTab === "userTab"){

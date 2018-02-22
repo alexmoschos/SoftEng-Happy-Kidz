@@ -76,14 +76,32 @@ router.post('/:type', upload.any(),function (req, res, next) {
 
   } else if (type == 'provider') {
 
-
+console.log(req.files[0]);
     // Do some checks here (all form fields have to be valid)
     req.assert('email', 'A valid email is required').isEmail();  //Validate email
     req.assert('password', 'passwords must be at least 8 chars long and contain one number')
       .isLength({ min: 8 })
       .matches(/\d/);
     req.assert('passwordAgain', 'Passwords do not match').equals(req.body.password);
+    // Now, some custom checks for file extension
+    var fileName = req.files[0].originalname; //will check if file is indeed an image
+    var fileExtension = fileName.split('.').pop();
+    if ((fileExtension != "png") && (fileExtension != "jpg") && (fileExtension != "jpeg")){
+       req.assert('file0', 'File should be an image').equals('dummyText');
+    }
+    var sizeInBytes = req.files[0].size;
+    var MAXBYTESALLOWED = 9000;
+    if (sizeInBytes > MAXBYTESALLOWED) {
+      req.assert('file0', 'File should be less than ' + MAXBYTESALLOWED.toString() + ' bytes').equals('dummyText');
+    }
+
+
+
+
     let errors = req.validationErrors();
+    
+  
+    
     if (!errors) {   //No errors were found.  Passed Validation!
       //SUCCESS
       passport.authenticate('local-signup-provider', function (err, user, info) {
