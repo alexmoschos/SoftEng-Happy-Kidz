@@ -33,6 +33,7 @@ var booked_seats = require('./routes/booked_seats');
 var register = require('./routes/register');
 var logout = require('./routes/logout');
 var admin = require('./routes/admin');
+var subscription = require('./routes/subscription');
 
 var app = express();
 
@@ -85,6 +86,8 @@ app.use('/payment', payment);
 app.use('/membership', membership);
 
 app.use('/admin', admin);
+
+app.use('/subscription', subscription);
 
 app.use(function(req, res, next) {
     var form = new formidable.IncomingForm({

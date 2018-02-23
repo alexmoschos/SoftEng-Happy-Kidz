@@ -22,7 +22,7 @@ function seedDatabase(db) {
         email : 'george@example.com',
         password : bcrypt.hashSync('123456',10),
         wallet: 0,
-        mailNotifications : false
+        mailNotifications : true
     }];
     for(i = 0; i < 15; ++i){
         parentobj.push(
@@ -31,7 +31,7 @@ function seedDatabase(db) {
                 email : faker_en.internet.email(),
                 password : bcrypt.hashSync(faker_en.internet.password(),10),
                 wallet: 0,
-                mailNotifications : false
+                mailNotifications : true
             }
         );
     }
@@ -177,9 +177,29 @@ function seedDatabase(db) {
         });
     }
     //console.log(reviewobj);
+    var subscriptionobj = [{
+        parentId: 1,
+        organizerId: 1
+    },
+    {
+        parentId: 1,
+        organizerId: 2
+    },
+    {
+        parentId: 1,
+        organizerId: 3
+    },
+    {
+        parentId: 2,
+        organizerId: 2
+    },
+    {
+        parentId: 3,
+        organizerId: 2
+    }];
     var ticketobj = [];
     for(i = 1; i < 15; i+=2){
-        var j = getRandomInt(0,19);
+        var j = getRandomInt(1,19);
         ticketobj.push({
             eventId: j,
             parentId: i,
@@ -249,6 +269,7 @@ function seedDatabase(db) {
 
             })
         .then((succ) => db.Membership.bulkCreate(membershipobj))
+        .then((succ) => db.Subscription.bulkCreate(subscriptionobj))
         .then((succ) => db.BoughtTickets.bulkCreate(ticketobj))
         .catch((err) => console.log(err));
 

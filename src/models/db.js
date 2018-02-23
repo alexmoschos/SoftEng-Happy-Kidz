@@ -55,9 +55,9 @@ BoughtTickets.belongsTo(Parent, { foreignKey: 'parentId', targetKey: 'parentId' 
 Parent.belongsToMany(Event, { through: Review, foreignKey: 'parentId', otherKey: 'eventId'});
 Event.belongsToMany(Parent, { through: Review, foreignKey: 'eventId', otherKey: 'parentId'});
 
-// Suscription Foreign Keys
-Parent.belongsToMany(Organizer, { through: Subscription, foreignKey: 'parentId', otherKey: 'organizerId' });
-Organizer.belongsToMany(Parent, { through: Subscription, foreignKey: 'organizerId', otherKey: 'parentId' });
+// Subscription Foreign Keys
+Parent.belongsToMany(Organizer, { through: Subscription, foreignKey: 'parentId', otherKey: 'organizerId', onDelete: 'cascade' });
+Organizer.belongsToMany(Parent, { through: Subscription, foreignKey: 'organizerId', otherKey: 'parentId', onDelete: 'cascade' });
 
 
 
