@@ -28,8 +28,12 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 		if (parent){
 			db.BoughtTickets.findAll({
 				include: [{
-				  model: db.Event,
-				  required: true
+				  model: db.Event, 
+				  required: true,
+				  include: [{
+					model: db.Organizer,
+					required: true
+				  }],
 				}],
 				where: { parentId: parent.parentId }
 			})
