@@ -68,7 +68,9 @@ crossorigin="anonymous"></script>
               <div class="golden-card">
                   <span style="font-size:20px; " class="glyphicon glyphicon-credit-card"></span>
                   <span style="font-size:20px;  margin-left:10px;" id="subscribtion-category"><%= category%></span> 
-                  <p class="page-subtitle small">Λήξη Συνδρομής: <%= expiryDate%></p>
+                  <p class="page-subtitle small">Λήξη Συνδρομής: <%var eDate_ = new Date(expiryDate*1000); %>
+                    <%= eDate_.toLocaleDateString()%>
+                     </p>
               </div>
               <div class="available-points">
                   <span style="font-size:20px; "  class="glyphicon glyphicon-asterisk"></span>
@@ -170,16 +172,15 @@ crossorigin="anonymous"></script>
                                                                            &nbsp;
                                                                            <span class="glyphicon glyphicon-briefcase"></span>
                                                                            <span >Πάροχος: </span>
-                                                                           <span id="provider-data" class="result-data"><a href="/provider_page/"><%= it.event.providerName %></a>,</span>
+                                                                           <span id="provider-data" class="result-data"><a href="/provider/<%=it.event.organizer.organizerId%> "><%= it.event.organizer.name %></a>,</span>
                                                                            &nbsp;
                                                                            <span class="glyphicon glyphicon-signal"></span>
                                                                            <span >Ηλικίες: </span>
                                                                            <span id="age-data" class="result-data"><%= it.event.minAge.toString() + "-" + it.event.maxAge.toString() %>,</span>
                                                                            &nbsp;
-                                                             
-                                                                           <!-- <span class="glyphicon glyphicon-earphone"></span>
+                                                                           <span class="glyphicon glyphicon-earphone"></span>
                                                                            <span>Τηλέφωνο Επικοινωνίας: </span>
-                                                                           <span id="phone-data" class="result-data"><%=it.phone%></span> -->
+                                                                           <span id="phone-data" class="result-data"><%=it.event.organizer.phone%></span>
                                                                 </center>
                                                                </div>
                                                                <div class="col-xs-12">
@@ -293,16 +294,15 @@ crossorigin="anonymous"></script>
                                                                              &nbsp;
                                                                              <span class="glyphicon glyphicon-briefcase"></span>
                                                                              <span >Πάροχος: </span>
-                                                                             <span id="provider-data" class="result-data"><a href="/provider_page/"><%= it.event.providerName %></a>,</span>
+                                                                             <span id="provider-data" class="result-data"><a href="/provider/<%=it.event.organizer.organizerId%> "><%= it.event.organizer.name %></a>,</span>
                                                                              &nbsp;
                                                                              <span class="glyphicon glyphicon-signal"></span>
                                                                              <span >Ηλικίες: </span>
                                                                              <span id="age-data" class="result-data"><%= it.event.minAge.toString() + "-" + it.event.maxAge.toString() %>,</span>
                                                                              &nbsp;
-                                                               
-                                                                             <!-- <span class="glyphicon glyphicon-earphone"></span>
+                                                                             <span class="glyphicon glyphicon-earphone"></span>
                                                                              <span>Τηλέφωνο Επικοινωνίας: </span>
-                                                                             <span id="phone-data" class="result-data"><%=it.phone%></span> -->
+                                                                             <span id="phone-data" class="result-data"><%=it.event.organizer.phone%></span>
                                                                   </center>
                                                                  </div>
                                                                  <div class="col-xs-12">
