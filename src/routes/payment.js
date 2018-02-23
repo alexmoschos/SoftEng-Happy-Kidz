@@ -48,11 +48,12 @@ function mailTickets(parentId, eventId) {
                         if (event.pictures > 0) {
                             eventImage = "public/files/events/" + event.eventId + "/" + "0";
                         }
+                        let eventDate = new Date(event.startTime * 1000);
                         let opt = {
                             filename: "public/files/tickets/pdf/" + ticketIds[0] + '.pdf',
                             title: event.title,
                             type: 'ticket',
-                            date_and_time: event.startTime,
+                            date_and_time: eventDate.toLocaleDateString() + eventDate.toLocaleTimeString(),
                             address: event.geoAddress,
                             number_of_tickets: tickets.length,
                             event_img_src: eventImage,
@@ -61,7 +62,7 @@ function mailTickets(parentId, eventId) {
                         pdf.save_pdf(opt)
                             .then((pdfPath) => {
                                 tickets[0].getParent()
-                                    .then((parent) => mail.sendPdfEmail('[Happy Kidz] Αγορά Εισητηρίων για το event: ' + event.title, parent.email, '', pdfPath))
+                                    .then((parent) => mail.sendPdfEmail('[Happy Kidz] Αγορά Εισιτηρίων για το event: ' + event.title, parent.email, '', pdfPath))
                                     .then((success) => { return; })
                                     .catch((err) => console.log(err));
                             });
@@ -72,7 +73,7 @@ function mailTickets(parentId, eventId) {
 }
 
 // GET Route for payment form (common for memberships and tickets)
-router.get('/', auth.isUserParent, function (req, res) {
+router.get('/', auth.isUserParentPayment, function (req, res) {
 
     /* Retrieve item to buy */
     let userSession = req.session;
@@ -82,11 +83,11 @@ router.get('/', auth.isUserParent, function (req, res) {
         switch (item.type) {
             case 'ticket':
                 db.Event.findById(item.eventId)
-                    .then((event) => res.render('payment/index', { description: item.quantity + 'x Εισιτήριο για ' + event.title, amount: event.ticketPrice, quantity: item.quantity }));
+                    .then((event) => res.render('payment/index', { user: req.user, description: item.quantity + 'x Εισιτήριο για ' + event.title, amount: event.ticketPrice * item.quantity, quantity: item.quantity }));
                 break;
             case 'membership':
                 if (availableMemberships[item.tier - 1]) {
-                    res.render('payment/index', { description: availableMemberships[item.tier - 1].description, amount: availableMemberships[item.tier - 1].amount });
+                    res.render('payment/index', { user: req.user, description: availableMemberships[item.tier - 1].description, amount: availableMemberships[item.tier - 1].amount });
                 }
                 break;
             default:
@@ -100,7 +101,7 @@ router.get('/', auth.isUserParent, function (req, res) {
 });
 
 // Payment forms should post here
-router.post('/', auth.isUserParent, function (req, res) {
+router.post('/', auth.isUserParentPayment, function (req, res) {
     // Retrieve item to buy 
     let userSession = req.session;
     if (userSession.cart) {
@@ -127,7 +128,7 @@ router.post('/', auth.isUserParent, function (req, res) {
                                             return event.update({ ticketCount: newTicketCount }, { transaction: t });
                                         } else {
                                             req.flash('error', 'Δεν υπάρχουν όσα εισητήρια ζητήσατε !');
-                                            req.redirect('back');
+                                            res.redirect('back');
                                             throw new Error("Not enough tickets");
                                         }
                                     })
@@ -190,7 +191,7 @@ router.post('/', auth.isUserParent, function (req, res) {
 });
 
 // Ticket purchase forms on event page should post here
-router.post('/events/:id', auth.isUserParent, function (req, res) {
+router.post('/events/:id', auth.isUserParentPayment, function (req, res) {
     /* Add ticket for event to cart */
     console.log('Adding ticket to cart - session ' + req.user.type);
     // Check if id is a valid integer
@@ -216,7 +217,7 @@ router.post('/events/:id', auth.isUserParent, function (req, res) {
 });
 
 // Membership purchase forms should post here
-router.post('/membership/:id', auth.isUserParent, function (req, res) {
+router.post('/membership/:id', auth.isUserParentPayment, function (req, res) {
     // Add ticket for event to cart
     console.log('Adding membership to cart - session ' + req.user);
     // Check if id is a valid integer

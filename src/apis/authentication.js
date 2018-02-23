@@ -175,13 +175,27 @@ function isUserVerifiedOrganizer(req, res, next) {
 
 function isNotUserLoggedIn(req, res, next) {
     if (req.isAuthenticated()){
-        res.send('user already logged in as ' + req.user.user.email);
+        req.flash('error', 'Είστε ήδη συνδεδεμένος ως: ' + req.user.user.email);
+        res.redirect('/');
     }
     else{
         return next();
     }
 }
 
+function isUserParentPayment(req, res, next){
+    if (req.isAuthenticated()){
+        if (req.user.type === "parent"){
+            return next();
+        } else {
+            // HTTP Code 403
+            res.send('Access Denied');
+        }
+    } else {
+        req.flash('error', 'Πρέπει να συνδεθείτε για να πραγματοποιήσετε αυτή την ενέργεια');
+        res.redirect('/');
+    }
+}
 
 
 var auth = {
@@ -197,7 +211,8 @@ var auth = {
     isUserMemberParent: isUserMemberParent,
     isUserVerifiedOrganizer: isUserVerifiedOrganizer,
     isNotUserLoggedIn: isNotUserLoggedIn,
-    isUserParentIdAndBoughtTicket: isUserParentIdAndBoughtTicket
+    isUserParentIdAndBoughtTicket: isUserParentIdAndBoughtTicket,
+    isUserParentPayment: isUserParentPayment
 };
 
 module.exports = auth;
