@@ -6,6 +6,11 @@ var auth = require('../apis/authentication');
 var bodyParser = require('body-parser');
 var configFile = require('../config');
 var utils = require('../apis/utilities');
+var qr = require('../apis/qr');
+var pdf = require('../apis/pdf_generator');
+var mail = require('../apis/mail');
+
+
 
 var availableMemberships = configFile.availableMemberships;
 
@@ -16,6 +21,54 @@ function isMembershipValid(membership) {
     } else {
         return false;
     }
+}
+
+// Create qrcode-pdf and send email
+function mailTickets(parentId, eventId) {
+    // Find all tickets for that event
+    db.BoughtTickets.findAll({
+        where: {
+            parentId: parentId
+        }
+    }).then((tickets) => {
+        // Create QR Code
+        let ticketIds = [];
+        for (let i = 0; i < tickets.length; i++) {
+            ticketIds.push(tickets[i].ticketId);
+        }
+        // let pdfFilename = path.resolve('./') + "/public/files/tickets/pdf/" + ticketIds[0];
+        qr.createQRCode(ticketIds)
+            .then((qrCodePath) => {
+                console.log("Getting ticket event");
+                tickets[0].getEvent()
+                    .then((event) => {
+                        // Create PDF with QRCode
+                        console.log("Creating pdf");
+                        let eventImage = "public/files/events/default.png";
+                        if (event.pictures > 0) {
+                            eventImage = "public/files/events/" + event.eventId + "/" + "0";
+                        }
+                        let opt = {
+                            filename: "public/files/tickets/pdf/" + ticketIds[0] + '.pdf',
+                            title: event.title,
+                            type: 'ticket',
+                            date_and_time: event.startTime,
+                            address: event.geoAddress,
+                            number_of_tickets: tickets.length,
+                            event_img_src: eventImage,
+                            qr_code_src: qrCodePath
+                        };
+                        pdf.save_pdf(opt)
+                            .then((pdfPath) => {
+                                tickets[0].getParent()
+                                    .then((parent) => mail.sendPdfEmail('[Happy Kidz] Αγορά Εισητηρίων για το event: ' + event.title, parent.email, '', pdfPath))
+                                    .then((success) => { return; })
+                                    .catch((err) => console.log(err));
+                            });
+                    });
+
+            });
+    });
 }
 
 // GET Route for payment form (common for memberships and tickets)
@@ -68,7 +121,7 @@ router.post('/', auth.isUserParent, function (req, res) {
                                 return db.Event.findById(item.eventId, { transaction: t })
                                     // Remove wanted tickets from event
                                     .then((event) => {
-                                        console.log('Event found: ' + event);
+                                        console.log('Event found: ' + JSON.stringify(event));
                                         let newTicketCount = event.ticketCount - item.quantity;
                                         if (newTicketCount >= 0) {
                                             return event.update({ ticketCount: newTicketCount }, { transaction: t });
@@ -94,18 +147,21 @@ router.post('/', auth.isUserParent, function (req, res) {
                                         }
                                         db.BoughtTickets.bulkCreate(ticketArray, { transaction: t });
                                     })
-                                    // Find parent and update wallet
-                                    // TODO: Generate QRCode -> PDF -> Send Email
-                                    .then((tickets) => db.Parent.findById(userSession.passport.user.id, { transaction: t }))
-                                    .then((parent) => parent.update({ wallet: parent.wallet + item.quantity * 100 }, { transaction: t }));
+                                    .then((tickets) => {
+                                        // Find parent and update wallet
+                                        console.log('Finding parent');
+                                        return db.Parent.findById(userSession.passport.user.id, { transaction: t });
+                                    })
+                                    .then((parent) => { return parent.update({ wallet: parent.wallet + item.quantity * 100 }, { transaction: t }); });
                             })
                                 .then((result) => {
                                     console.log('Successful transaction ' + result);
+                                    // Generate QRCode -> PDF -> Send Email
+                                    mailTickets(userSession.passport.user.id, item.eventId);
                                     res.redirect('/payment/success');
                                 })
                                 .catch((err) => {
                                     console.log('Unsuccessful transaction ' + err);
-                                    res.send('Not enough tickets');
                                 });
                         }
                     });
@@ -169,7 +225,7 @@ router.post('/membership/:id', auth.isUserParent, function (req, res) {
         return;
     }
     // Check if membership id is valid
-    if (!availableMemberships[req.params.id - 1]){
+    if (!availableMemberships[req.params.id - 1]) {
         res.status(404).render('no_page');
         return;
     }
