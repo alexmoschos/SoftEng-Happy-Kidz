@@ -1,4 +1,4 @@
-@media (min-width: 900px) and (max-width: 901px) {
+/* @media (min-width: 900px) and (max-width: 901px) {
     .collapse {
         display: none !important;
     }
@@ -100,7 +100,7 @@ color: #ffffff;
 }
 .navbar-custom .navbar-link:hover {
     color: #c0c0c0;
-}
+} */
 
 #content {
     padding-top : 0%;
@@ -121,15 +121,12 @@ body {
 
 
 
-.container {
+/* .container {
     margin-top: 10px;
     margin-bottom: 0px;
     margin-right: 150px;
     margin-left: 80px;
-}
-
-#promo_text {
-}
+} */
 
 
 
@@ -142,9 +139,9 @@ body {
 
 
 
-* {
+/* * {
     box-sizing: border-box;
-}
+} */
 
 .columns {
     margin-bottom:20px;
@@ -214,19 +211,19 @@ body {
 
 
 #pricing-table {
-    margin: 5px auto;
+    margin: 10px auto;
     text-align: center;
-    width: 892px; /* total computed width = 222 x 3 + 226 */
+    /*width: 892px; total computed width = 222 x 3 + 226 */
 }
 
 #pricing-table .plan {
     font: 12px 'Lucida Sans', 'trebuchet MS', Arial, Helvetica;
-    text-shadow: 0 1px rgba(255,255,255,.8);        
-    background: #fff;      
+    text-shadow: 0 1px rgba(255,255,255,.8);
+    background: #fff;
     border: 1px solid #ddd;
     color: #333;
     padding: 20px;
-    width: 280px; /* plan width = 180 + 20 + 20 + 1 + 1 = 222px */      
+    width: 100%; /* plan width = 180 + 20 + 20 + 1 + 1 = 222px */
     float: left;
     position: relative;
 }
@@ -237,18 +234,18 @@ body {
     border-width: 3px;
     padding: 30px 20px;
     border-radius: 5px;
-    box-shadow: 20px 0 10px -10px rgba(0, 0, 0, .15), -20px 0 10px -10px rgba(0, 0, 0, .15);    
+    box-shadow: 20px 0 10px -10px rgba(0, 0, 0, .15), -20px 0 10px -10px rgba(0, 0, 0, .15);
 }
 
 #pricing-table .plan:nth-child(1) {
-    border-radius: 5px 0 0 5px;        
+    border-radius: 5px 0 0 5px;
 }
 
 #pricing-table .plan:nth-child(4) {
-    border-radius: 0 5px 5px 0;        
+    border-radius: 0 5px 5px 0;
 }
 
-/* --------------- */   
+/* --------------- */
 
 #pricing-table h3 {
     font-size: 20px;
@@ -264,16 +261,16 @@ body {
     background-image: linear-gradient(#eee, #ddd);
     margin-top: -30px;
     padding-top: 30px;
-    border-radius: 5px 5px 0 0;         
+    border-radius: 5px 5px 0 0;
 }
 
 #pricing-table .plan:nth-child(1) h3 {
-    border-radius: 5px 0 0 0;       
+    border-radius: 5px 0 0 0;
 }
 
 #pricing-table .plan:nth-child(4) h3 {
-    border-radius: 0 5px 0 0;       
-}   
+    border-radius: 0 5px 0 0;
+}
 
 #pricing-table h3 span {
     display: block;
@@ -302,32 +299,32 @@ body {
 }
 
 /* --------------- */
-    
+
 #pricing-table .signup {
     position: relative;
     padding: 8px 20px;
-    margin: 20px 0 0 0;  
+    margin: 20px 0 0 0;
     color: #fff;
     font: bold 14px Arial, Helvetica;
     text-transform: uppercase;
     text-decoration: none;
-    display: inline-block;       
+    display: inline-block;
     background-color: #72ce3f;
     background-image: linear-gradient(#72ce3f, #62bc30);
-    border-radius: 3px;     
-    text-shadow: 0 1px 0 rgba(0,0,0,.3);        
+    border-radius: 3px;
+    text-shadow: 0 1px 0 rgba(0,0,0,.3);
     box-shadow: 0 1px 0 rgba(255, 255, 255, .5), 0 2px 0 rgba(0, 0, 0, .7);
 }
 
 #pricing-table .signup:hover {
     background-color: #62bc30;
-    background-image: linear-gradient(#62bc30, #72ce3f); 
+    background-image: linear-gradient(#62bc30, #72ce3f);
 }
 
 #pricing-table .signup:active, #pricing-table .signup:focus {
-    background: #62bc30;       
+    background: #62bc30;
     top: 2px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, .7) inset; 
+    box-shadow: 0 0 3px rgba(0, 0, 0, .7) inset;
 }
 
 /* --------------- */
@@ -343,13 +340,16 @@ body {
 
 .clear {
   zoom:1
-}   
+}
 
 .plan { transition: all .2s ease-in-out; }
 .plan:hover { transform: scale(1.1); }
 
 
-
+#panelo {
+    text-align: justify;
+    text-justify: inter-word;
+}
 
 
 

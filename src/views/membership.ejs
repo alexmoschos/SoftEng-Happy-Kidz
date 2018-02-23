@@ -3,24 +3,24 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>HappyKidz - Συνδρομή</title>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-	crossorigin="anonymous"></script>
+	 crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-	crossorigin="anonymous"></script>
+	 crossorigin="anonymous"></script>
 
 	<!-- Latest compiled and minified CSS -->
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
+	 crossorigin="anonymous">
 
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous">
+	 crossorigin="anonymous">
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	crossorigin="anonymous"></script>
+	 crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
 
 	<link rel="stylesheet" href="/stylesheets/styles_membership.css">
@@ -33,133 +33,91 @@
 
 <%- include partials/navbar.ejs %>
 
-
-
-<div class="container" id="promo_">
-
-	<div style="background:transparent !important" class="jumbotron vertical-center">
-		<div class="panel-group">
-
-
-
-			<div class="panel panel-primary">
+	<body>
+		<div class="container">
+			<div class="panel panel-primary" id="panelo">
 				<div class="panel-heading">Πληροφορίες και Επιλογές Συνδρομής</div>
 				<div class="panel-body">Think about a cloud. Just float around and be there. You have to make almighty decisions when you're the creator. There's
 					nothing wrong with having a tree as a friend. This is truly an almighty mountain. There it is. I'm sort of a softy,
-					I couldn't shoot Bambi except with a camera. Just a happy little shadow that lives in there. All you have to do is
-					let your imagination go wild. In your imagination you can go anywhere you want. This is the time to get out all your
-					flustrations, much better than kicking the dog around the house or taking it out on your spouse. Just take out whatever
-					you don't want. It'll change your entire perspective. I will take some magic white, and a little bit of Vandyke brown
-					and a little touch of yellow. When things happen - enjoy them. They're little gifts. It looks so good, I might as
-					well not stop. Nothing's gonna make your husband or wife madder than coming home and having a snow-covered dinner.
-					Each highlight must have it's own private shadow. Let's do that again. The little tiny Tim easels will let you down.
-					See there how easy that is. You can do it. Clouds are free they come and go as they please. Only God can make a tree
-					- but you can paint one. I'm a water fanatic. I love water. A beautiful little sunset. Maybe there's a happy little
-					Evergreen that lives here. A tree needs to be your friend if you're going to paint him. Even trees need a friend.
-					We all need friends. This is where you take out all your hostilities and frustrations. It's better than kicking the
-					puppy dog around and all that so. Automatically, all of these beautiful, beautiful things will happen. Now we'll
-				take the almighty fan brush. Nature is so fantastic, enjoy it. Let it make you happy.</div>
+					I couldn't shoot Bambi except with a camera. Just a happy little shadow that lives in there. All you have to do is let
+					your imagination go wild. In your imagination you can go anywhere you want. This is the time to get out all your flustrations,
+					much better than kicking the dog around the house or taking it out on your spouse. Just take out whatever you don't
+					want. It'll change your entire perspective. I will take some magic white, and a little bit of Vandyke brown and a little
+					touch of yellow. When things happen - enjoy them. They're little gifts. It looks so good, I might as well not stop.
+					Nothing's gonna make your husband or wife madder than coming home and having a snow-covered dinner. Each highlight must
+					have it's own private shadow. Let's do that again. The little tiny Tim easels will let you down. See there how easy
+					that is. You can do it. Clouds are free they come and go as they please. Only God can make a tree - but you can paint
+					one. I'm a water fanatic. I love water. A beautiful little sunset. Maybe there's a happy little Evergreen that lives
+					here. A tree needs to be your friend if you're going to paint him. Even trees need a friend. We all need friends. This
+					is where you take out all your hostilities and frustrations. It's better than kicking the puppy dog around and all that
+					so. Automatically, all of these beautiful, beautiful things will happen. Now we'll take the almighty fan brush. Nature
+					is so fantastic, enjoy it. Let it make you happy.</div>
 			</div>
 
+
+			<div id="pricing-table" class="clear align-items-center row">
+				<div class="col-md-4 col-sm-4 col-xs-12">
+					<div class="plan">
+						<h3>Enterprise
+							<span>50€</span>
+						</h3>
+						<form action="/payment/membership/1" method="POST">
+							<button name="plan" value="50" class="signup">Αγορά</button>
+						</form>
+						<ul>
+							<li>
+								<b>10GB</b> Disk Space</li>
+							<li>
+								<b>100GB</b> Monthly Bandwidth</li>
+							<li>
+								<b>20</b> Email Accounts</li>
+							<li>
+								<b>Unlimited</b> subdomains</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-12">
+					<div class="plan">
+						<h3>Enterprise
+							<span>100€</span>
+						</h3>
+						<form action="/payment/membership/2" method="POST">
+							<button name="plan" value="100" class="signup">Αγορά</button>
+						</form>
+						<ul>
+							<li>
+								<b>10GB</b> Disk Space</li>
+							<li>
+								<b>100GB</b> Monthly Bandwidth</li>
+							<li>
+								<b>20</b> Email Accounts</li>
+							<li>
+								<b>Unlimited</b> subdomains</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-12">
+					<div class="plan">
+						<h3>Enterprise
+							<span>200€</span>
+						</h3>
+						<form action="/payment/membership/3" method="POST">
+							<button name="plan" value="200" class="signup">Αγορά</button>
+						</form>
+						<ul>
+							<li>
+								<b>10GB</b> Disk Space</li>
+							<li>
+								<b>100GB</b> Monthly Bandwidth</li>
+							<li>
+								<b>20</b> Email Accounts</li>
+							<li>
+								<b>Unlimited</b> subdomains</li>
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
-		
-	</div>
-    <!--  <div class="jumbotron">
+	</body>
 
-    </div> -->
-</div>
-
-<div style="width:860px; margin:0 auto;">
-
-<div id="pricing-table" class="clear align-items-center
-">
-<div class="col-md-4 col-sm-4 col-xs-12">
-	<div class="plan">
-		<h3>Enterprise<span>50€</span></h3>
-		<form action = "/payment/membership/1" method = "POST">
-                                <!-- <div class="row">
-                                    <div class="col-6 col-xs-6">
-                                        <button id="accept-btn" name="action" value="accept" class="btn btn-lg">
-                                            <div class="row">
-                                            <p style="margin: auto auto;">Αποδοχή</p>
-                                            </div>
-                                        </button>
-                                    </div>
-                                </div> -->
-                                <button  name="plan" value="50" class="signup">Αγορά</button>
-                            </form>
-                            <ul>
-                            	<li><b>10GB</b> Disk Space</li>
-                            	<li><b>100GB</b> Monthly Bandwidth</li>
-                            	<li><b>20</b> Email Accounts</li>
-                            	<li><b>Unlimited</b> subdomains</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12">
-                    	<div class="plan">
-                    		<h3>Enterprise<span>100€</span></h3>
-                    		<form action = "/payment/membership/2" method = "POST">
-                                <!-- <div class="row">
-                                    <div class="col-6 col-xs-6">
-                                        <button id="accept-btn" name="action" value="accept" class="btn btn-lg">
-                                            <div class="row">
-                                            <p style="margin: auto auto;">Αποδοχή</p>
-                                            </div>
-                                        </button>
-                                    </div>
-                                </div> -->
-                                <button  name="plan" value="100" class="signup">Αγορά</button>
-                            </form>
-                            <ul>
-                            	<li><b>10GB</b> Disk Space</li>
-                            	<li><b>100GB</b> Monthly Bandwidth</li>
-                            	<li><b>20</b> Email Accounts</li>
-                            	<li><b>Unlimited</b> subdomains</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12">
-                    	<div class="plan">
-                    		<h3>Enterprise<span>200€</span></h3>
-
-			<!-- <form  action = "/payment/membership/" method = "PΟST">
-			<div class="row">
-                                    <div class="col-6 col-xs-6">
-                                        <button id="accept-btn" name="action" value="accept" class="btn btn-lg">
-                                            <div class="row">
-                                            <p style="margin: auto auto;">Αποδοχή</p>
-                                            </div>
-                                        </button>
-                                    </div>
-                                    </div>
-                                </form> -->
-                                <form action = "/payment/membership/3" method = "POST">
-                                <!-- <div class="row">
-                                    <div class="col-6 col-xs-6">
-                                        <button id="accept-btn" name="action" value="accept" class="btn btn-lg">
-                                            <div class="row">
-                                            <p style="margin: auto auto;">Αποδοχή</p>
-                                            </div>
-                                        </button>
-                                    </div>
-                                </div> -->
-                                <button  name="plan" value="200" class="signup">Αγορά</button>
-                            </form>
-                            <ul>
-                            	<li><b>10GB</b> Disk Space</li>
-                            	<li><b>100GB</b> Monthly Bandwidth</li>
-                            	<li><b>20</b> Email Accounts</li>
-                            	<li><b>Unlimited</b> subdomains</li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-
-            </body>
-            </html>
-
+</html>
