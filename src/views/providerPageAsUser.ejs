@@ -47,7 +47,11 @@ crossorigin="anonymous"></script>
 
 
 			<div class="card hovercard">
+			<div class="provider-basic-info">
+			
 				<h2 class="username"><%= PersonalInfo.ProviderName %></h2>
+				<div class="heart"></div>
+				</div>
 
 			</div>
 
@@ -307,7 +311,10 @@ crossorigin="anonymous"></script>
 
 
 <script>
+var providerId = 0;
 $(document).ready(function() {
+
+	providerId = <%-JSON.stringify(PersonalInfo.ProviderId)%>;
     $(".btn-pref .btn").click(function () {
         $(".btn-pref .btn").removeClass("btn-info").addClass("btn-default");
     
@@ -346,8 +353,56 @@ $(document).ready(function() {
 
 
 
+/* when a user clicks, toggle the 'is-animating' class */
+$(".heart").on('click touchstart', function(){
+  $(this).toggleClass('is_animating');
+});
 
+/*when the animation is over, remove the class*/
+$(".heart").on('animationend', function(){
+  $(this).toggleClass('is_animating');
+});
 
+$(".heart").on('click', function(){
+	
+  if(providerId != 0) { //document has been loaded
+  	
+  	if(!($(this).hasClass('hey'))){ //want to subscribe	
+	    $.ajax({
+	        type: "POST",
+	        url: "/subscription",
+	        data: { 
+	            providerId: providerId
+	        },
+	        success: function(result) {
+	        	$(this).toggleClass('hey');
+	            alert('Subscribed');
+	        },
+	        error: function(result) {
+	            alert('Failed');
+	        }
+	    });
+	}
+	else { 
+		var deleteUrl = "/subscription/" + providerId.toString();
+		$.ajax({
+	        type: "DELETE",
+	        url: deleteUrl,
+	        data: { 
+	            providerId: providerId
+	        },
+	        success: function(result) {
+	        	$(this).toggleClass('hey');
+	            alert('Unsubscribed');
+	        },
+	        error: function(result) {
+	            alert('error');
+	        }
+	    });
+	}
+  }
+
+});
 
 
  
