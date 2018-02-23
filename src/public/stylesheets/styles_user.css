@@ -483,6 +483,7 @@ body {
 
 .provider-subscription-logo:hover{
 	border: 1px solid rgba(0,0,0,0.5);
+	text-decoration: none
 }
 
 /* .showable {
@@ -513,3 +514,27 @@ body {
 	/*   background-color: rgba(255, 0, 0, 0.2); */
 	  border:solid 1px red;
 	}
+
+
+
+
+.prov-subscribed{
+ /*font-weight: 900;*/
+
+    color: #1194c4;
+    text-align: center;
+    /*color: #7c795d;*/
+    /*font-family: "Times New Roman", Times, serif;*/
+    font-family: 'Trocchi', serif;
+    vertical-align: center;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 24px;
+    padding-bottom:0px;
+    margin-bottom:0;
+}
+
+a:hover{
+    text-decoration: none;
+}

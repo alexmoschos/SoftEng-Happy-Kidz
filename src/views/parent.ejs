@@ -92,19 +92,28 @@ crossorigin="anonymous"></script>
             </div>    
             <div class="clearfix"></div>
           </div>
+
+
           <div class="panel panel-default">
               <div class="panel-heading">
                 <h1 class="page-header small">Subscriptions</h1>
               </div>   
               <% if (subscriptions.length > 0){
                   subscriptions.forEach(function(it2){ %>
-                    <div class="subscription-item ">
-                      
-                        <a  href="/provider/<%= it2.organizerId%>"> <%= it2.name%></a>
+                    <!-- <div class="subscription-item ">
+             <a  href="/provider/<%= it2.organizerId%>"><img  src="/happy2.png" alt="<%= it2.name%>"  class="provider-subscription-logo"></a>
                         
+                    </div> -->
+
+                    <div class="subscription-item ">
+
+             <a  href="/provider/<%= it2.organizerId%>"><div class="provider-subscription-logo well prov-subscribed"><h4 class="center" ><%= it2.name%></h4></div></a>
                     </div>
+
+
                  <% })%>
             <%}%>
+            <div class="clearfix"></div>
           </div>
 
           
