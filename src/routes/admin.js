@@ -6,7 +6,7 @@ var auth = require('../apis/authentication');
 var bcrypt = require('bcrypt');
 var utilities = require('../apis/utilities');
 var auth = require('../apis/authentication');
-
+var fs = require('fs');
 
 router.get('/', auth.isUserAdmin, function(req, res) {
 
