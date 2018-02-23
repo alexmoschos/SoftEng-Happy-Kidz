@@ -41,18 +41,31 @@ crossorigin="anonymous"></script>
 <body>
 
 
+	<!-- ALERTS -->
+	<div id="myAlertSubscribe" class="myAlert-bottom alert alert-success">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		You successfully subscribed at  <strong><%= PersonalInfo.ProviderName %></strong>!
+	</div>
+
+	<div id="myAlertUnsubscribe" class="myAlert-bottom alert alert-danger">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		You successfully unsubscribed at  <strong><%= PersonalInfo.ProviderName %></strong>!
+	</div>
+	<!-- END OF ALERTS -->
+
+
 	<div id="my-main-row" class="row">
 		<div class="col-sm-2"></div>
 		<div class="col-lg-8 col-sm-8">
 
 
 			<div class="card hovercard">
-			<div class="provider-basic-info">
-			
-				<h2 class="username"><%= PersonalInfo.ProviderName %></h2>
-		<%		if (!PersonalInfo.isAdmin) { %>
-				<div class="heart"></div>
-				<% } %>
+				<div class="provider-basic-info">
+
+					<h2 class="username"><%= PersonalInfo.ProviderName %></h2>
+					<%		if (!PersonalInfo.isAdmin) { %>
+					<div class="heart"></div>
+					<% } %>
 				</div>
 
 			</div>
@@ -88,16 +101,6 @@ crossorigin="anonymous"></script>
 						<div class="general-info">
 
 
-							<!-- <h3>This is tab 1</h3> -->
-
-
-
- 					<!-- 	PastEventsList.forEach(function(event){ 
-                       		event.
-                       }
- -->
-
-
 
 							<h3><%= PersonalInfo.ProviderName %></h3>
 							<p><%= PersonalInfo.ProviderText %> </p>
@@ -126,35 +129,17 @@ crossorigin="anonymous"></script>
 									<%= PersonalInfo.ProviderAddress %>
 								</span>
 							</div>
-					
+
 						</div>
 
 					</div>
 
-
-
-
-
-
-
-
-
 					<div  class="tab-pane fade in well main-well" id="tab2">
 
 
-
 						<div class="previus-events ">
-
-
-
-
-
-
-
-
 							<div class="row">
 								<% PastEventsList.forEach(function(event){ %>
-
 								<div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border:1px solid #e0e0e0; margin-bottom:20px; border-radius:20px;">
 									<!-- <center>     -->
 									<div class="row" style="height: 170px; margin-top: 15px">
@@ -188,25 +173,22 @@ crossorigin="anonymous"></script>
 													<span >Ηλικίες: </span>
 													<span id="age-data" class="result-data"><%= event.Ages %>,</span> 
 													&nbsp;
-                                                                                        <!-- <span class="glyphicon glyphicon-euro"></span> 
-                                                                                        <span>Τιμή: </span>
-                                                                                        <span id="price-data" class="result-data">10,</span>
-                                                                                        &nbsp; -->
-                                                                                        <span class="glyphicon glyphicon-earphone"></span> 
-                                                                                        <span>Τηλέφωνο Επικοινωνίας: </span>
-                                                                                        <span id="phone-data" class="result-data"><%= event.PhoneNumber %></span>                                         
-                                                                                    </div>
-                                                                                    <div class="col-xs-12">
-                                                                                    	<hr>
-                                                                                    	<span class="glyphicon glyphicon-remove"></span> 
-                                                                                    	<span>Αρχική Τιμή: </span>
-                                                                                    	<span id="price-data" class="result-data"><%= event.InitialPrice %></span>
-                                                                                    	&nbsp;
-                                                                                    	<span class="glyphicon glyphicon-ok"></span> 
-                                                                                    	<span>Τιμή HappyKidz: </span>
-                                                                                    	<span id="price-data" class="result-data"><%= event.FinalPrice %></span>
-                                                                                    	<!-- <br> -->
-                                                                                    </div>
+
+													<span class="glyphicon glyphicon-earphone"></span> 
+													<span>Τηλέφωνο Επικοινωνίας: </span>
+													<span id="phone-data" class="result-data"><%= event.PhoneNumber %></span>                                         
+												</div>
+												<div class="col-xs-12">
+													<hr>
+													<span class="glyphicon glyphicon-remove"></span> 
+													<span>Αρχική Τιμή: </span>
+													<span id="price-data" class="result-data"><%= event.InitialPrice %></span>
+													&nbsp;
+													<span class="glyphicon glyphicon-ok"></span> 
+													<span>Τιμή HappyKidz: </span>
+													<span id="price-data" class="result-data"><%= event.FinalPrice %></span>
+													<!-- <br> -->
+												</div>
                                                                             <!-- <div class="col-xs-10">
                                                                                 <p>20€</p>
                                                                             </div> -->
@@ -217,12 +199,8 @@ crossorigin="anonymous"></script>
                                                             </div>
                                                             <div class="col-sm-1"></div>
                                                             <% }) %>
-                                                            <!-- &nbsp; -->
-
-
 
                                                         </div>                        
-
 
                                                     </div>
                                                 </div>
@@ -291,133 +269,126 @@ crossorigin="anonymous"></script>
 
                                             </div>
                                         </div>
-
-
-
-
-
-
-
-
-
                                     </div>
                                     <div class="col-sm-2"></div>
                                 </div>
-
 
                             </body>
 
 
 
+        <script>
+	    	var providerId = 0;
+
+	    	$(document).ready(function() {
+
+		    	$(".btn-pref .btn").click(function () {
+			    	$(".btn-pref .btn").removeClass("btn-info").addClass("btn-default");
+					$(this).removeClass("btn-default").addClass("btn-info");   
+			        if (this.id == "about-btn"){
+			        	$("#tab1").addClass("active");
+			        	$("#tab2").removeClass("active");
+			        	$("#tab3").removeClass("active");        
+			        }
+			        else if (this.id == "events-btn"){
+			        	$("#tab2").addClass("active");
+			        	$("#tab1").removeClass("active");
+			        	$("#tab3").removeClass("active");         
+			        }
+			        else if (this.id == "running-events-btn"){
+			        	$("#tab3").addClass("active");
+			        	$("#tab1").removeClass("active");
+			        	$("#tab2").removeClass("active");          
+			        }
+			        else if(this.id == "analytics-btn"){
+			        	$("#tab3").removeClass("active");
+			        	$("#tab1").removeClass("active");
+			        	$("#tab2").removeClass("active");
+			        }
+
+				});
+            		providerId = <%-JSON.stringify(PersonalInfo.ProviderId)%>
+            		isAdmin = <%-JSON.stringify(PersonalInfo.isAdmin)%>
+            		isSubscribed = <%-JSON.stringify(PersonalInfo.isSubscribed)%>
+
+            		if (!isAdmin){ 
+            			if (isSubscribed) {
+            				$('.heart').toggleClass('hey');
+            			}
+            		}
+            });
 
 
 
-<script>
-var providerId = 0;
-$(document).ready(function() {
+        	/* when a user clicks, toggle the 'is-animating' class */
+        	$(".heart").on('click touchstart', function(){
+        		$(this).toggleClass('is_animating');
+        	});
 
+        	/*when the animation is over, remove the class*/
+        	$(".heart").on('animationend', function(){
+        		$(this).toggleClass('is_animating');
+        	});
 
-    $(".btn-pref .btn").click(function () {
-        $(".btn-pref .btn").removeClass("btn-info").addClass("btn-default");
-    
-        //  $(".tab").addClass("active"); // instead of this do the below 
-        $(this).removeClass("btn-default").addClass("btn-info");   
-    
-    
-        if (this.id == "about-btn"){
-            $("#tab1").addClass("active");
-            $("#tab2").removeClass("active");
-            $("#tab3").removeClass("active");        
-        }
-        else if (this.id == "events-btn"){
-            $("#tab2").addClass("active");
-            $("#tab1").removeClass("active");
-            $("#tab3").removeClass("active");         
-        }
-        else if (this.id == "running-events-btn"){
-            $("#tab3").addClass("active");
-            $("#tab1").removeClass("active");
-            $("#tab2").removeClass("active");          
-        }
-        else if(this.id == "analytics-btn"){
-            $("#tab3").removeClass("active");
-            $("#tab1").removeClass("active");
-            $("#tab2").removeClass("active");
-        }
-	
-		
-	
+        	$(".heart").on('click', function(){
 
-
-   
-});
-    	 providerId = <%-JSON.stringify(PersonalInfo.ProviderId)%>
-	 isAdmin = <%-JSON.stringify(PersonalInfo.isAdmin)%>
-	 		 isSubscribed = <%-JSON.stringify(PersonalInfo.isSubscribed)%>
-
-	if (!isAdmin){ 
-		if (isSubscribed) {
-
-			  	$('.heart').toggleClass('hey');
-		}
-
-	}
-});
+			  	if(providerId != 0) { //document has been loaded
+			  	$(this).toggleClass('hey');
+			  	if(($(this).hasClass('hey'))){ //want to subscribe	
+			  		$.ajax({
+			  			type: "POST",
+			  			url: "/subscription",
+			  			data: { 
+			  				providerId: providerId
+			  			},
+			  			success: function(result) {
+				            //alert('Subscribed');
+				            myAlertSubscribe();
+				        },
+				        error: function(result) {
+				        	alert('error');
+				        }
+				    });
+			  	}
+			  	else { 
+			  		var deleteUrl = "/subscription/" + providerId.toString();
+			  		$.ajax({
+			  			type: "DELETE",
+			  			url: deleteUrl,
+			  			data: { 
+			  				providerId: providerId
+			  			},
+			  			success: function(result) {
+				            //alert('Unsubscribed');
+				            myAlertUnsubscribe();
+				        },
+				        error: function(result) {
+				        	alert('error');
+				        }
+				    });
+			  	}
+			  }
+			});
 
 
 
-/* when a user clicks, toggle the 'is-animating' class */
-$(".heart").on('click touchstart', function(){
-  $(this).toggleClass('is_animating');
-});
-
-/*when the animation is over, remove the class*/
-$(".heart").on('animationend', function(){
-  $(this).toggleClass('is_animating');
-});
-
-$(".heart").on('click', function(){
-	
-  if(providerId != 0) { //document has been loaded
-  	$(this).toggleClass('hey');
-  	if(($(this).hasClass('hey'))){ //want to subscribe	
-	    $.ajax({
-	        type: "POST",
-	        url: "/subscription",
-	        data: { 
-	            providerId: providerId
-	        },
-	        success: function(result) {
-	            alert('Subscribed');
-	        },
-	        error: function(result) {
-	            alert('Failed');
-	        }
-	    });
-	}
-	else { 
-		var deleteUrl = "/subscription/" + providerId.toString();
-		$.ajax({
-	        type: "DELETE",
-	        url: deleteUrl,
-	        data: { 
-	            providerId: providerId
-	        },
-	        success: function(result) {
-	            alert('Unsubscribed');
-	        },
-	        error: function(result) {
-	            alert('error');
-	        }
-	    });
-	}
-  }
-
-});
+    	function myAlertSubscribe(){
+    		$("#myAlertSubscribe").show();
+    		setTimeout(function(){
+    			$("#myAlertSubscribe").hide(); 
+    		}, 3800);
+    	}
 
 
- 
-</script>
+    	function myAlertUnsubscribe(){
+    		$("#myAlertUnsubscribe").show();
+    		setTimeout(function(){
+    			$("#myAlertUnsubscribe").hide(); 
+    		}, 3800);
+    	}
 
 
-    </html>
+    </script>
+
+
+</html>

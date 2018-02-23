@@ -346,3 +346,18 @@ hr {
     from {background-position:left;}
     to { background-position:right;}
   }
+
+
+  .myAlert-bottom{
+    position: fixed;
+    bottom: 2px; 
+    left:2%;
+    width: 95%;
+    z-index: 999;
+}
+
+
+
+.alert{
+    display: none;
+}
