@@ -10,14 +10,13 @@ var auth = require('../apis/authentication');
 
 router.get('/', auth.isUserAdmin, function(req, res) {
 
-    console.log(Math.floor(Date.now() / 1000));
-
+    db.Subscription.findAll().then(x => x.forEach( (x1) => console.log(x1.parentId + ' ' + x1.organizerId)));
     
 
 
-    db.Parent.findAll()
-    .then( (parents) => parents.forEach( (parent) => console.log(parent.name) )
-    );
+    // db.Parent.findAll()
+    // .then( (parents) => parents.forEach( (parent) => console.log(parent.name) )
+    // );
 
     var promise1 = db.Parent.findAll();
     var promise2 = db.Organizer.findAll();

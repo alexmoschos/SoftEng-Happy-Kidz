@@ -143,10 +143,10 @@ router.delete('/:eventId', auth.isUserAdmin, function(req, res){
 //edw thelei elastic kai sto delete kai sto put
 
 
-router.put('/:eventId', auth.isUserAdmin, function(req, res){
+router.put('/:eventId', auth.isUserAdmin, function(req, res) {
 
     var eventId = utilities.checkInt(req.params.eventId);
-    var providerId, title;
+    var providerId, title, providerName;
     if (!eventId) { res.render('no_page', {user: req.user});}
 
     db.Event.findById(req.params.eventId)
@@ -192,15 +192,17 @@ router.put('/:eventId', auth.isUserAdmin, function(req, res){
             });
         }
         else {
-            res.render('no_page', {user: req.user});
-
+            console.log('wtdf');
+            return false;
         }
     })                      //send email notification for acceptance, checks might be needed
     .then ( (succ) => {
         return db.Organizer.findById(providerId);
     })
     .then ( (provider) => {
+        console.log(provider);
         if (provider){
+            providerName = provider.name;
             return mail.sendTextEmail('Επικύρωση Εκδήλωσης', provider.email, 'Είμαστε στην ευχάριστη θέση να σας ενημερώσουμε ότι η εκδήλωσή σας ' + title + ' επικυρώθηκε.');
         }
         else {
@@ -211,15 +213,55 @@ router.put('/:eventId', auth.isUserAdmin, function(req, res){
     })
     .then ((succ) => {
         if (succ) {
+            //find subcribers to send notification
+            return db.Subscription.findAll({
+                where : {
+                    organizerId: providerId
+                }
+            });
+        }
+        else {
+            console.log('error with email');
+            return false;
+
+        }
+    }).then ((subscription) => {
+        if (subscription.length > 0) {
+            var promises = [];
+            subscription.forEach(x => {
+                promises.push(db.Parent.findById(x.parentId));
+            });
+            return Promise.all(promises);
+        }
+        else {
+            console.log('no subscribers');
+            return false;
+        }
+    }).then ((parents) => {
+        if (!parents) {return false;}
+        console.log(parents);
+        parents.filter((x) =>  x.mailNotifications === true);
+        if (parents.length > 0) {
+            var maillist = [];
+            for (var i = 0; i < parents.length; i++){
+                maillist.push(parents[i].email);
+            }
+            //leipei to link
+            return mail.sendTextEmail('Νέα εκδήλωσή', maillist, 'Σας ενημερώνουμε ότι δημιουργήθηκε μια νέα εκδήλωσή από τον ' + providerName + ' με τίτλο ' + title + '.');
+        }
+        else {
+            console.log('notifications off');
+            return false;
+        }
+    }). then ((succ) => {
+        if (succ) {
             res.redirect('/admin');
         }
         else {
             console.log('error with email');
-            res.redirect('/admin');
-
+            res.redirect('/admin'); 
         }
     });
-
 });
 
 module.exports = router;
