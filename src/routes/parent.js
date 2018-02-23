@@ -13,7 +13,6 @@ var HashMap = require('hashmap');
 
 /* GET parent profile. */
 router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
-
 	db.Parent.findOne({
 		where: { parentId: req.params.parentId },
 		include: [{
@@ -25,10 +24,8 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 			}
 		}]
 	})
-	// db.Parent.findById(req.params.parentId)
 	.then( (parent) => {
 		if (parent){
-			console.log(parent.parentId);
 			db.BoughtTickets.findAll({
 				include: [{
 				  model: db.Event,
@@ -36,11 +33,20 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 				}],
 				where: { parentId: parent.parentId }
 			})
-			.then( tickets => { 
-				console.log(tickets);
+			.then( tickets => {
+				var future_tickets = [];
+				var past_tickets = []; 
 				if(tickets){
 					ticketMap = new HashMap(tickets.map( x => [x.eventId, x]));
 					tickets = ticketMap.values();
+					tickets.forEach(function(tick){
+						if(tick.startTime > Math.floor(Date.now() / 1000)){
+							future_tickets.push(tick);
+						}
+						else{
+							past_tickets.push(tick);
+						}
+					})
 				}
 				db.Membership.findById(req.params.parentId)
 				.then( member => {
@@ -53,7 +59,8 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 							expiryDate: member.expiryDate,
 							points: parent.wallet,
 							email: parent.email,
-							bought: tickets,
+							bought: future_tickets,
+							past: past_tickets,
 							subscriptions: parent.organizers
 						};
 					}
@@ -66,7 +73,8 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 							expiryDate: 0,
 							points: parent.wallet,
 							email: parent.email,
-							bought: tickets,
+							bought: future_tickets,
+							past: past_tickets,
 							subscriptions: parent.organizers							
 						};
 					}
