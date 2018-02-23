@@ -126,8 +126,25 @@ router.get('/:providerId', function(req, res) {
 							if ((req.user.type === 'organizer') && (req.user.user.organizerId == req.params.providerId)) { //the request was made by the owner
 								res.render('ProviderPage', ProviderInfo);
 							}
+							else if (req.user.type === 'parent'){
+								//Render a page for users (could possibly subscribe)
+								ProviderInfo.PersonalInfo.isAdmin = false;
+								db.Subscription.find({
+									where: {
+										parentId: req.user.user.parentId,
+										organizerId: providerId
+									}
+								}).then(subscription=> {
+									if (subscription) ProviderInfo.PersonalInfo.isSubscribed = true;
+									else ProviderInfo.PersonalInfo.isSubscribed = false;
+									console.log(ProviderInfo.PersonalInfo.isSubscribed);
+									res.render('providerPageAsUser', ProviderInfo);
+									});	
+							}
 							else {
-								//Render a page for users-providers with other id-admins
+								//Render a page for admins/providers with other id
+								ProviderInfo.PersonalInfo.isAdmin = true;
+								ProviderInfo.PersonalInfo.isSubscribed = false;
 								res.render('providerPageAsUser', ProviderInfo);
 							}
 
@@ -138,10 +155,10 @@ router.get('/:providerId', function(req, res) {
 				res.render('no_page', {user: req.user});
 			}      
 		});		
-	}
-	else {
-		res.redirect('/login');
-	}
+}
+else {
+	res.redirect('/login');
+}
 });
 router.get('/:providerId/settings',function(req,res,next){
 	providerId = utilities.checkInt(req.params.providerId);
@@ -188,8 +205,8 @@ router.post('/:providerId/settings',function(req,res,next){
 				}
 				req.assert('email', 'A valid email is required').isEmail(); 
 				req.assert('newPassword', 'passwords must be at least 8 chars long and contain one number')
-					.isLength({ min: 8 })
-					.matches(/\d/);
+				.isLength({ min: 8 })
+				.matches(/\d/);
 				req.assert('newPasswordAgain', 'Passwords do not match').equals(req.body.newPassword);
 				var errors = req.validationErrors();
 				if( !errors){
@@ -250,7 +267,7 @@ router.delete('/:providerId', auth.isUserAdmin, function(req, res){
 	})
 	.then( (succ) => {
 		if (succ){
-		 return mail.sendTextEmail('Διαγραφή Λογαριασμού', email, 'Είμαστε στη δυσάρεστη θέση να σας ενημερώσουμε ότι ο λογαριαμός σας διαγράφηκε.');
+			return mail.sendTextEmail('Διαγραφή Λογαριασμού', email, 'Είμαστε στη δυσάρεστη θέση να σας ενημερώσουμε ότι ο λογαριαμός σας διαγράφηκε.');
 		}
 		else{
 			console.log('error with deletion');
@@ -274,8 +291,8 @@ router.put('/:providerId', auth.isUserAdmin, function(req, res){
 
 
 	var providerId = utilities.checkInt(req.params.providerId);
-    if (!providerId) { res.render('no_page', {user: req.user});}
-    var email;
+	if (!providerId) { res.render('no_page', {user: req.user});}
+	var email;
 
 	
 	if (!providerId) { res.render('no_page', {user: req.user});}
@@ -299,9 +316,9 @@ router.put('/:providerId', auth.isUserAdmin, function(req, res){
 
 router.get('/:providerId/deko', auth.isUserAdmin, function(req, res) {
 	var providerId = utilities.checkInt(req.params.providerId);
-    if (!providerId) { res.render('no_page', {user: req.user});}
+	if (!providerId) { res.render('no_page', {user: req.user});}
 
-    db.Organizer.findById(providerId)
+	db.Organizer.findById(providerId)
 	.then( (provider) => {
 		if (provider) {
 
@@ -314,16 +331,16 @@ router.get('/:providerId/deko', auth.isUserAdmin, function(req, res) {
 	
 
 
-    
-
-    
 
 
-  
+
+
+
+
 
 
 
 });
-    
+
 
 module.exports = router;

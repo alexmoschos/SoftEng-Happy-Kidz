@@ -50,7 +50,9 @@ crossorigin="anonymous"></script>
 			<div class="provider-basic-info">
 			
 				<h2 class="username"><%= PersonalInfo.ProviderName %></h2>
+		<%		if (!PersonalInfo.isAdmin) { %>
 				<div class="heart"></div>
+				<% } %>
 				</div>
 
 			</div>
@@ -314,7 +316,7 @@ crossorigin="anonymous"></script>
 var providerId = 0;
 $(document).ready(function() {
 
-	providerId = <%-JSON.stringify(PersonalInfo.ProviderId)%>;
+
     $(".btn-pref .btn").click(function () {
         $(".btn-pref .btn").removeClass("btn-info").addClass("btn-default");
     
@@ -343,12 +345,23 @@ $(document).ready(function() {
             $("#tab2").removeClass("active");
         }
 	
-	
+		
 	
 
 
    
 });
+    	 providerId = <%-JSON.stringify(PersonalInfo.ProviderId)%>
+	 isAdmin = <%-JSON.stringify(PersonalInfo.isAdmin)%>
+	 		 isSubscribed = <%-JSON.stringify(PersonalInfo.isSubscribed)%>
+
+	if (!isAdmin){ 
+		if (isSubscribed) {
+
+			  	$('.heart').toggleClass('hey');
+		}
+
+	}
 });
 
 
@@ -366,8 +379,8 @@ $(".heart").on('animationend', function(){
 $(".heart").on('click', function(){
 	
   if(providerId != 0) { //document has been loaded
-  	
-  	if(!($(this).hasClass('hey'))){ //want to subscribe	
+  	$(this).toggleClass('hey');
+  	if(($(this).hasClass('hey'))){ //want to subscribe	
 	    $.ajax({
 	        type: "POST",
 	        url: "/subscription",
@@ -375,7 +388,6 @@ $(".heart").on('click', function(){
 	            providerId: providerId
 	        },
 	        success: function(result) {
-	        	$(this).toggleClass('hey');
 	            alert('Subscribed');
 	        },
 	        error: function(result) {
@@ -392,7 +404,6 @@ $(".heart").on('click', function(){
 	            providerId: providerId
 	        },
 	        success: function(result) {
-	        	$(this).toggleClass('hey');
 	            alert('Unsubscribed');
 	        },
 	        error: function(result) {
