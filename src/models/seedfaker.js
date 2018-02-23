@@ -190,10 +190,6 @@ function seedDatabase(db) {
         organizerId: 3
     },
     {
-        parentId: 2,
-        organizerId: 2
-    },
-    {
         parentId: 3,
         organizerId: 2
     }];
