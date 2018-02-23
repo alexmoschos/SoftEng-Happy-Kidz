@@ -40,6 +40,7 @@ router.get('/:providerId', function(req, res) {
 				db.Event.findAll({
 					where: {
 						organizerId: providerId,
+						isVerified: true,
 						startTime:{
 							[Op.lt]: currtime
 						}
@@ -76,6 +77,7 @@ router.get('/:providerId', function(req, res) {
 					db.Event.findAll({
 						where: {
 							organizerId: providerId,
+							isVerified: true,
 							startTime:{
 								[Op.gt]: currtime
 							}

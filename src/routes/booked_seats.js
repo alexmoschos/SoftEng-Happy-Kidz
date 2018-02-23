@@ -16,6 +16,7 @@ router.get('/', function(req, res, next) {
 		var currtime = new Date().getTime()/1000;
 		db.Event.findAll({
 					where: {
+						isVerified: true,
 						organizerId: organizerId,
 						startTime:{
 							[Op.gt]: currtime

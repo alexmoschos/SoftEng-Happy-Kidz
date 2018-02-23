@@ -28,6 +28,7 @@ router.get('/', function(req, res, next) {
 				],
 				where: {
 					organizerId: organizerId,
+					isVerified : true,
 					startTime:{
 						[Op.lt]: todate,
 						[Op.gt]: fromdate
@@ -50,6 +51,7 @@ router.get('/', function(req, res, next) {
 					],
 					where: {
 						organizerId: organizerId,
+						isVerified : true,
 						startTime:{
 							[Op.lt]: todate,
 							[Op.gt]: fromdate
