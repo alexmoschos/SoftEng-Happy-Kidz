@@ -15,43 +15,43 @@ var info = {};
 function validNewEvent(newEvent) {
 
     if (newEvent.title.length == 0) {
-        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα", event: newEvent};
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συμπληρωμένα", event: newEvent};
         return false;
     }
 
     if (isNaN(newEvent.startTime)) {
         delete newEvent.startTime;
-        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα",event: newEvent};
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συμπληρωμένα",event: newEvent};
         return false;
     }
 
     if (newEvent.description.length == 0) {
-        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα",event: newEvent};
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συμπληρωμένα",event: newEvent};
         return false;
     }
 
     if (newEvent.geoAddress.length == 0) {
-        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα",event: newEvent};
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συμπληρωμένα",event: newEvent};
         return false;
     }
 
     if (!newEvent.categoryName) {
-        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα",event: newEvent};
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συμπληρωμένα",event: newEvent};
         return false;
     }
 
     if (isNaN(newEvent.ticketPrice)) {
-        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα",event: newEvent};
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συμπληρωμένα",event: newEvent};
         return false;
     }
 
     if (isNaN(newEvent.ticketCount)) {
-        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα",event: newEvent};
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συμπληρωμένα",event: newEvent};
         return false;
     }
     
     if (isNaN(newEvent.discount)) {
-        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συπληρωμένα",event: newEvent};
+        info = {errMsg : "Όλα τα πεδία πρέπει να είναι συμπληρωμένα",event: newEvent};
         return false;
     }
 
