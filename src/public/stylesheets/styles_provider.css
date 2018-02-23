@@ -55,33 +55,26 @@ hr {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    /* background-image: url('./happy.png'); */
   }
   .card.hovercard {
     position: relative;
     padding-top: 0;
     overflow: hidden;
     text-align: center;
-    /* background-color: #fff; */
-    /* background-color: rgba(255, 255, 255, 1); */
+    /*default provider logo*/
+    background: url(/provider_avatar1.jpeg); 
+    /*default provider logo*/
 
-    /* background-image: url('./happy.png'); */
-
-
-    background: url(/provider_avatar3.jpeg); 
-    /* -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover; */
-    /* background-size: cover; */
-
+    /*default gradient logo*/
+    /* background: #FEAC5E;  
+    background: -webkit-linear-gradient(to right, #4BC0C8, #C779D0, #FEAC5E); 
+    background: linear-gradient(to right, #4BC0C8, #C779D0, #FEAC5E); */
+    /*default gradient logo*/
 
     background-repeat: no-repeat;
     background-size: 100% 100%;
     height: 200px;
-
     width: 100%;
-    
-
   }
 
 
@@ -157,21 +150,6 @@ hr {
     }
 
 
-/* #subscribe-btn  {
-    float: left;
-  filter: none;
-  
-
-
-
-  -webkit-filter: none;
-  -moz-filter: none;
-  -o-filter: none;
-  -ms-filter: none;
-  filter: none;
- 
-
-  } */
 
   #subscribe-btn{
     /* float: left; */
@@ -306,19 +284,26 @@ hr {
 
   .username {
 
-    font-weight: 900;
+    /*font-weight: 900;*/
     color: #fff3f0;
-    font-family: "Times New Roman", Times, serif;
+    /*color: #7c795d;*/
+    /*font-family: "Times New Roman", Times, serif;*/
+    font-family: 'Trocchi', serif;
     vertical-align: center;
     margin: 0 auto;
     margin-top: 8%;
+    font-size: 29px;
+    font-weight: normal;
+    line-height: 29px;
 
 
   }
+
   .heart {
     cursor: pointer;
     height: 50px;
-    width: 190px;
+    width: 120px;
+    z-index: 999;
     background-image:url( 'https://abs.twimg.com/a/1446542199/img/t1/web_heart_animation.png');
     background-position: left;
     background-repeat:no-repeat;
@@ -360,4 +345,16 @@ hr {
 
 .alert{
     display: none;
+}
+
+#subscriptions-count{
+  position: absolute;
+  bottom: 6px;
+  left: 20px;
+  color: white;
+  font-family: 'Trocchi', serif;
+  font-size: 1.2em;
+  font-weight: normal;
+  line-height: 18px;
+
 }
