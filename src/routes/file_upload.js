@@ -19,7 +19,7 @@ router.post('/', function (req, res, next) {
         fs.mkdirSync(newdir);
     }
     var count=0;
-    for (i in files) {
+    for (var i in files) {
         var newpath = path.join(newdir, count.toString());
         count++;
         fs.rename(files[i].path, newpath, function (err) {

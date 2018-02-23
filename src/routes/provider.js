@@ -230,7 +230,7 @@ router.post('/:providerId/settings',function(req,res,next){
 			else {
 				res.render('no_page',{user: req.user});
 			} 	
-		})
+		});
 	});
 });
 
@@ -262,7 +262,7 @@ router.delete('/:providerId', auth.isUserAdmin, function(req, res){
 			email = provider.email;
 			return provider.destroy();
 		} else {
-			res.send('No such provider!' + console.log(req.params.providerId))
+			res.send('No such provider!' + console.log(req.params.providerId));
 		}
 	})
 	.then( (succ) => {

@@ -125,7 +125,7 @@ function seedDatabase(db) {
                             newEvent.categoryName = event.categoryName;
                             newEvent.geoAddress = event.geoAddress;
                             newEvent.ticketPrice = event.ticketPrice;
-                            newEvent.ticketCount = event.ticketCount
+                            newEvent.ticketCount = event.ticketCount;
                             newEvent.initialTicketCount = event.initialTicketCount;
                             newEvent.minAge = event.minAge;
                             newEvent.maxAge = event.maxAge;

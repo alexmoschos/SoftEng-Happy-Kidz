@@ -74,7 +74,7 @@ var db = {
     Review: Review,
     Subscription: Subscription,
     Membership: Membership
-}
+};
 
 //initialize tables if they don't exist
 sequelize.sync({force: true})
