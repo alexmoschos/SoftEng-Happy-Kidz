@@ -34,7 +34,7 @@
 <%- include partials/navbar.ejs %>
     <div id="wrapper">
         <!-- Sidebar -->
-        <div id="sidebar-wrapper" style="background: rgb(190, 186, 186); height: 520px; margin-top:80px; margin-right:15px; width:235px; padding-top:10px;" >
+        <div id="sidebar-wrapper" style="background: rgb(255, 255, 255);  margin-top:0px; margin-right:15px; width:235px; padding-top:10px; border-right-style: solid; border-width: 2px;">
             <div class="container-fluid">
                 <a id="menu-toggle-side" href="#" class="h4 filters-close-button toggle" style="width:100%">
                     <!-- <button class="btn btn-default btn-block">Close Filters</button> -->
@@ -45,44 +45,73 @@
                     <form class="" id="filter-form" role="search" method="get" action="/search">
                         <div class="input-group">
                             <label for="Activity">Δραστηριότητα</label>
-                            <input style="width: 205px" type="text" class="form-control" placeholder="Search" name="q" value="<%= activity%>" >
+                            <input style="width: 205px; border-radius: 25px;" type="text" class="form-control" placeholder="Search" name="q" value="<%= activity%>" >
                         </div>
+                        <br>
                         <div class="input-group">
                             <label for="Location">Τοποθεσία</label>
-                            <input style="width: 205px" type="text" class="form-control" placeholder="Location" name="location"  value="<%= location %>" >
+                            <input style="width: 205px; border-radius: 25px;" type="text" class="form-control" placeholder="Location" name="location"  value="<%= location %>" >
                         </div>
+                        <br>
                         <div class="input-group">
                         <label for="Radius">Απόσταση απο τοποθεσία</label>
-                            <p><span id="distance_text"><%= radius %></span> km</p>
-                            <input id = "distance" style="width: 205px" type="range" class="form-control" min=0 max=100 step=5 name="radius" value="<%= radius %>" >
+                            <p>Έως <span id="distance_text"><%= radius %></span> km</p>
+                            <input id = "distance" style="height: 1px; width: 205px; border-radius: 25px;" type="range" class="form-control" min=0 max=100 step=5 name="radius" value="<%= radius %>" >
                         </div>
-    
-                        <div class="form-group">
-                            <label for="AgeGroup">Ηλικιακή Ομάδα</label>
-                            <select style="width: 205px" class="form-control " name="AgeGroup" id="age" >
-                                    <option value="u">--</option>
-                                    <option <% if (ageGroup === '3') { %> selected='selected' <% } %> value="3">3-5</option>
-                                    <option <% if (ageGroup === '6') { %> selected='selected' <% } %>   value="6">6-8</option>
-                                    <option <% if (ageGroup === '9') { %> selected='selected' <% } %> value="9">9-12</option>
-                                    <option <% if (ageGroup === '13') { %> selected='selected' <% } %> value="13">>12</option>
-                            </select>
+                        <br>
+                        <!-- <div class="input-group">
+                                <label for="AgeGroup">Ηλικιακή Ομάδα</label>
+                                <p><span id="age_text">
+                                    <% if (ageGroup === '3'){ %>
+                                        3-5
+                                    <%} else if (ageGroup === '6'){%>
+                                        6-8
+                                    <%} else if (ageGroup === '9'){%>
+                                        9-12
+                                    <%} else{%>
+                                        >12
+                                        <%}%>
+                                </span> Ετών</p>
+                                    <input id = "AgeGroup" style="height: 1px; width: 205px; border-radius: 25px;" type="range" class="form-control" min=3 max=12 step=3 name="AgeGroup" value="<%= ageGroup %>" >
                         </div>
+                        <br> -->
+                        
                         <div class="input-group">
                         <label for="PriceRange">Τιμή</label>
                             <!-- <input type="number" class="form-control" placeholder="Minimum Price" name="startPrice"  > -->
-                            <p><span id="price_text"><%= endPrice %></span><span class="glyphicon glyphicon-eur" aria-hidden="true"></span></p>
-                            <input style="width: 205px" type="range" id="price" min=0 max=100 step=5 class="form-control" placeholder="Maximum Price" name="endPrice" value="<%= endPrice %>" >
+                            <p>Έως <span id="price_text"><%= endPrice %></span> €</p>
+                            <input style="height: 1px; width: 205px; border-radius: 25px;" type="range" id="price" min=0 max=100 step=5 class="form-control" placeholder="Maximum Price" name="endPrice" value="<%= endPrice %>" >
                         </div>
-    
-                        <div class="input-group">
+                        <br>      
+                        <div class="form-group">
+                                <label for="AgeGroup">Ηλικιακή Ομάδα</label>
+                                <select style="width: 205px" class="form-control " name="AgeGroup" id="age" >
+                                        <option value="u">--</option>
+                                        <option <% if (ageGroup === '3') { %> selected='selected' <% } %> value="3">3-5</option>
+                                        <option <% if (ageGroup === '6') { %> selected='selected' <% } %>   value="6">6-8</option>
+                                        <option <% if (ageGroup === '9') { %> selected='selected' <% } %> value="9">9-12</option>
+                                        <option <% if (ageGroup === '13') { %> selected='selected' <% } %> value="13">>12</option>
+                                </select>
+                        </div>                  
+                                <!-- <div class="inner-addon left-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                        <input type="date" class="form-control" placeholder="Username" />
+                                      </div> -->
+                                      <!-- <div class="input-group"> -->
+                                            
                         <label for="Date">Ημερομηνία</label>
-                            <input style="width: 205px"type="date" class="form-controλ" placeholder="End Date " name="endDate" value="<%= endDate %>" >
+                        <div class="inner-addon left-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                            <input style="width: 205px; border-radius: 25px;" type="date" class="form-control" placeholder="End Date " name="endDate" value="<%= endDate %>" >
                         </div>
                         <div class="input-group" style="display: none;">
                         <label for="Date">Page</label>
                             <input type="number" class="form-control" name="page" id="page-changer" value=<%= page %>>
                         </div>
-                        <button class="btn btn-success btn-block filter-element" style="margin-top:10px" type="submit" id="filter-apply">Go!</button>
+                        <center>
+                        <button class="btn btn-circle btn-lg filter-element filter-apply" type="submit" id="filter-apply" style="margin-top:10px;"><i class="glyphicon glyphicon-search"></i></button>
+                    </center>
+                        <!-- <button class="btn btn-success btn-block filter-element" style="margin-top:10px; border-radius: 50%;" type="submit" id="filter-apply">Go!</button> -->
                     </form>
                 </div>
             </div>
@@ -93,15 +122,20 @@
                 <div class="container-fluid">
                     <div class="row">
                         <a id="menu-toggle" href="#" class="btn-menu toggle" style="margin-left:10px;">
-                            <button class="btn filter-btn btn-lg">
-                                <span><i class="glyphicon glyphicon-list"></i></span>
-                                <span>Φίλτρα</span>
-                            </button>
+                            <!-- <button class="btn filter-btn btn-lg"> -->
+                                <i class="glyphicon glyphicon-list filter-btn" style="font-size: 25px;"></i>
+                                <!-- <span>Φίλτρα</span> -->
+                            <!-- </button> -->
                         </a>
                         <div class="controls">
-                            <button class="btn btn-primary prev-page">Προηγούμενη σελίδα</button> <span class="a">Σελίδα <%= page %> </span>
+                            <a href="#" class="prev-page" style="width:100%">
+                                <i class="glyphicon glyphicon-chevron-left" style="color:#29335c;"></i>
+                            </a>
+                            <span class="a">Σελίδα <%= page %> </span>
                             <% if (obj.length >0 ) { %>
-                            <button class="btn btn-primary next-page">Επόμενη σελίδα</button>
+                            <a href="#" class="next-page" style="width:100%">
+                                    <i class="glyphicon glyphicon-chevron-right" style="color:#29335c;"></i>
+                            </a>
                             <% } %>
                         </div>
                     </div>
@@ -142,7 +176,7 @@
                                         <% var coordinates = []; %>
                                         <% obj.forEach(function(it, index){ %>
                                             <% coordinates.push({geolon: it.geolon, geolat: it.geolat, address: it.address}); %>
-                                            <div id = <%= 'event' + index %> class="col-12 col-xs-12 col-sm-5 col-md-12 col-lg-12 myClass" style="border:1px solid #e0e0e0; margin-bottom:20px; border-radius:20px;">
+                                            <div id = <%= 'event' + index %> class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 myClass" style="border:1px solid #e0e0e0; margin-bottom:20px; border-radius:20px;">
                                                     <!-- <center>     -->
                                                     <div class="row" style="height: 170px; margin-top: 15px">
                                                                 <div class="col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
@@ -279,15 +313,9 @@
                         else{ %>
                             <p>Δεν υπάρχουν διαθέσιμα αποτελέσματα</p>
                         <% } %>
-                    </div>
-                    <div class="row">
-                        <div class="controls">
-                            <button class="btn btn-primary prev-page">Προηγούμενη σελίδα</button> <span class="a">Σελίδα <%= page %> </span>
-                            <% if (obj.length >0 ) { %>
-                            <button class="btn btn-primary next-page">Επόμενη σελίδα</button>
-                            <% } %>
-                        </div>	
-                    </div>
+
+                    
+                    </div>      
                 </div>
             </div>
         </div>
@@ -300,6 +328,21 @@
     $("#distance").change(function (event) {
         var distance = $("#distance").val();
         $("#distance_text").html(distance);
+    });
+    $("#AgeGroup").change(function (event) {
+        var age = $("#AgeGroup").val();
+        if (age === '3'){
+            $("#age_text").html('3-5');
+        }
+        else if (age === '6'){
+            $("#age_text").html('6-8');
+        }
+        else if (age === '9'){
+            $("#age_text").html('9-12');
+        }
+        else {
+            $("#age_text").html('>12');
+        }
     });
 
     $("#price").change(function (event) {
@@ -332,6 +375,22 @@
         // alert(1);
     });
 
+
+    var slider = document.getElementById('myRange')
+
+function onChange(event) {
+  var x = event.target.value
+
+  if (x <= 3) {
+    slider.className = ''
+  } else if (x > 3 && x <= 6) {
+    slider.className = 'MyClass-1'
+  } else if (x > 6) {
+    slider.className = 'MyClass-2'
+  }
+}
+
+slider.addEventListener('input', onChange)
     </script>
 
 </html>
