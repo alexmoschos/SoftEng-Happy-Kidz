@@ -6,6 +6,7 @@ var auth = require('../apis/authentication');
 var bcrypt = require('bcrypt');
 var utilities = require('../apis/utilities');
 var auth = require('../apis/authentication');
+var fs = require('fs');
 
 
 router.get('/', auth.isUserAdmin, function(req, res) {
@@ -145,7 +146,7 @@ router.get('/events/:eventId', auth.isUserAdmin, function(req, res) {
             .then( (provider) => {
                 if (event && event.isVerified === false) {
                     event.provider = provider;
-                    obj = event;
+                    var obj = event;
                     var startDate = new Date(event.startTime*1000);
                         var imglist = [];
                         path = './public/files/events/' + event.eventId + "/";
