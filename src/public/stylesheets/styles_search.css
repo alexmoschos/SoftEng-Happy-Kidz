@@ -1,3 +1,7 @@
+body {
+  background-color: #e6ecf0;
+}
+
 #wrapper {
     padding-left: 250px;
     transition: all 0.4s ease 0s;
@@ -239,9 +243,16 @@
     .filter-btn{
         width: 100%;
         color: #29335c;
-        background-color: #f6774f;  
+        /* background-color: #f6774f;   */
     
     }
+
+    .filter-apply{
+      width: 100%;
+      background-color: #ffffff;
+      color: #29335c;  
+  
+  }
 
     @import url('http://getbootstrap.com/dist/css/bootstrap.css');
     
@@ -254,3 +265,124 @@
       border-top: 0.5px solid #e0e0e0;
       border-bottom: 0.5px solid #e0e0e0;
   }
+
+  /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   */
+
+   input[type=range] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent; 
+  border-color: transparent;
+  color: transparent;
+}
+
+
+
+
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: transparent;
+  background-image: url(/images/navbar-logo-slider.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+input[type="range"]::-moz-range-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: transparent;
+  background-image: url(/images/navbar-logo-slider.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+input[type="range"]::-ms-thumbx {
+  -webkit-appearance: none;
+  border: none;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: transparent;
+  background-image: url(/images/navbar-logo-slider.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+/* All the same stuff for IE */
+/* input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+input[type=range]::-moz-range-thumb {
+  background-color: green;
+} */
+
+/* enable absolute positioning */
+.inner-addon { 
+  position: relative; 
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+position: absolute;
+padding: 10px;
+pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.btn-circle.btn-lg {
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
+}
+
+/* .glyphicon.glyphicon-list {
+  font-size: 75px;
+} */
