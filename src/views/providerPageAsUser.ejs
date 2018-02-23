@@ -61,11 +61,11 @@ crossorigin="anonymous"></script>
 
 			<div class="card hovercard">
 				<div class="provider-basic-info">
-
 					<h2 class="username"><%= PersonalInfo.ProviderName %></h2>
 					<%		if (!PersonalInfo.isAdmin) { %>
 					<div class="heart"></div>
 					<% } %>
+					<h4 id="subscriptions-count" >Subscriptions: <%= subscriptionsCount %></h4>
 				</div>
 
 			</div>
