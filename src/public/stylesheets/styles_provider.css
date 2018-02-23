@@ -346,3 +346,15 @@ hr {
 .alert{
     display: none;
 }
+
+#subscriptions-count{
+  position: absolute;
+  bottom: 6px;
+  left: 20px;
+  color: white;
+  font-family: 'Trocchi', serif;
+  font-size: 1.2em;
+  font-weight: normal;
+  line-height: 18px;
+
+}

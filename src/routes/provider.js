@@ -110,19 +110,28 @@ router.get('/:providerId', function(req, res) {
 								BarchartID: event.eventId
 							};
 							
-						});						
-						var ProviderInfo =  {
-							PersonalInfo: { ProviderName : result.name, ProviderText : result.description,
-								ProviderId : providerId,
-								ProviderEmail : result.email,
-								ProviderPage :result.webpage,
-								ProviderPhoneNumber: result.phone,
-								ProviderAddress : "25ης Μαρτίου 10, Βριλήσσια"},
-								PastEventsList: PastEventsArray,
-								CurrentEventsList: CurrentEvents,
-								user: req.user
+						});	
 
-							}; 
+						db.Subscription.findAll({
+							where: {
+								organizerId: providerId
+							}
+						}).then(subscription=> {
+						    var subscriptionsCount = subscription.length;
+						    console.log(subscription.length);
+							var ProviderInfo =  {
+								PersonalInfo: { ProviderName : result.name, ProviderText : result.description,
+									ProviderId : providerId,
+									ProviderEmail : result.email,
+									ProviderPage :result.webpage,
+									ProviderPhoneNumber: result.phone,
+									ProviderAddress : "25ης Μαρτίου 10, Βριλήσσια"},
+									PastEventsList: PastEventsArray,
+									CurrentEventsList: CurrentEvents,
+									subscriptionsCount: subscriptionsCount,
+									user: req.user
+
+								}; 
 							if ((req.user.type === 'organizer') && (req.user.user.organizerId == req.params.providerId)) { //the request was made by the owner
 								res.render('ProviderPage', ProviderInfo);
 							}
@@ -147,8 +156,9 @@ router.get('/:providerId', function(req, res) {
 								ProviderInfo.PersonalInfo.isSubscribed = false;
 								res.render('providerPageAsUser', ProviderInfo);
 							}
+						});	
 
-						});
+					});
 				});
 			} 
 			else {
