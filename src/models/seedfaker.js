@@ -178,15 +178,15 @@ function seedDatabase(db) {
     }
     //console.log(reviewobj);
     var subscriptionobj = [{
-        parentId: 1,
+        parentId: 3,
         organizerId: 1
     },
     {
-        parentId: 1,
-        organizerId: 2
+        parentId: 3,
+        organizerId: 3
     },
     {
-        parentId: 1,
+        parentId: 3,
         organizerId: 3
     },
     {

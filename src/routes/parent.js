@@ -13,9 +13,22 @@ var HashMap = require('hashmap');
 
 /* GET parent profile. */
 router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
-	db.Parent.findById(req.params.parentId)
+
+	db.Parent.findOne({
+		where: { parentId: req.params.parentId },
+		include: [{
+			model: db.Organizer,
+			required: false,
+			attributes: ['organizerId', 'name'],
+			through: {
+				model: db.Subscription
+			}
+		}]
+	})
+	// db.Parent.findById(req.params.parentId)
 	.then( (parent) => {
 		if (parent){
+			console.log(parent.parentId);
 			db.BoughtTickets.findAll({
 				include: [{
 				  model: db.Event,
@@ -24,6 +37,7 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 				where: { parentId: parent.parentId }
 			})
 			.then( tickets => { 
+				console.log(tickets);
 				if(tickets){
 					ticketMap = new HashMap(tickets.map( x => [x.eventId, x]));
 					tickets = ticketMap.values();
@@ -39,7 +53,8 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 							expiryDate: member.expiryDate,
 							points: parent.wallet,
 							email: parent.email,
-							bought: tickets
+							bought: tickets,
+							subscriptions: parent.organizers
 						};
 					}
 					else{
@@ -51,11 +66,14 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 							expiryDate: 0,
 							points: parent.wallet,
 							email: parent.email,
-							bought: tickets
+							bought: tickets,
+							subscriptions: parent.organizers							
 						};
 					}
 					res.render('parent', obj);
 				})	
+				// })
+				
 				// console.log(tickets);
 			})
 		}

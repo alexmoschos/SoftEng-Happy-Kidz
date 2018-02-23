@@ -90,6 +90,20 @@ crossorigin="anonymous"></script>
             </div>    
             <div class="clearfix"></div>
           </div>
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                <h1 class="page-header small">Subscriptions</h1>
+              </div>   
+              <% if (subscriptions.length > 0){
+                  subscriptions.forEach(function(it2){ %>
+                    <div class="subscription-item ">
+                      
+                        <a  href="/provider/<%= it2.organizerId%>"> <%= it2.name%></a>
+                        
+                    </div>
+                 <% })%>
+            <%}%>
+          </div>
 
           
           
@@ -120,7 +134,7 @@ crossorigin="anonymous"></script>
                                    <!-- <center>     -->
                                    <div class="row" style="height: 170px; margin-top: 15px">
                                                <div class="col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                                   <img src="" alt="" style="width:100%; height: 150px;">
+                                                   <img src="<%= it.event.pictures[0] %>" alt="" style="width:100%; height: 150px;">
                                                </div>
                                                <div id="info-container" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                                                        <div class="row">
