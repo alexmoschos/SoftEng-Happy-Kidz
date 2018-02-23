@@ -11,7 +11,7 @@ var methodOverride = require('method-override');
 var validator = require('express-validator');
 var passport = require('./apis/passport');
 var flash = require('express-flash');
-
+var fs = require('fs');
 // Routes
 var chart_data = require('./routes/chart_data');
 var index = require('./routes/index');
@@ -37,6 +37,14 @@ var subscription = require('./routes/subscription');
 
 var app = express();
 
+if (!fs.existsSync('./public/files/events')) {
+    console.log('Events public folder doesnt exist');
+    fs.mkdirSync('./public/files/events');
+}
+if (!fs.existsSync('./public/files/providers')) {
+    console.log('Providers public folder doesnt exist');
+    fs.mkdirSync('./public/files/providers');
+}
 // Static Resources
 app.use(express.static(path.join(__dirname, 'public')));
 
