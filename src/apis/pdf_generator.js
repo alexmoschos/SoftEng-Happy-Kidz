@@ -18,7 +18,7 @@ function build_ticket(doc, options) {
 
     //add ticket and event info
     doc.fontSize(11);
-    doc.text('κωδικός εισιτηρίου: ' + options.ticket_id, (170 + 150) / 2, 180, { width: doc.page.width - 170, align: 'right' });
+    // doc.text('κωδικός εισιτηρίου: ' + options.ticket_id, (170 + 150) / 2, 180, { width: doc.page.width - 170, align: 'right' });
 
     doc.font('public/font-regular.ttf');
     doc.text('Ημερομηνία: ' + options.date_and_time, (170 + 150) / 2, 210, { width: doc.page.width - 170, align: 'left' });
@@ -54,17 +54,17 @@ function send_pdf(res, options) {
 }
 
 function save_pdf(options) {
+    return new Promise((resolve, reject) => {
+        doc = new PDFDocument;
+        console.log(doc);
+        build_ticket(doc, options);
 
-    doc = new PDFDocument;
-    console.log(doc);
-    build_ticket(doc, options);
+        let writeStream = fs.createWriteStream(options.filename);
+        doc.pipe(writeStream);
+        doc.end();
 
-    let writeStream = fs.createWriteStream(options.filename);
-    doc.pipe(writeStream);
-    doc.end();
-    // return new Promise((resolve, reject) => {
-    //     writeStream.on('finish', resolve(options.filename));
-    // });
+        writeStream.on('finish', resolve(options.filename));
+    });
 }
 
 pdf = {

@@ -9,7 +9,6 @@ var utils = require('../apis/utilities');
 var qr = require('../apis/qr');
 var pdf = require('../apis/pdf_generator');
 var mail = require('../apis/mail');
-var path = require('path');
 
 
 
@@ -45,28 +44,29 @@ function mailTickets(parentId, eventId) {
                     .then((event) => {
                         // Create PDF with QRCode
                         console.log("Creating pdf");
-                        let eventImage = path.resolve('./') + "/public/files/events/default.png";
+                        let eventImage = "public/files/events/default.png";
                         if (event.pictures > 0) {
-                            eventImage = path.resolve('./') + "/public/files/events/" + event.eventId + "/" + "0";
+                            eventImage = "public/files/events/" + event.eventId + "/" + "0";
                         }
                         let opt = {
-                            filename: path.resolve('./') + "/public/files/tickets/pdf/" + ticketIds[0],
+                            filename: "public/files/tickets/pdf/" + ticketIds[0] + '.pdf',
                             title: event.title,
+                            type: 'ticket',
                             date_and_time: event.startTime,
                             address: event.geoAddress,
                             number_of_tickets: tickets.length,
                             event_img_src: eventImage,
                             qr_code_src: qrCodePath
                         };
-                        return pdf.save_pdf(opt);
-                    })
-                    // Send mail
-                    .then((pdfPath) => {
-                        tickets[0].getParent()
-                            .then((parent) => mail.sendPdfEmail('[Happy Kidz] Αγορά Εισητηρίων για το event: ' + event.title, parent.email, '', pdfPath))
-                            .then((success) => { return; })
-                            .catch((err) => console.log(err));
+                        pdf.save_pdf(opt)
+                            .then((pdfPath) => {
+                                tickets[0].getParent()
+                                    .then((parent) => mail.sendPdfEmail('[Happy Kidz] Αγορά Εισητηρίων για το event: ' + event.title, parent.email, '', pdfPath))
+                                    .then((success) => { return; })
+                                    .catch((err) => console.log(err));
+                            });
                     });
+
             });
     });
 }

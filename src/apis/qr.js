@@ -15,9 +15,9 @@ function createQRCode(tickets) {
 
     return new Promise((resolve, reject) => {
         let qrString = tickets.join('-');
-        let savePath = path.resolve('./') + '/public/files/tickets/qrcode/' + qrString + '.png';
+        let savePath = 'public/files/tickets/qrcode/' + tickets[0] + '.png';
         qrcode.toFile(savePath, qrString, options)
-        .then((ticketPath) => resolve(ticketPath))
+        .then((succ) => resolve(savePath))
         .catch((err) => reject(err));
         
     });
