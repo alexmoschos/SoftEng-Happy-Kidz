@@ -7,11 +7,11 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
         },
         startDate: {
-            type: DataTypes.DATE,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         expiryDate: {
-            type: DataTypes.DATE,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         membershipTier: {

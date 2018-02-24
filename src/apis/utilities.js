@@ -23,7 +23,7 @@ function makeid(len) {
 
 // Utility function to check if membership is valid
 function isMembershipValid(membership) {
-	if (membership && (membership.expiryDate < Math.floor(Date.now() / 1000))) {
+	if (membership && (membership.expiryDate > Math.floor(Date.now() / 1000)) ) {
 			return true;
 	} else {
 			return false;
