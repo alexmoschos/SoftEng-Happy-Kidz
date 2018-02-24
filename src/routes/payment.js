@@ -16,7 +16,7 @@ var availableMemberships = configFile.availableMemberships;
 
 // Utility function to check if membership is valid
 function isMembershipValid(membership) {
-    if (membership && (membership.expiryDate < Math.floor(Date.now()))) {
+    if (membership && (membership.expiryDate < Math.floor(Date.now() / 1000))) {
         return true;
     } else {
         return false;
