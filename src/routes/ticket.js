@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
         number_of_tickets: 3,
         address: 'Αριστοτέλους 23, Πυλαία, Θεσσαλονίκη',
         event_img_src: 'public/files/redhood.jpg'
-    }
+    };
 
     pdf.send_pdf(res,options); 
 });
