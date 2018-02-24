@@ -65,9 +65,19 @@ crossorigin="anonymous"></script>
           <div class="panel panel-default">
             <div class="panel-heading">
               <h1 class="page-header small">Στοιχεία Συνδρομής</h1>
-              <div class="golden-card">
+              <div id="subscribtion-category" class="golden-card">
                   <span style="font-size:20px; " class="glyphicon glyphicon-credit-card"></span>
-                  <span style="font-size:20px;  margin-left:10px;" id="subscribtion-category"><%= category%></span> 
+                  <span style="font-size:20px;  margin-left:10px;">
+                    <% if (category === '1') {;%>
+                      Gold-card
+                    <%} else if (category === '2') {;%>
+                      Silver-card
+                    <%} else if (category === '3') {;%>
+                      Platinum-card
+                    <%} else if (category === '0') {%>
+                      Δεν έχετε Συνδρομή
+                    <%}%>
+                  </span> 
                   <p class="page-subtitle small">Λήξη Συνδρομής: <%var eDate_ = new Date(expiryDate*1000); %>
                     <%= eDate_.toLocaleDateString()%>
                      </p>
@@ -77,7 +87,7 @@ crossorigin="anonymous"></script>
                   <span style="font-size:20px;  margin-left:10px;" id="subscribtion-category"><%= points%> Πόντοι</span> 
                   <!-- <p class="page-subtitle small">Expiration Date: 20/10/19</p> -->
               </div>
-              <% if (category === '0') {%>
+              <% if (expiryDate < Math.floor(Date.now() / 1000)) {%>
                 <a href="/membership"><button type="button" class="btn btn-info" id="renew-subscription-button">Ανανέωση Συνδρομής</button></a>
                 <%}%>
               </div>
