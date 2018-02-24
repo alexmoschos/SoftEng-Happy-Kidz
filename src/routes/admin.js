@@ -194,7 +194,6 @@ router.get('/provider/:providerId', auth.isUserAdmin, function(req, res) { //fir
                 ProviderEmail : result.email,
                 ProviderPage :result.webpage,
                 ProviderPhoneNumber: result.phone,
-                ProviderAddress : "25ης Μαρτίου 10, Βριλήσσια",
                 isVerified : result.isVerified,
                 ProviderId: result.organizerId},
                 user: req.user
