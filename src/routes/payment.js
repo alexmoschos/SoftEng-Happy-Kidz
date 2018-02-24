@@ -10,18 +10,7 @@ var qr = require('../apis/qr');
 var pdf = require('../apis/pdf_generator');
 var mail = require('../apis/mail');
 
-
-
 var availableMemberships = configFile.availableMemberships;
-
-// Utility function to check if membership is valid
-function isMembershipValid(membership) {
-    if (membership && (membership.expiryDate < Math.floor(Date.now()))) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 // Create qrcode-pdf and send email
 function mailTickets(parentId, eventId) {
@@ -112,7 +101,7 @@ router.post('/', auth.isUserParentPayment, function (req, res) {
                 // Check if parent has a valid membership
                 db.Membership.findById(userSession.passport.user.id)
                     .then((membership) => {
-                        if (!isMembershipValid(membership)) {
+                        if (!utils.isMembershipValid(membership)) {
                             console.log("Not a valid membership");
                             req.flash('error', 'Δεν έχετε συνδρομή είτε η συνδρομή σας έχει λήξει.');
                             res.redirect('/membership');
@@ -202,7 +191,7 @@ router.post('/events/:id', auth.isUserParentPayment, function (req, res) {
     // Check if parent has a valid membership
     db.Membership.findById(req.session.passport.user.id)
         .then((membership) => {
-            if (!isMembershipValid(membership)) {
+            if (!utils.isMembershipValid(membership)) {
                 req.flash('error', 'Δεν έχετε συνδρομή είτε η συνδρομή σας έχει λήξει.');
                 res.redirect('/membership');
             } else {
@@ -233,7 +222,7 @@ router.post('/membership/:id', auth.isUserParentPayment, function (req, res) {
     // Check if parent already has a valid membership
     db.Membership.findById(req.session.passport.user.id)
         .then((membership) => {
-            if (!isMembershipValid(membership)) {
+            if (!utils.isMembershipValid(membership)) {
                 req.session.cart = {
                     type: 'membership',
                     tier: req.params.id

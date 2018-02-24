@@ -31,7 +31,8 @@ router.get('/', function (req, res, next) {
   res.render('register',
     {
       errors: [],
-      tab: "userTab"
+      tab: "userTab",
+      userForm: {}
     });
 });
 
@@ -47,6 +48,14 @@ router.post('/:type', upload.any(),function (req, res, next) {
       .matches(/\d/);
     req.assert('passwordAgain', 'Passwords do not match').equals(req.body.password);
     let errors = req.validationErrors();
+    let userForm = {
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    email: req.body.email,
+                    password: req.body.password,
+                    passwordAgain: req.body.passwordAgain
+                  };
+
     if (!errors) {   //No errors were found. Continue with the registration!
       //SUCCESS
       passport.authenticate('local-signup-user', function (err, user, info) {
@@ -58,7 +67,7 @@ router.post('/:type', upload.any(),function (req, res, next) {
               param: 'email',
               msg: 'Email already exists'  
           }];
-          return res.status(409).render('register', { errMsg: info.errMsg, errors: errors, tab: "userTab" });
+          return res.status(409).render('register', { errMsg: info.errMsg, errors: errors, tab: "userTab", userForm: userForm });
         }
         req.login(user, function (err) {
           if (err) {
@@ -73,14 +82,15 @@ router.post('/:type', upload.any(),function (req, res, next) {
     else {   //Display errors to user
       res.render('register', {
         errors: errors,
-        tab: "userTab"
+        tab: "userTab",
+        userForm: userForm
       });
     }
 
 
   } else if (type == 'provider') {
 
-console.log(req.files[0]);
+    //console.log(req.files[0]);
     // Do some checks here (all form fields have to be valid)
     req.assert('email', 'A valid email is required').isEmail();  //Validate email
     req.assert('password', 'passwords must be at least 8 chars long and contain one number')
@@ -94,15 +104,19 @@ console.log(req.files[0]);
        req.assert('file0', 'File should be an image').equals('dummyText');
     }
     var sizeInBytes = req.files[0].size;
-    var MAXBYTESALLOWED = 50000;
+    var MAXBYTESALLOWED = 6291456;
     if (sizeInBytes > MAXBYTESALLOWED) {
-      req.assert('file0', 'File should be less than ' + MAXBYTESALLOWED.toString() + ' bytes').equals('dummyText');
+      req.assert('file0', 'File should be less than ' + (MAXBYTESALLOWED/(1024*1024)).toString() + ' MB').equals('dummyText');
     }
-
-
-
-
     let errors = req.validationErrors();
+    let userForm = {
+                    email: req.body.email,
+                    legalBusinessPhone: req.body.legalBusinessPhone,
+                    legalBusinessName: req.body.legalBusinessName,
+                    businessSite: req.body.businessSite,
+                    password: req.body.password,
+                    passwordAgain: req.body.passwordAgain
+                  };
     
   
     
@@ -117,7 +131,7 @@ console.log(req.files[0]);
               param: 'email',
               msg: 'Email already exists'  
           }];
-          return res.status(409).render('register', { errMsg: info.errMsg, errors: errors, tab: "providerTab" });
+          return res.status(409).render('register', { errMsg: info.errMsg, errors: errors, tab: "providerTab", userForm: userForm });
         }
         req.login(user, function (err) {
           if (err) {
@@ -132,7 +146,8 @@ console.log(req.files[0]);
     else {   //Display errors to user
       res.render('register', {
         errors: errors,
-        tab: "providerTab"
+        tab: "providerTab",
+        userForm: userForm
       });
     }
   }
