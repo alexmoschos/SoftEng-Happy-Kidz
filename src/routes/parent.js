@@ -106,7 +106,7 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 							user: req.user,
 							id: parent.parentId ,
 							name: parent.name,
-							category: 0,
+							category: '0',
 							expiryDate: 0,
 							points: parent.wallet,
 							email: parent.email,
