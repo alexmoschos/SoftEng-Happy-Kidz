@@ -14,7 +14,8 @@ var conf = {
         description: "Συνδρομή 12 μηνών",
         duration: 12,
         amount: 40
-    }]
+    }],
+    pointsToEuro: 1000
 };
 
 

@@ -23,10 +23,6 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/navbar.css">
     <%- include ../partials/navbar.ejs %>
 </head>
-<body>
-
-
-
 
 
 <div class="panel panel-primary" style="margin:20px;">
@@ -51,13 +47,34 @@
 
                 <!-- Amount -->
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="card-holder-name">Συνολικό Ποσό</label>
+                    <label class="col-sm-3 control-label" for="card-holder-name">Ποσό </label>
                     <div class="col-sm-9">
                         <text readonly id="charge">
                             <%= amount %> &euro;
                         </text>
                     </div>
                 </div>
+
+                 <!-- Point Discount if buying membership -->
+                 <% if (locals.paymentDetails) {%>
+                 <div class="form-group">
+                    <label class="col-sm-3 control-label" for="card-holder-name">Τελικό Ποσό με Έκπτωση Πόντων</label>
+                    <div class="col-sm-9">
+                        <text readonly id="charge">
+                            <%= paymentDetails.finalPrice %> &euro;
+                        </text>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="card-holder-name">Υπολοιπόμενοι Πόντοι </label>
+                    <div class="col-sm-9">
+                        <text readonly id="charge">
+                            <%= paymentDetails.remainingPoints %>
+                        </text>
+                    </div>
+                </div>
+                <%}%>
 
                  <!-- Points if buying tickets -->
                  <% if (locals.quantity) {%>
