@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const Sequelize = require('sequelize');
 const conf = require('../config.js');
-const seedDB = require('./seedfaker');
+//const seedDB = require('./seedfaker');
 
 // Database connection config
 const sequelize = new Sequelize('devdb', 'dev', 'password', {
@@ -77,8 +77,6 @@ var db = {
 };
 
 //initialize tables if they don't exist
-sequelize.sync({force: true})
-.then(() =>seedDB.seedDatabase(db));
-
+sequelize.sync(); 
 
 module.exports = db;
