@@ -257,6 +257,8 @@
                                                                 zoom: 4,
                                                                 center: place
                                                 });
+                                                
+                                                var bounds = new google.maps.LatLngBounds();
 
                                                 for (let x in myObject){
                                                     if (myObject.hasOwnProperty(x)){
@@ -272,9 +274,12 @@
                                                             infowindow.open(map, marker);
                                                         });
                                                         markers.push(marker);
+                                                        bounds.extend(place); 
                                                     }
 
                                                 }
+                                                map.fitBounds(bounds);
+
                                                 createHandlers();
 
                                             }

@@ -49,7 +49,7 @@ function validNewEvent(newEvent) {
         info = {errMsg : "Όλα τα πεδία πρέπει να είναι συμπληρωμένα",event: newEvent};
         return false;
     }
-    
+
     if (isNaN(newEvent.discount)) {
         info = {errMsg : "Όλα τα πεδία πρέπει να είναι συμπληρωμένα",event: newEvent};
         return false;
@@ -74,7 +74,7 @@ function validNewEvent(newEvent) {
     }
 
     if (newEvent.startTime <= (new Date().getTime() /1000)) {
-        info = {errMsg : "Το event δεν μπορεί να ξεκινά σε παρελθοντικό χρόνο", event: newEvent}
+        info = {errMsg : "Το event δεν μπορεί να ξεκινά σε παρελθοντικό χρόνο", event: newEvent};
         return false;
     }
 
@@ -147,10 +147,10 @@ router.post('/', auth.isUserVerifiedOrganizer,  function(req, res, next) {
                         if (body.watermark){
                             watermark.addTextWatermark(newpath, newpath, 'HappyKidz').catch(err => {console.log(err);});
                         }
-                        
+
                     });
 
-                    
+
                 }
             }
 

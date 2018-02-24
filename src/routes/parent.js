@@ -106,7 +106,7 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 							user: req.user,
 							id: parent.parentId ,
 							name: parent.name,
-							category: 0,
+							category: '0',
 							expiryDate: 0,
 							points: parent.wallet,
 							email: parent.email,
@@ -155,36 +155,50 @@ router.post('/:parentId/settings', auth.isUserParentId,function(req, res){
 		db.Parent.findById(req.params.parentId)
 		.then( (parent) => {
 			if (parent){
-				if (result && req.body.email !== parent.email){
-					req.assert('email', 'Υπάρχει ήδη χρήστης με αυτό το email').equals(true);	
+				if ((req.body.email !== parent.email) || (req.body.newPassword.length > 0)){
+					if (result && req.body.email !== parent.email){
+						req.assert('email', 'Υπάρχει ήδη χρήστης με αυτό το email').equals(true);	
+					}
+					var temp = bcrypt.compareSync(req.body.oldPassword, parent.password);
+					if(!temp){
+						req.assert('oldPassword', 'Λάθος Κωδικός').equals(true);			
+					}
+					req.assert('email', 'A valid email is required').isEmail(); 
+					if (req.body.newPassword.length > 0){
+						req.assert('newPassword', 'passwords must be at least 8 chars long and contain one number')
+							.isLength({ min: 8 })
+							.matches(/\d/);
+						req.assert('newPasswordAgain', 'Passwords do not match').equals(req.body.newPassword);
+					}
+					var errors = req.validationErrors();
+					if( !errors && req.body.newPassword.length > 0){
+						req.flash('success', 'Επιτυχία !');
+						parent.update({email: req.body.email})
+						.then ( (succ) => {
+							return succ.update({password: bcrypt.hashSync(req.body.newPassword,10)});
+						})
+						.then( (succe) => res.redirect("/parent/" + req.params.parentId));
+					}
+					else if( !errors ){ // here, user did not put a new password
+						req.flash('success', 'Επιτυχία !');
+						parent.update({email: req.body.email})
+						.then( (succ) => res.redirect("/parent/" + req.params.parentId));
+					}
+					else{
+						obj = {
+							user: req.user,
+							errors: errors,
+							id: parent.parentId,
+							name: parent.name,
+							email: parent.email
+						};
+						res.render('parentSettings', obj);
+					}
 				}
-				var temp = bcrypt.compareSync(req.body.oldPassword, parent.password);
-				if(!temp){
-					req.assert('oldPassword', 'Λάθος Κωδικός').equals(true);			
-				}
-				req.assert('email', 'A valid email is required').isEmail(); 
-				req.assert('newPassword', 'passwords must be at least 8 chars long and contain one number')
-					.isLength({ min: 8 })
-					.matches(/\d/);
-				req.assert('newPasswordAgain', 'Passwords do not match').equals(req.body.newPassword);
-				var errors = req.validationErrors();
-				if( !errors){
-					parent.update({email: req.body.email})
-					.then ( (succ) => {
-						return succ.update({password: bcrypt.hashSync(req.body.newPassword,10)});
-					})
-					.then( (succe) => res.redirect("/parent/" + req.params.parentId));
-				}
-				else{
-					obj = {
-						user: req.user,
-						errors: errors,
-						id: parent.parentId,
-						name: parent.name,
-						email: parent.email
-					};
-					res.render('parentSettings', obj);
-				}
+				else { // user didnt change anything at all
+					req.flash('error', 'Δεν αλλάξατε κανένα πεδίο !');
+					res.redirect("/parent/" + req.params.parentId);
+				}	
 			}
 			else {
 				res.render('no_page',{user: req.user});

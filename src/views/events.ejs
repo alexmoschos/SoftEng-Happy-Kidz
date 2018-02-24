@@ -190,7 +190,16 @@
                                         <label for="quantity">Αριθμός Εισιτηρίων:</label>
                                         <input type="number" name="quantity" value="1" min="1" max="<%= ticketCount %>" class="form-control" id="quantity">
                                 </div>
-                                <button style="margin-top:12px;" id="book-now" type="submit" class="btn my-btn btn-lg">Book Now</button>
+                                <button style="margin-top:12px;" id="book-now" type="submit" class="btn my-btn btn-lg
+                                <% if (!isFuture) { %>
+                                disabled
+                                <% } %>
+                                "
+                                <% if (!isFuture) { %>
+                                disabled
+                                <% } %> >
+                                    Book Now
+                                </button>
                             </center>
                         </form>
                     </div>
