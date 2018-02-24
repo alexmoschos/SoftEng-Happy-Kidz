@@ -83,8 +83,8 @@ function seedDatabase(db, done) {
         endTime: Math.floor(Date.now() / 1000 + 3600),
         description: '',
         categoryName: 'Αθλητισμός',
-        geoLon: 37.988930,
-        geoLat: 23.764727,
+        geoLon: 23.7704801,
+        geoLat: 37.9785796,
         geoAddress: 'Ευρυτανίας 56, 15451, Αθήνα',
         ticketPrice: 15,
         discount: 5,
@@ -103,8 +103,8 @@ function seedDatabase(db, done) {
         endTime: Math.floor(Date.now() / 1000 + 3600),
         description: '',
         categoryName: 'Αθλητισμός',
-        geoLon: 37.988930,
-        geoLat: 23.764727,
+        geoLon: 23.7704801,
+        geoLat: 37.9785796,
         geoAddress: 'Ευρυτανίας 56, 15451, Αθήνα',
         ticketPrice: 15,
         discount: 5,
@@ -118,6 +118,9 @@ function seedDatabase(db, done) {
     }];
     for(i = 0; i < 20; ++i){
         var dateoffset = getRandomInt(-1,100);
+        var signs = [-1, 1];
+        var p1 = getRandomInt(0,1);
+        var p2 = getRandomInt(0,1);
         eventobj.push(
             {
                 organizerId: getRandomInt(1,9),
@@ -126,8 +129,8 @@ function seedDatabase(db, done) {
                 endTime: Math.floor(Date.now() / 1000 + dateoffset*24*3600 + 3600),
                 description: faker.lorem.paragraph(),
                 categoryName: 'Αθλητισμός',
-                geoLon: 37.988930 + Math.random()*10,
-                geoLat: 23.764727 + Math.random()*10,
+                geoLon: 23.7704801 + signs[p1] *  Math.random()/10,
+                geoLat: 37.9785796 + signs[p2] * Math.random()/10,
                 geoAddress: faker.address.streetAddress("###"),
                 ticketPrice: getRandomInt(5,35),
                 discount: getRandomInt(5,15),
