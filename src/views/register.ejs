@@ -52,11 +52,11 @@ crossorigin="anonymous"></script>
                     <div class="row">
                       <div class="col-sm-6 form-group">
                         <label>Όνομα</label>
-                        <input type="text" name="firstName" placeholder="Όνομα" class="form-control" required>
+                        <input type="text" id="firstName" name="firstName" placeholder="Όνομα" class="form-control" required>
                       </div>
                       <div class="col-sm-6 form-group">
                         <label>Επώνυμο</label>
-                        <input type="text" name="lastName" placeholder="Επώνυμο" class="form-control" required>
+                        <input type="text" id="lastName" name="lastName" placeholder="Επώνυμο" class="form-control" required>
                       </div>
                     </div>
                     
@@ -188,11 +188,20 @@ crossorigin="anonymous"></script>
 
 //Script for handling errors from validation step in backend
 $( document ).ready(function() {
-
+ 
  var errorList = <%-JSON.stringify(errors)%>;
  var whichTab = <%-JSON.stringify(tab)%>;
  var actualId = "";
  if(whichTab === "providerTab") {
+  if (errorList.length > 0){ // if 0 means that we come here for first time
+    var prevForm = <%-JSON.stringify(userForm)%>;
+    $('#businessemail').val(prevForm.email)
+    $('#legalBusinessPhone').val(prevForm.legalBusinessPhone)
+    $('#businessName').val(prevForm.legalBusinessName)
+    $('#businessSite').val(prevForm.businessSite)
+    $('#businesspassword').val(prevForm.password)
+    $('#businesspasswordAgain').val(prevForm.passwordAgain)
+  }
   $("#Section1").removeClass("active")
   $("#Section1").removeClass("in")
   $("#personal-tab").removeClass("active")
@@ -203,6 +212,7 @@ $( document ).ready(function() {
   	if (myError.param != "file0") {
     	actualId = "business" + myError.param; 
     	$('#' + actualId).addClass("error-input")
+      $('#' + actualId).val("") 
     	$('#' + actualId).attr("placeholder", myError.msg) 
     }
     else {
@@ -213,8 +223,17 @@ $( document ).ready(function() {
   });
  }
  else if(whichTab === "userTab"){
+  if (errorList.length > 0){ // if 0 means that we come here for first time
+    var prevForm = <%-JSON.stringify(userForm)%>;
+    $('#firstName').val(prevForm.firstName)
+    $('#lastName').val(prevForm.lastName)
+    $('#email').val(prevForm.email)
+    $('#password').val(prevForm.password)
+    $('#passwordAgain').val(prevForm.passwordAgain)
+  }
   errorList.forEach(function(myError){ 
   $('#' + myError.param).addClass("error-input")
+  $('#' + myError.param).val("") 
   $('#' + myError.param).attr("placeholder", myError.msg) 
     });
  }
@@ -225,6 +244,7 @@ $( document ).ready(function() {
 });
 
 
+        
 
 
 </script>
