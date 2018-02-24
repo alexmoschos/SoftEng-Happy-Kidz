@@ -21,9 +21,19 @@ function makeid(len) {
   return text;
 }
 
+// Utility function to check if membership is valid
+function isMembershipValid(membership) {
+	if (membership && (membership.expiryDate < Math.floor(Date.now() / 1000))) {
+			return true;
+	} else {
+			return false;
+	}
+}
+
 utilities = {
 	checkInt: checkInt,
-	makeid: makeid
+	makeid: makeid,
+	isMembershipValid: isMembershipValid
 };
 
 module.exports = utilities;
