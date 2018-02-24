@@ -43,7 +43,7 @@ router.get('/', function(req, res, next) {
 				categories.forEach(function(element,i){
 					var cat = element.dataValues;
 					Data[i+1] = [cat.categoryName, Number(cat.num)];
-				})
+				});
 				db.Event.findAll({
 					attributes: [
 						"minAge",
@@ -67,7 +67,7 @@ router.get('/', function(req, res, next) {
 						var agestring;
 						if(age.minAge == 3)agestring = "3-5";
 						else if(age.minAge == 6)agestring = "6-8";
-						else if (age.minAge == 9)agestring = "9-12"
+						else if (age.minAge == 9)agestring = "9-12";
 						else agestring = ">12";
 						AgesData[i+1] = [agestring, Number(age.num)];
 					});
@@ -88,12 +88,12 @@ router.get('/', function(req, res, next) {
 					res.send(obj);
 
 				});
-			})
+			});
 		}
 		else {res.redirect("/login");
 		}
 			
-})
+});
 
 router.get('/bar_chart', function(req,res, next){
 	var organizerId = req.user.user.organizerId;
@@ -119,7 +119,7 @@ router.get('/bar_chart', function(req,res, next){
 		});
 		console.log(Rows);
 		res.send({Rows:Rows});
-	})
+	});
 
 });
 	

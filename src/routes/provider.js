@@ -8,7 +8,6 @@ var conf = require('../config');
 var auth = require('../apis/authentication');
 var db = require('../models/db');
 const Sequelize = require('sequelize');
-
 var mail = require('../apis/mail');
 var bcrypt = require('bcrypt');
 var HashMap = require('hashmap');
@@ -59,10 +58,13 @@ router.get('/:providerId', function(req, res) {
 						if(minutes < 10)minutes = "0" + minutes;
 						var time = hours + ":" + minutes;
 						var stringDate = numberdate + "/"+month+"/"+year;
+						var img_src = "../files/events/"+event.eventId +"/0";
+						if (parseInt(event.pictures) == 0 )
+							img_src = "/happy.png";
 						PastEventsArray[i]= 
 						{
 							eventId : event.eventId,
-							ImgUrl: "../files/events/"+event.eventId +"/0",
+							ImgUrl: img_src,
 							Title: event.title,
 							Date: stringDate,
 							Hours: time,
@@ -70,8 +72,8 @@ router.get('/:providerId', function(req, res) {
 							Provider: result.name,
 							Ages: event.minAge + "-" + event.maxAge,
 							PhoneNumber: result.phone,
-							InitialPrice: event.ticketPrice,
-							FinalPrice: event.discount
+							InitialPrice: (event.ticketPrice * 100 / (100 - event.discount)).toFixed(2),
+							FinalPrice: event.ticketPrice.toFixed(2)
 						};
 					});
 					db.Event.findAll({
@@ -96,10 +98,13 @@ router.get('/:providerId', function(req, res) {
 							if(minutes < 10)minutes = "0" + minutes;
 							var time = hours + ":" + minutes;
 							var stringDate = numberdate + "/"+month+"/"+year;
+							var img_src = "../files/events/"+event.eventId +"/0";
+							if (parseInt(event.pictures) == 0 )
+								img_src = "/happy.png";
 							CurrentEvents[i]= 
 							{
 								eventId : event.eventId,
-								ImgUrl: "../files/events/"+event.eventId +"/0",
+								ImgUrl: img_src,
 								Title: event.title,
 								Date: stringDate,
 								Hours: time,
@@ -107,8 +112,8 @@ router.get('/:providerId', function(req, res) {
 								Provider: result.name,
 								Ages: event.minAge + "-" + event.maxAge,
 								PhoneNumber: result.phone,
-								InitialPrice: event.ticketPrice,
-								FinalPrice: event.discount,
+								InitialPrice: (event.ticketPrice * 100 / (100 - event.discount)).toFixed(2),
+								FinalPrice: event.ticketPrice.toFixed(2),
 								BarchartID: event.eventId
 							};
 							
