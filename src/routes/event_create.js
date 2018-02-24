@@ -134,20 +134,23 @@ router.post('/', auth.isUserVerifiedOrganizer,  function(req, res, next) {
                 var files = req.files;
 
                 var id = event.eventId.toString(); //here goes the id of the event
-                var newdir = path.join(__dirname, '../public/files/events',  id);
+                let newdir = path.join(__dirname, '../public/files/events',  id);
                 if (!fs.existsSync(newdir)){
                     fs.mkdirSync(newdir);
                 }
-                count=0;
-                for (i in files) {
-                    var newpath = path.join(newdir, count.toString());
+                let count=0;
+                for (let i in files) {
+                    let newpath = path.join(newdir, count.toString());
                     count++;
-                    fs.rename(files[i].path, newpath, function (err) {
+                    fs.rename(files[i].path, newpath, function(err) {
                         if (err) throw err;
+                        if (body.watermark){
+                            watermark.addTextWatermark(newpath, newpath, 'HappyKidz').catch(err => {console.log(err);});
+                        }
+                        
                     });
 
-                    if (body.watermark)
-                        watermark.addTextWatermark(newpath, newpath, 'HappyKidz').catch(err => {console.log(err);});
+                    
                 }
             }
 
