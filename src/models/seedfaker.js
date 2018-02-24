@@ -18,8 +18,8 @@ function seedDatabase(db) {
     });
     var i;
     var parentobj = [{
-        name : 'Ιωαννης',
-        email : 'johneration@gmail.com',
+        name : 'Γιώργης',
+        email : 'george@example.com',
         password : bcrypt.hashSync('123456',10),
         wallet: 0,
         mailNotifications : true

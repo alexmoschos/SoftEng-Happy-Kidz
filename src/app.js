@@ -45,6 +45,13 @@ if (!fs.existsSync('./public/files/providers')) {
     console.log('Providers public folder doesnt exist');
     fs.mkdirSync('./public/files/providers');
 }
+//initialize events folder with as many events as in the seedfaker
+for (var i = 0; i < 22; i++) {
+    if (!fs.existsSync('./public/files/events/'+toString(i+1))) {
+        console.log('Event specific  folder doesnt exist');
+        fs.mkdirSync('./public/files/events/'+toString(i+1));
+    }
+}
 // Static Resources
 app.use(express.static(path.join(__dirname, 'public')));
 
