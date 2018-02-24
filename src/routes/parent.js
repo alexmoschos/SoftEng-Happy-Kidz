@@ -71,9 +71,8 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 							tickets[i].image = '/happy.png';
 						}
 					}
-					db.Membership.findById(req.params.parentId)
-				})
-				.then( member => {
+					db.Membership.findById(parseInt(req.params.parentId))
+					.then( member => {
 					if(member != null){
 						obj = {
 							user: req.user,
@@ -87,8 +86,11 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 							past: past_tickets,
 							subscriptions: parent.organizers
 						};
+						console.log(member.expiryDate);
+
 					}
 					else{
+						console.log('here');
 						obj = {
 							user: req.user,
 							id: parent.parentId ,
@@ -103,7 +105,9 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 						};
 					}
 					res.render('parent', obj);
-				})	
+				})
+				})
+					
 				// })
 				
 				// console.log(tickets);

@@ -12,6 +12,7 @@ var validator = require('express-validator');
 var passport = require('./apis/passport');
 var flash = require('express-flash');
 var fs = require('fs');
+
 // Routes
 var chart_data = require('./routes/chart_data');
 var index = require('./routes/index');
@@ -47,11 +48,12 @@ if (!fs.existsSync('./public/files/providers')) {
 }
 //initialize events folder with as many events as in the seedfaker
 for (var i = 0; i < 22; i++) {
-    if (!fs.existsSync('./public/files/events/'+toString(i+1))) {
+    if (!fs.existsSync('./public/files/events/'+ (i+1).toString())) {
         console.log('Event specific  folder doesnt exist');
-        fs.mkdirSync('./public/files/events/'+toString(i+1));
+        fs.mkdirSync('./public/files/events/'+ (i+1).toString());
     }
 }
+
 // Static Resources
 app.use(express.static(path.join(__dirname, 'public')));
 
