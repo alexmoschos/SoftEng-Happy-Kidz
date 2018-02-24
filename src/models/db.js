@@ -77,6 +77,6 @@ var db = {
 };
 
 //initialize tables if they don't exist
-sequelize.sync(); 
+// sequelize.sync(); 
 
 module.exports = db;

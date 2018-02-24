@@ -54,6 +54,22 @@ for (var i = 0; i < 22; i++) {
     }
 }
 
+// initialize psql if necessary
+var db = require('./models/db');
+var conf = require('./config.js');
+db.sequelizeConnection.sync()
+.then(() => {
+    // for each supported category make sure, we have it in the categories table
+    conf.supportedCategories.forEach(function (category, idx) {
+        db.Categories.findOne({ where: { categoryName: category } }).then(res => {
+            if (!res) {
+                // this category has to be added.
+                db.Categories.create({ categoryName: category }).catch(err => { console.log(err); });
+            }
+        }).catch(err => { console.log(err); });
+    });
+});
+
 // Static Resources
 app.use(express.static(path.join(__dirname, 'public')));
 
