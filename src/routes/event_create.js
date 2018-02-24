@@ -100,7 +100,7 @@ router.post('/', auth.isUserVerifiedOrganizer,  function(req, res, next) {
     newEvent.organizerId = req.user.user.organizerId;
 
     newEvent.title = body.EventName;
-    newEvent.startTime = new Date(body.Date + "T" + body.Time).getTime()/1000;
+    newEvent.startTime = new Date(body.Date + "T" + body.Time).getTime()/1000 - 7200;
     newEvent.endTime = newEvent.startTime; // this field should probably go.
     newEvent.description = body.Description;
     newEvent.categoryName = body.categoryName;
@@ -120,6 +120,8 @@ router.post('/', auth.isUserVerifiedOrganizer,  function(req, res, next) {
     if (!validNewEvent(newEvent)) {
         info.user = req.user;
         info.categories = conf.supportedCategories;
+        if (info.event.startTime) 
+            info.event.startTime +=7200;
         return res.render('newevent', info);
     }
 
@@ -158,6 +160,7 @@ router.post('/', auth.isUserVerifiedOrganizer,  function(req, res, next) {
 
         }).catch(err => {
             console.log(err);
+            newEvent.startTime += 7200;
             res.render('newevent', {categories: conf.supportedCategories,user: req.user, errMsg : "There was an error please try again", event:newEvent});
         });
     });
