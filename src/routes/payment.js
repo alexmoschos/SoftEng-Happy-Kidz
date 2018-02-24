@@ -12,6 +12,16 @@ var mail = require('../apis/mail');
 
 var availableMemberships = configFile.availableMemberships;
 
+function calculateDiscount(amount, points) {
+    let discount = Math.min(amount, points / configFile.pointsToEuro);
+    let finalPrice = amount - discount;
+    let remainingPoints = Math.floor(points - discount * configFile.pointsToEuro);
+    return ({
+        finalPrice: finalPrice,
+        remainingPoints: remainingPoints
+    });
+}
+
 // Create qrcode-pdf and send email
 function mailTickets(parentId, eventId) {
     // Find all tickets for that event
@@ -76,7 +86,8 @@ router.get('/', auth.isUserParentPayment, function (req, res) {
                 break;
             case 'membership':
                 if (availableMemberships[item.tier - 1]) {
-                    res.render('payment/index', { user: req.user, description: availableMemberships[item.tier - 1].description, amount: availableMemberships[item.tier - 1].amount });
+                    let paymentDetails = calculateDiscount(availableMemberships[item.tier - 1].amount, req.user.user.wallet);
+                    res.render('payment/index', { user: req.user, description: availableMemberships[item.tier - 1].description, amount: availableMemberships[item.tier - 1].amount, paymentDetails: paymentDetails });
                 }
                 break;
             default:
@@ -159,15 +170,27 @@ router.post('/', auth.isUserParentPayment, function (req, res) {
                 break;
             case 'membership':
                 console.log('Creating new membership' + JSON.stringify(userSession.passport.user));
+                let paymentDetails = calculateDiscount(availableMemberships[item.tier - 1].amount, req.user.user.wallet);
                 // Insert new or update existing membership
-                db.Membership.upsert({
-                    parentId: userSession.passport.user.id,
-                    startDate: Math.floor(Date.now() / 1000),
-                    expiryDate: Math.floor(Date.now() / 1000 + 60 * 60 * 24 * 10 * availableMemberships[item.tier].duration),
-                    membershipTier: item.tier,
-                    maxTicketsPerEvent: 100
-                });
-                res.redirect('/payment/success');
+                db.sequelizeConnection.transaction(function (t) {
+                    return db.Membership.upsert({
+                        parentId: userSession.passport.user.id,
+                        startDate: Math.floor(Date.now() / 1000),
+                        expiryDate: Math.floor(Date.now() / 1000 + 60 * 60 * 24 * 10 * availableMemberships[item.tier].duration),
+                        membershipTier: item.tier,
+                        maxTicketsPerEvent: 100
+                    }, { transaction: t })
+                        .then((membership) => db.Parent.update(
+                            { wallet: paymentDetails.remainingPoints },
+                            {
+                                where:{ 
+                                    parentId: req.session.passport.user.id
+                                },
+                                transaction: t
+                            }));
+                })
+                    .then((succ) => res.redirect('/payment/success'))
+                    .catch((err) => console.log(err));
                 break;
             default:
                 console.log('something definitely went wrong');

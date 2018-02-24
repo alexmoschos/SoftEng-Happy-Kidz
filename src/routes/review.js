@@ -22,14 +22,14 @@ router.post("/:eventId/:parentId", auth.isUserParentIdAndBoughtTicket, function(
         if(!review){
             db.Review.create(newReview).then( review2 => {
                 res.redirect('/events/' + req.params.eventId);
-            }) 
+            }); 
         }
         else{
             review.update(newReview).then( review3 => {
                 res.redirect('/events/' + req.params.eventId);
-            })
+            });
         }
-    })   
+    });   
 });
 
 router.get('/:eventId/:parentId', auth.isUserParentIdAndBoughtTicket, function(req, res, next) {
@@ -60,19 +60,19 @@ router.get('/:eventId/:parentId', auth.isUserParentIdAndBoughtTicket, function(r
                             prevDescription: descr
                         };
                         res.render('review',obj);
-                    })
+                    });
                 }
                 else {
                     res.render('no_page',{user: req.user});
                 }
-            })
+            });
         }
         else {
             res.render('no_page',{user: req.user});
         }
 
         
-    })
+    });
 });
 
 module.exports = router;

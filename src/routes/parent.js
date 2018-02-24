@@ -116,13 +116,13 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 						};
 					}
 					res.render('parent', obj);
-				})
-				})
+				});
+				});
 					
 				// })
 				
 				// console.log(tickets);
-			})
+			});
 		}
 		else {
             res.render('no_page',{user: req.user});
@@ -146,7 +146,7 @@ router.get('/:parentId/settings', auth.isUserParentId, function(req, res){
 		else {
             res.render('no_page',{user: req.user});
         }	
-	})
+	});
 });
 
 
@@ -203,8 +203,8 @@ router.post('/:parentId/settings', auth.isUserParentId,function(req, res){
 			else {
 				res.render('no_page',{user: req.user});
 			} 	
-		})
-	})
+		});
+	});
 });
 
 router.delete('/:parentId', auth.isUserAdmin,  function(req, res){
@@ -218,7 +218,7 @@ router.delete('/:parentId', auth.isUserAdmin,  function(req, res){
 			email = parent.email;
 			return parent.destroy();
 		} else {
-			res.send('No such parent!' + console.log(req.params.parentId))
+			res.send('No such parent!' + console.log(req.params.parentId));
 		}
 	})
 	.then( (succ) => {

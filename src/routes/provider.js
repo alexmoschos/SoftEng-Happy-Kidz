@@ -58,10 +58,13 @@ router.get('/:providerId', function(req, res) {
 						if(minutes < 10)minutes = "0" + minutes;
 						var time = hours + ":" + minutes;
 						var stringDate = numberdate + "/"+month+"/"+year;
+						var img_src = "../files/events/"+event.eventId +"/0";
+						if (parseInt(event.pictures) == 0 )
+							img_src = "/happy.png";
 						PastEventsArray[i]= 
 						{
 							eventId : event.eventId,
-							ImgUrl: "../files/events/"+event.eventId +"/0",
+							ImgUrl: img_src,
 							Title: event.title,
 							Date: stringDate,
 							Hours: time,
@@ -95,10 +98,13 @@ router.get('/:providerId', function(req, res) {
 							if(minutes < 10)minutes = "0" + minutes;
 							var time = hours + ":" + minutes;
 							var stringDate = numberdate + "/"+month+"/"+year;
+							var img_src = "../files/events/"+event.eventId +"/0";
+							if (parseInt(event.pictures) == 0 )
+								img_src = "/happy.png";
 							CurrentEvents[i]= 
 							{
 								eventId : event.eventId,
-								ImgUrl: "../files/events/"+event.eventId +"/0",
+								ImgUrl: img_src,
 								Title: event.title,
 								Date: stringDate,
 								Hours: time,
