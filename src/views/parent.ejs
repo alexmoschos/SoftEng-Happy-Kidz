@@ -68,18 +68,24 @@ crossorigin="anonymous"></script>
               <div id="subscribtion-category" class="golden-card">
                   <span style="font-size:20px; " class="glyphicon glyphicon-credit-card"></span>
                   <span style="font-size:20px;  margin-left:10px;">
-                    <% if (category === '1') {;%>
+                    <% if (category === '1') {%>
                       Gold-card
-                    <%} else if (category === '2') {;%>
+                    <%} else if (category === '2') {%>
                       Silver-card
-                    <%} else if (category === '3') {;%>
+                    <%} else if (category === '3') {%>
                       Platinum-card
-                    <%} else if (category === '0') {%>
-                      Δεν έχετε Συνδρομή
+                    <%} else if (category === '0'){%>
+                      Δεν έχετε έγκυρη συνδρομή
                     <%}%>
                   </span> 
-                  <p class="page-subtitle small">Λήξη Συνδρομής: <%var eDate_ = new Date(expiryDate*1000); %>
-                    <%= eDate_.toLocaleDateString()%>
+                  <p class="page-subtitle small">Λήξη Συνδρομής: 
+                    <% if (category === '0') {%>
+                      -
+                    <%} else{
+                      var eDate_ = new Date(expiryDate*1000); %>
+                      <%= eDate_.toLocaleDateString()%>
+                    <%}%>
+                    
                      </p>
               </div>
               <div class="available-points">
@@ -87,9 +93,9 @@ crossorigin="anonymous"></script>
                   <span style="font-size:20px;  margin-left:10px;" id="subscribtion-category"><%= points%> Πόντοι</span> 
                   <!-- <p class="page-subtitle small">Expiration Date: 20/10/19</p> -->
               </div>
-              <% if (expiryDate < Math.floor(Date.now() / 1000)) {%>
+              <% if (category === '0') {%>
                 <a href="/membership"><button type="button" class="btn btn-info" id="renew-subscription-button">Ανανέωση Συνδρομής</button></a>
-                <%}%>
+              <%}%>
               </div>
             
             <div class="clearfix"></div>

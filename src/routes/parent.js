@@ -74,19 +74,30 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 					db.Membership.findById(parseInt(req.params.parentId))
 					.then( member => {
 					if(member != null){
+						var exp;
+						var cat;
+						if (member.expiryDate < Math.floor(Date.now() / 1000)){
+							exp = 0;
+							cat = '0';
+						}
+						else{
+							exp = member.expiryDate;
+							cat = member.membershipTier;
+						}
+						console.log(cat);
+						
 						obj = {
 							user: req.user,
 							id: parent.parentId ,
 							name: parent.name,
-							category: member.membershipTier,
-							expiryDate: member.expiryDate,
+							category: cat,
+							expiryDate: exp,
 							points: parent.wallet,
 							email: parent.email,
 							bought: future_tickets,
 							past: past_tickets,
 							subscriptions: parent.organizers
 						};
-						console.log(member.expiryDate);
 
 					}
 					else{
