@@ -27,6 +27,7 @@
     "grunt-parallel": "^0.5.1",
     "hashmap": "^2.3.0",
     "https": "^1.0.0",
+    "js-promisify": "^1.1.0",
     "load-grunt-tasks": "^3.5.2",
     "method-override": "^2.3.10",
     "morgan": "~1.9.0",

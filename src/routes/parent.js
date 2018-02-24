@@ -4,8 +4,8 @@ var db = require('../models/db');
 var auth = require('../apis/authentication');
 var utilities = require('../apis/utilities');
 var mail = require('../apis/mail');
-
-
+var fs = require('fs');
+var promisify = require('js-promisify');
 var bcrypt = require('bcrypt');
 var HashMap = require('hashmap');
 
@@ -13,6 +13,7 @@ var HashMap = require('hashmap');
 
 /* GET parent profile. */
 router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
+	var tickets;
 	db.Parent.findOne({
 		where: { parentId: req.params.parentId },
 		include: [{
@@ -37,22 +38,41 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 				}],
 				where: { parentId: parent.parentId }
 			})
-			.then( tickets => {
+			.then( eisitiria => {
+				tickets = eisitiria;
 				var future_tickets = [];
-				var past_tickets = []; 
+				var past_tickets = [];
+				var promises = [];
+ 
 				if(tickets){
 					ticketMap = new HashMap(tickets.map( x => [x.eventId, x]));
 					tickets = ticketMap.values();
+					
 					tickets.forEach(function(tick){
+						promises.push(promisify(fs.readdir, ['./public/files/events/' + tick.eventId + "/"]));
+
 						if(tick.startTime > Math.floor(Date.now() / 1000)){
 							future_tickets.push(tick);
 						}
 						else{
 							past_tickets.push(tick);
 						}
-					})
+					});
+					
 				}
-				db.Membership.findById(req.params.parentId)
+				Promise.all(promises).
+				then( succ => 
+				{
+					for (var i = 0; i < succ.length; i++){
+						if (succ[i].length > 0){
+							tickets[i].image = '/files/events/'+ tickets[i].eventId + '/' + succ[i][0];
+						}
+						else{
+							tickets[i].image = '/happy.png';
+						}
+					}
+					db.Membership.findById(req.params.parentId)
+				})
 				.then( member => {
 					if(member != null){
 						obj = {
@@ -92,7 +112,7 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 		else {
             res.render('no_page',{user: req.user});
         }
-	});
+    });
 });
 
 router.get('/:parentId/settings', auth.isUserParentId, function(req, res){

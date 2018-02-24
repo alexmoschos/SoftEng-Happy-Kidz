@@ -8,6 +8,7 @@ var utilities = require('../apis/utilities');
 var auth = require('../apis/authentication');
 var fs = require('fs');
 
+
 router.get('/', auth.isUserAdmin, function(req, res) {
 
     db.Subscription.findAll().then(x => x.forEach( (x1) => console.log(x1.parentId + ' ' + x1.organizerId)));
@@ -145,7 +146,7 @@ router.get('/events/:eventId', auth.isUserAdmin, function(req, res) {
             .then( (provider) => {
                 if (event && event.isVerified === false) {
                     event.provider = provider;
-                    obj = event;
+                    var obj = event;
                     var startDate = new Date(event.startTime*1000);
                         var imglist = [];
                         path = './public/files/events/' + event.eventId + "/";

@@ -7,6 +7,7 @@ var mail = require('../apis/mail');
 var elastic = require('../apis/elastic_interface');
 
 
+
 var fs = require('fs');
 
 
@@ -212,6 +213,8 @@ router.put('/:eventId', auth.isUserAdmin, function(req, res) {
 
     })
     .then ((succ) => {
+        console.log(succ.info);
+        console.log(succ);
         if (succ) {
             //find subcribers to send notification
             return db.Subscription.findAll({
