@@ -27,7 +27,8 @@ function mailTickets(parentId, eventId) {
     // Find all tickets for that event
     db.BoughtTickets.findAll({
         where: {
-            parentId: parentId
+            parentId: parentId,
+            eventId: eventId
         }
     }).then((tickets) => {
         // Create QR Code

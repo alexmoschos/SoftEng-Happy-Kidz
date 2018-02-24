@@ -35,7 +35,7 @@ const Categories = sequelize.import(__dirname + '/categories.js');
 // Associate models with Foreign Keys
 
 // Parent Foreign Key
-Parent.hasOne(Membership, { foreignKey: 'parentId', targetKey: 'parentId' });
+Parent.hasOne(Membership, { foreignKey: 'parentId', targetKey: 'parentId', onDelete: 'cascade' });
 
 // Event Foreign Key
 Organizer.hasMany(Event, { foreignKey: 'organizerId', sourceKey: 'organizerId' });
@@ -52,8 +52,8 @@ Parent.hasMany(BoughtTickets, { foreignKey: 'parentId', sourceKey: 'parentId' })
 BoughtTickets.belongsTo(Parent, { foreignKey: 'parentId', targetKey: 'parentId' });
 
 // Review Foreign Keys
-Parent.belongsToMany(Event, { through: Review, foreignKey: 'parentId', otherKey: 'eventId'});
-Event.belongsToMany(Parent, { through: Review, foreignKey: 'eventId', otherKey: 'parentId'});
+Parent.belongsToMany(Event, { through: Review, foreignKey: 'parentId', otherKey: 'eventId', onDelete: 'cascade'});
+Event.belongsToMany(Parent, { through: Review, foreignKey: 'eventId', otherKey: 'parentId', onDelete: 'cascade'});
 
 // Subscription Foreign Keys
 Parent.belongsToMany(Organizer, { through: Subscription, foreignKey: 'parentId', otherKey: 'organizerId', onDelete: 'cascade' });
