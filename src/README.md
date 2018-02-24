@@ -1,35 +1,43 @@
+# HappyKidz δραστηριότητες για τα παιδιά σας
+
 ## Routes
 
  |      Route       |      Method       |     Page      |
  |     --------     |     --------      |   --------    |
  |         /        |       GET         |    landing    |
- |       /events?q=\<name1\>:\<value1\>&\<name2\>\<value2\>&...          | GET |  search events  |
- |  /event/:id      |       GET         | event page    |
- |  /event          |       POST        | new event route |
- |  /event/new      |       GET         | new event form |
+ |       /search?q=\<name1\>:\<value1\>&\<name2\>\<value2\>&...          | GET |  search events   |
+ |  /events/:id     |       GET         | verified event page    |
+ |  /event_create   |       POST        | new event route |
+ |  /event_create   |       GET         | new event form |
  |      /login      |       GET         |    login      |
  | /login/organizer |       POST        | authentication route |
  | /login/parent    |       POST        | authentication route |
  | /register        |       GET        |   register page   |
  | /organizer       |    POST       |  organizer register route |
- | /parent          |     POST      | parent register route  | 
- |   /parent/:id    |       GET         | user profile page |
- | /organizer/:id   |       GET         | org. profile page |
+ | /parent          |     POST      | parent register route  |
+ | /parent/:id      |       GET         | user profile page |
+ | /provider/:id    |       GET         | org. profile page |
  |      /register   |       GET         |    register   |
- |   /parents/:id   |       GET         | user profile page |
- | /organizers/:id  |       GET         | org. profile page |
  | /events/:id      |       GET         | Event Page    |
-  | /login      |       GET         | Login Page    |
+| /admin            |       GET         | admin dashboard|
+|/admin/provider/:id|       GET         | admin provider verification page|
+|/admin/events/:id|       GET         | admin event verification page|
+ |  /events/:id     |       PUT         | verification route    |
+ |  /events/:id     |       DELETE         | delete route    |
+ | /membership      |       GET         | Αγορά membership |
+ | /payment         |       GET         | Σελίδα πληρωμής  |
+ | /payment/success |       GET         | Σελίδα επιτυχούς πληρωμής  |
+ | /payment/fail    |       GET         | Σελίδα αποτυχημένης πληρωμής  |
 
 
-## HTML -> ejs 
+## HTML -> ejs
  1. Δημιουργία ejs αρχείου στον φάκελο views και αντιγραφή του html σε αυτό.
  2. Το στατικό περιεχόμενο στον φάκελο public (images, css, js).
  3. Στο αρχείο app.js δημιουργία route που σερβίρει το ejs
  4. Σε όποιο σημείο χρειάζονται πληροφορίες από το backend περνάμε ένα fake object που κατασκευάζουμε εμείς.
 
- 
- πχ. 
+
+ πχ.
 
 ```javascript
 app.get('/exampleroute', function(req, res){
@@ -50,7 +58,7 @@ app.get('/exampleroute', function(req, res){
 router.post('/', function (req, res, next) {
     var files = req.files;
     var fields = req.fields;
-    if (fields.id.length == 0) 
+    if (fields.id.length == 0)
         fields.id = '1';
     var newdir = path.join(__dirname, '../public/files/',  fields.id);
     if (!fs.existsSync(newdir)){

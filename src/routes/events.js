@@ -42,6 +42,7 @@ router.get('/:id', function(req, res, next) {
                     Promise.all(promises).then(function() {
 
                         var startDate = new Date(event.startTime*1000);
+                        var isFuture = startDate > Date.now();
                         var imglist = [];
                         path = './public/files/events/' + event.eventId + "/";
                         fs.readdir(path, function(err, items) {
@@ -86,7 +87,8 @@ router.get('/:id', function(req, res, next) {
                                 ticketCount : event.ticketCount,
                                 images: imglist,
                                 ratings,
-                                user : req.user
+                                user : req.user,
+                                isFuture : isFuture
                             };
                             res.render('events',obj);
                         });
@@ -262,7 +264,7 @@ router.put('/:eventId', auth.isUserAdmin, function(req, res) {
         }
         else {
             console.log('error with email');
-            res.redirect('/admin'); 
+            res.redirect('/admin');
         }
     });
 });

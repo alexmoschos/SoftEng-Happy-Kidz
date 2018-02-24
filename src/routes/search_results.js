@@ -12,15 +12,15 @@ router.get('/', function(req, res, next) {
         endDate = undefined;
 
     var radius = req.query.radius;
-    if (!radius)    
+    if (!radius)
         radius=10;
-    
+
     var age_group = req.query.AgeGroup;
     if (age_group === 'u')
         age_group = undefined;
 
     var price = req.query.endPrice;
-    if (!price) 
+    if (!price)
         price = 50;
 
     filters = {
@@ -32,7 +32,7 @@ router.get('/', function(req, res, next) {
         page : req.query.page,
         max_time: endDate,
         age_group: age_group
-    }
+    };
 
     var page = req.query.page;
     if (req.query.page == null)
@@ -53,9 +53,9 @@ router.get('/', function(req, res, next) {
                 case 9:
                     agegroups = "9-12";
                     break;
-                default: 
-                    agegroups = ">12"
-            };
+                default:
+                    agegroups = ">12";
+            }
 
             var path;
             if (parseInt(element._source.pictures) > 0)
@@ -94,7 +94,7 @@ router.get('/', function(req, res, next) {
             endDate : req.query.endDate,
             page : page,
             user: req.user
-    
+
         };
         // console.log(info);
         res.render('search_results2', info);
