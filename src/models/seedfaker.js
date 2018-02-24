@@ -6,7 +6,7 @@ const faker_en = require('faker');
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-function seedDatabase(db) {
+function seedDatabase(db, done) {
     // for each supported category make sure, we have it in the categories table
     conf.supportedCategories.forEach(function (category, idx) {
         db.Categories.findOne({ where: { categoryName: category } }).then(res => {
@@ -267,6 +267,7 @@ function seedDatabase(db) {
         .then((succ) => db.Membership.bulkCreate(membershipobj))
         .then((succ) => db.Subscription.bulkCreate(subscriptionobj))
         .then((succ) => db.BoughtTickets.bulkCreate(ticketobj))
+        .then(() => {done();})
         .catch((err) => console.log(err));
 
 }

@@ -127,7 +127,7 @@ router.get('/:providerId', function(req, res) {
 									ProviderEmail : result.email,
 									ProviderPage :result.webpage,
 									ProviderPhoneNumber: result.phone,
-									ProviderAddress : "25ης Μαρτίου 10, Βριλήσσια"},
+									},
 									PastEventsList: PastEventsArray,
 									CurrentEventsList: CurrentEvents,
 									subscriptionsCount: subscriptionsCount,
