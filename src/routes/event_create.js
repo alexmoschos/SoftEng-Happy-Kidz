@@ -145,7 +145,7 @@ router.post('/', auth.isUserVerifiedOrganizer,  function(req, res, next) {
                     fs.rename(files[i].path, newpath, function(err) {
                         if (err) throw err;
                         if (body.watermark){
-                            watermark.addTextWatermark(newpath, newpath, 'HappyKidz').catch(err => {console.log(err);});
+                            watermark.addTextWatermark(newpath, newpath, req.user.user.name).catch(err => {console.log(err);});
                         }
 
                     });
