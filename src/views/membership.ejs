@@ -38,54 +38,29 @@
 			<div class="panel panel-primary" id="panelo">
 				<div class="panel-heading">Πληροφορίες και Επιλογές Συνδρομής</div>
 				<div class="panel-body"><p> Η πλατφόρμα μας σας δίνει τη δυνατότητα να αγοράζετε εισιτήρια σε προνομιακές τιμές, απολαμβάνοντας εκπτώσεις σε όλες τις δραστηριότητες. Για να επωφελειθείτε από τις προσφορές μας, μπορείτε να αγοράσετε μια συνδρομή, η οποία σας επιτρέπει να αγοράζετε εισιτήρια σε μειωμένες τιμές, ένώ ταυτόχρονα θα συσσωρεύετε πόντους για επιπλέον προνόμια. Οι εκπτώσεις σε όλες τις δραστηριότητες έχουν κατώτερο όριο το 5% και μπορεί να διαφέρουν ανάλογα με τη δραστηριότητα. Σας παρέχουμε 3 μοναδικές επιλογές συνδρομής, ώστε να επιλέξετε αυτή που ταιριάζει καλύτερα στις άνάγκες σας.</p>
-				<p>Κάθε φορά που αγοράζετε ένα εισιτήριο, προστίθενται πόντοι στο ηλεκτρονικό σας πορτοφόλι. Συγκεκριμένα, για αγορές έως και 10 ευρώ κερδίζετε 5 πόντους, για αγορές 10-20 ευρώ κερδίζετε 10 πόντους, ενώ για αγορές άνω των 20 ευρώ κερδίζετε 15 πόντους. Με τη συγκέντρωση αρκετών πόντων μπορείτε να εξασφαλίσετε έκπτωση στης έπόμενη αγορά συνδρομής που θα κάνετε. Ειδικότερα, αν έχετε 100-200 πόντους σας προσφέρουμε 30% έκπτωση στην ανανέωση της συνδρομής, ενώ για παραπάνω από 200 πόντους δικαιούστε 40 % έκπτωση στην ανανέωση της συνδρομής σας.</p></div>
+				<p>Κάθε φορά που αγοράζετε ένα εισιτήριο, προστίθενται πόντοι στο ηλεκτρονικό σας πορτοφόλι. Συγκεκριμένα, για κάθε αγορά εισιτηρίου κερδίζετε 100 πόντους! Με τη συγκέντρωση αρκετών πόντων μπορείτε να εξασφαλίσετε έκπτωση στης έπόμενη αγορά συνδρομής που θα κάνετε. Κάθε <%= config.pointsToEuro %> πόντοι σας δίνουν 1&euro; έκπτωση στην επόμενη αγορά συνδρομής ! </p></div>
 			</div>
 
-
+			<% let availMemberships = config.availableMemberships; 
+			for (let i = 0; i < availMemberships.length; i++){ %>
 			<div id="pricing-table" class="clear align-items-center row">
 				<div class="col-md-4 col-sm-4 col-xs-12">
 					<div class="plan">
-						<h3>Silver Card
-							<span>15€</span>
+						<h3><%= availMemberships[i].title %>
+							<span><%= availMemberships[i].amount %>€</span>
 						</h3>
-						<form action="/payment/membership/1" method="POST">
-							<button name="plan" value="50" class="signup">Αγορά</button>
+						<form action="/payment/membership/<%= i + 1 %>" method="POST">
+							<button name="plan" value="<%= availMemberships[i].amount %>" class="signup">Αγορά</button>
 						</form>
 						<ul>
 							<li>
-								<b>3 μήνες</b> διάρκεια</li>
+								<b><%= availMemberships[i].duration %> μήνες</b> διάρκεια</li>
 						</ul>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-4 col-xs-12">
-					<div class="plan">
-						<h3>Gold Card
-							<span>25€</span>
-						</h3>
-						<form action="/payment/membership/2" method="POST">
-							<button name="plan" value="100" class="signup">Αγορά</button>
-						</form>
-						<ul>
-							<li>
-								<b>6 μήνες</b> Διάρκεια</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-4 col-xs-12">
-					<div class="plan">
-						<h3>Platinum Card
-							<span>40€</span>
-						</h3>
-						<form action="/payment/membership/3" method="POST">
-							<button name="plan" value="200" class="signup">Αγορά</button>
-						</form>
-						<ul>
-							<li>
-								<b>1 χρόνος</b> διάρκεια</li>
-						</ul>
-					</div>
-				</div>
-			</div>
+			<% } %>
+
+
 		</div>
 	</body>
 
