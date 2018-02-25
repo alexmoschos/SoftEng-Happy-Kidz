@@ -85,6 +85,13 @@ function createQuery(filters, callback) {
         }
     };
 
+    if (filters.id && filters.id.length != 0) {
+        query.bool.filter.push({
+            term: {eventId: filters.id}
+        });
+        return callback(query); // we only use id when updating ticketcount
+    }
+
     
     
     if (filters.free_text && filters.free_text.length != 0) {
@@ -221,12 +228,29 @@ function search_document(index, filters, f) {
 }
 
 
+function update_ticket_count (eventId, new_count, f) {
+    // first we need to find the event
+    var filters = { id: eventId.toString()};
+    search_document('events', filters, function (hits) {
+        if (hits.length == 0) 
+            return console.log('event with id ' + eventId + ' does not exists');
+        var event = hits[0]._source;
+        event.ticketCount = new_count;
+        if (f)
+            update_document('events', hits[0]._id, event,f);
+        else 
+            update_document('events', hits[0]._id, event);
+
+    });
+}
+
 var api = {
     client: client, // this shoud be removed at the end.
     insert: insert_document,
     update: update_document,
     delete: delete_document,
-    search: search_document
+    search: search_document,
+    updateTickets: update_ticket_count
 }
 
 module.exports = api;
