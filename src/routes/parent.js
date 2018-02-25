@@ -50,10 +50,13 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 					
 					tickets.forEach(function(tick){
 
-						if (!fs.existsSync('./public/files/events/' + tick.eventId + "/")) {
-							promises.push(promisify(fs.readdir, ['./public/files/events/default']));
-						} else {
+						if (parseInt(tick.event.pictures) != 0) {
+							console.log('mpika edo----------------------------------');
+							console.log(tick.event.pictures);
 							promises.push(promisify(fs.readdir, ['./public/files/events/' + tick.eventId + "/"]));
+						}
+						else {
+							promises.push(new Promise(function(resv, rej){ resv([]);}));
 						}
 						
 						if(tick.startTime > Math.floor(Date.now() / 1000)){
