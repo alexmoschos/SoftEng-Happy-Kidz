@@ -56,7 +56,7 @@
                         <div class="input-group">
                         <label for="Radius">Απόσταση απο τοποθεσία</label>
                             <p>Έως <span id="distance_text"><%= radius %></span> km</p>
-                            <input id = "distance" style="height: 1px; width: 205px; border-radius: 25px;" type="range" class="form-control" min=0 max=100 step=5 name="radius" value="<%= radius %>" >
+                            <input id = "distance" style="height: 1px; width: 205px; border-radius: 25px;" type="range" class="form-control" min=5 max=100 step=5 name="radius" value="<%= radius %>" >
                         </div>
                         <br>
                         <!-- <div class="input-group">
@@ -255,6 +255,7 @@
 
                                                 var map = new google.maps.Map(document.getElementById('map'), {
                                                                 zoom: 4,
+                                                                maxZoom: 15,
                                                                 center: place
                                                 });
                                                 
