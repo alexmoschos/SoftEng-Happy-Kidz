@@ -41,6 +41,7 @@
     "request": "^2.83.0",
     "sequelize": "^4.33.4",
     "serve-favicon": "~2.4.5",
+    "shelljs": "^0.8.1",
     "watermarkmodule": "git+https://github.com/alexmoschos/WatermarkModule.git"
   }
 }
