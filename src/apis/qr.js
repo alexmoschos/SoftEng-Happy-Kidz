@@ -4,6 +4,7 @@ var path = require('path');
 var options = {
     type: 'png',
     width: 400,
+    errorCorrectionLevel: "L",
     color: {
         dark: '#4c89d4ff'
     }
