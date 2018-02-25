@@ -91,6 +91,30 @@ module.exports = function (grunt) {
       .then(() =>demoData.initializeSqlDB(db,done));
       //.then(() => demoData.initializeElasticDB(db, done));
     });
+
+    grunt.registerTask('putDemoImages', 'copy demo images from demoImages', function() {
+      var fs = require('fs');
+      var db = require('./models/db');
+      var demoData = require('./models/demoData');
+
+      var i;
+      for (i = 1; i <= 13; i++) {
+          if (!fs.existsSync('./public/files/events/' + i)) 
+              fs.mkdirSync('./public/files/events/' + i);
+            
+      
+            var j;
+            for (j = 0; j< parseInt(demoData.events[i-1].pictures); j++) {
+              let id = i;
+              let num = j;
+              fs.symlinkSync('../../../../demoImages/' + id + '/' + num,'public/files/events/' + id + '/' + num);
+            }
+          
+      }
+
+      // var myVar = setInterval(function (){done(); clearInterval(myVar);}, 2000);
+    });
+
     grunt.registerTask('createDemoDataForElastic', 'Create the necessary elastic data for the demo', function() {
       var done = this.async();
       var db = require('./models/db');
@@ -98,7 +122,7 @@ module.exports = function (grunt) {
       demoData.initializeElasticDB(db,done);
     });
 
-    grunt.registerTask('createDemoData', 'Create the necessary data for the demo', ['createDemoDataForSQL', 'createDemoDataForElastic']);
+    grunt.registerTask('createDemoData', 'Create the necessary data for the demo', ['createDemoDataForSQL', 'createDemoDataForElastic', 'putDemoImages']);
 
     grunt.registerTask('cleanDB', 'remove relations from psql and drop the elastic index.', function () {
       var done = this.async();
