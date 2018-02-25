@@ -177,7 +177,7 @@ router.post('/', auth.isUserParentPayment, function (req, res) {
                     return db.Membership.upsert({
                         parentId: userSession.passport.user.id,
                         startDate: Math.floor(Date.now() / 1000),
-                        expiryDate: Math.floor(Date.now() / 1000 + 60 * 60 * 24 * 10 * availableMemberships[item.tier - 1].duration),
+                        expiryDate: Math.floor(Date.now() / 1000 + 60 * 60 * 24 * 30 * availableMemberships[item.tier - 1].duration),
                         membershipTier: item.tier,
                         maxTicketsPerEvent: 100
                     }, { transaction: t })
