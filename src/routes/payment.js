@@ -9,6 +9,7 @@ var utils = require('../apis/utilities');
 var qr = require('../apis/qr');
 var pdf = require('../apis/pdf_generator');
 var mail = require('../apis/mail');
+var elasticsearch = require('../apis/elastic_interface');
 
 var availableMemberships = configFile.availableMemberships;
 
@@ -27,7 +28,8 @@ function mailTickets(parentId, eventId) {
     // Find all tickets for that event
     db.BoughtTickets.findAll({
         where: {
-            parentId: parentId
+            parentId: parentId,
+            eventId: eventId
         }
     }).then((tickets) => {
         // Create QR Code
@@ -125,6 +127,7 @@ router.post('/', auth.isUserParentPayment, function (req, res) {
                                         console.log('Event found: ' + JSON.stringify(event));
                                         let newTicketCount = event.ticketCount - item.quantity;
                                         if (newTicketCount >= 0) {
+                                            elasticsearch.updateTickets(event.eventId, newTicketCount);
                                             return event.update({ ticketCount: newTicketCount }, { transaction: t });
                                         } else {
                                             req.flash('error', 'Δεν υπάρχουν όσα εισητήρια ζητήσατε !');
@@ -176,7 +179,7 @@ router.post('/', auth.isUserParentPayment, function (req, res) {
                     return db.Membership.upsert({
                         parentId: userSession.passport.user.id,
                         startDate: Math.floor(Date.now() / 1000),
-                        expiryDate: Math.floor(Date.now() / 1000 + 60 * 60 * 24 * 10 * availableMemberships[item.tier - 1].duration),
+                        expiryDate: Math.floor(Date.now() / 1000 + 60 * 60 * 24 * 30 * availableMemberships[item.tier - 1].duration),
                         membershipTier: item.tier,
                         maxTicketsPerEvent: 100
                     }, { transaction: t })

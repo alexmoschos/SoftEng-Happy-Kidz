@@ -73,7 +73,7 @@ function validNewEvent(newEvent) {
         return false;
     }
 
-    if (newEvent.startTime <= (new Date().getTime() /1000)) {
+    if ((newEvent.startTime + 7200) <= (new Date().getTime() /1000)) {
         info = {errMsg : "Το event δεν μπορεί να ξεκινά σε παρελθοντικό χρόνο", event: newEvent};
         return false;
     }
