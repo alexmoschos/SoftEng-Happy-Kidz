@@ -112,6 +112,17 @@ module.exports = function (grunt) {
           
       }
 
+      if (!fs.existsSync('./public/files/providers/')) 
+          fs.mkdirSync('./public/files/providers/');
+
+      for (i = 1; i<=3; i++) {
+          if (!fs.existsSync('./public/files/providers/' + i)) 
+              fs.mkdirSync('./public/files/providers/' + i);
+          
+          fs.symlinkSync('../../../../demoImages/deko.jpg','public/files/providers/' + i + '/deko');
+      }
+
+
       // var myVar = setInterval(function (){done(); clearInterval(myVar);}, 2000);
     });
 
