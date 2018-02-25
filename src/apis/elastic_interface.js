@@ -244,13 +244,26 @@ function update_ticket_count (eventId, new_count, f) {
     });
 }
 
+function delete_event_by_id (eventId, f) {
+    var filters = { id: eventId.toString()};
+    search_document('events', filters, function (hits) {
+        if (hits.length == 0) 
+            return console.log('event with id ' + eventId + ' does not exists');
+        if (f)
+            delete_document('events', hits[0]._id, f);
+        else 
+            delete_document('events', hits[0]._id);
+    });
+}
+
 var api = {
     client: client, // this shoud be removed at the end.
     insert: insert_document,
     update: update_document,
     delete: delete_document,
     search: search_document,
-    updateTickets: update_ticket_count
+    updateTickets: update_ticket_count,
+    deleteEvent: delete_event_by_id
 }
 
 module.exports = api;
