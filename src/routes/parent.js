@@ -49,8 +49,13 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 					tickets = ticketMap.values();
 					
 					tickets.forEach(function(tick){
-						promises.push(promisify(fs.readdir, ['./public/files/events/' + tick.eventId + "/"]));
 
+						if (!fs.existsSync('./public/files/events/' + tick.eventId + "/")) {
+							promises.push(promisify(fs.readdir, ['./public/files/events/default']));
+						} else {
+							promises.push(promisify(fs.readdir, ['./public/files/events/' + tick.eventId + "/"]));
+						}
+						
 						if(tick.startTime > Math.floor(Date.now() / 1000)){
 							future_tickets.push(tick);
 						}
@@ -61,14 +66,16 @@ router.get('/:parentId', auth.isUserParentId, function(req, res, next) {
 					
 				}
 				Promise.all(promises).
-				then( succ => 
+				then( succ=> 
 				{
+					console.log(succ);
 					for (var i = 0; i < succ.length; i++){
-						if (succ[i].length > 0){
-							tickets[i].image = '/files/events/'+ tickets[i].eventId + '/' + succ[i][0];
+						if (succ[i].length === 0){
+							tickets[i].image = '/happy.png';
+
 						}
 						else{
-							tickets[i].image = '/happy.png';
+							tickets[i].image = '/files/events/'+ tickets[i].eventId + '/' + succ[i][0];
 						}
 					}
 					db.Membership.findById(parseInt(req.params.parentId))

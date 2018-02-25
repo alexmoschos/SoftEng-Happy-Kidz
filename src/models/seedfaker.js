@@ -3,10 +3,21 @@ const bcrypt = require('bcrypt');
 const elastic = require('../apis/elastic_interface');
 const faker = require('faker/locale/el');
 const faker_en = require('faker');
+const fs = require('fs');
+
+
+
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function seedDatabase(db, done) {
+        //initialize events folder with as many events as in the seedfaker
+    for (var i = 0; i < 22; i++) {
+        if (!fs.existsSync('./public/files/events/'+ (i+1).toString())) {
+            console.log('Event specific  folder doesnt exist');
+            fs.mkdirSync('./public/files/events/'+ (i+1).toString());
+        }
+    }
     // for each supported category make sure, we have it in the categories table
     conf.supportedCategories.forEach(function (category, idx) {
         db.Categories.findOne({ where: { categoryName: category } }).then(res => {

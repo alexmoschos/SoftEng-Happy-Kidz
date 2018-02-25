@@ -37,6 +37,8 @@ var admin = require('./routes/admin');
 var subscription = require('./routes/subscription');
 
 var app = express();
+app.disable('etag');
+
 
 if (!fs.existsSync('./public/files/events')) {
     console.log('Events public folder doesnt exist');
@@ -46,13 +48,7 @@ if (!fs.existsSync('./public/files/providers')) {
     console.log('Providers public folder doesnt exist');
     fs.mkdirSync('./public/files/providers');
 }
-//initialize events folder with as many events as in the seedfaker
-for (var i = 0; i < 22; i++) {
-    if (!fs.existsSync('./public/files/events/'+ (i+1).toString())) {
-        console.log('Event specific  folder doesnt exist');
-        fs.mkdirSync('./public/files/events/'+ (i+1).toString());
-    }
-}
+
 
 // initialize psql if necessary
 var db = require('./models/db');
