@@ -120,8 +120,9 @@ router.delete('/:eventId', auth.isUserAdmin, function(req, res){
             res.render('no_page', {user: req.user});
         }
     })
-    .then( (succ) =>
-        {return db.Organizer.findById(providerId);
+    .then( (succ) => {
+        elastic.deleteEvent(req.params.eventId);
+        return db.Organizer.findById(providerId);
     })
     .then( (provider) => {
         if (provider){

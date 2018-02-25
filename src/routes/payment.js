@@ -9,6 +9,7 @@ var utils = require('../apis/utilities');
 var qr = require('../apis/qr');
 var pdf = require('../apis/pdf_generator');
 var mail = require('../apis/mail');
+var elasticsearch = require('../apis/elastic_interface');
 
 var availableMemberships = configFile.availableMemberships;
 
@@ -126,6 +127,7 @@ router.post('/', auth.isUserParentPayment, function (req, res) {
                                         console.log('Event found: ' + JSON.stringify(event));
                                         let newTicketCount = event.ticketCount - item.quantity;
                                         if (newTicketCount >= 0) {
+                                            elasticsearch.updateTickets(event.eventId, newTicketCount);
                                             return event.update({ ticketCount: newTicketCount }, { transaction: t });
                                         } else {
                                             req.flash('error', 'Δεν υπάρχουν όσα εισητήρια ζητήσατε !');
