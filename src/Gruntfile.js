@@ -83,6 +83,23 @@ module.exports = function (grunt) {
       .then(() =>seedDB.seedDatabase(db, done));
     });
 
+    grunt.registerTask('createDemoDataForSQL', 'Create the necessary sql data for the demo', function() {
+      var done = this.async();
+      var db = require('./models/db');
+      const demoData = require('./models/demoData');
+      db.sequelizeConnection.sync({force: true})
+      .then(() =>demoData.initializeSqlDB(db,done));
+      //.then(() => demoData.initializeElasticDB(db, done));
+    });
+    grunt.registerTask('createDemoDataForElastic', 'Create the necessary elastic data for the demo', function() {
+      var done = this.async();
+      var db = require('./models/db');
+      const demoData = require('./models/demoData');
+      demoData.initializeElasticDB(db,done);
+    });
+
+    grunt.registerTask('createDemoData', 'Create the necessary data for the demo', ['createDemoDataForSQL', 'createDemoDataForElastic']);
+
     grunt.registerTask('cleanDB', 'remove relations from psql and drop the elastic index.', function () {
       var done = this.async();
       var db = require('./models/db');
