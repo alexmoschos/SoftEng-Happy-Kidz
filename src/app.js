@@ -48,6 +48,18 @@ if (!fs.existsSync('./public/files/providers')) {
     console.log('Providers public folder doesnt exist');
     fs.mkdirSync('./public/files/providers');
 }
+if (!fs.existsSync('./public/files/tickets')) {
+    console.log('Tickets public folder doesnt exist');
+    fs.mkdirSync('./public/files/tickets');
+}
+if (!fs.existsSync('./public/files/tickets/qrcode')) {
+    console.log('QRCODE public folder doesnt exist');
+    fs.mkdirSync('./public/files/tickets/qrcode');
+}
+if (!fs.existsSync('./public/files/tickets/pdf')) {
+    console.log('PDF public folder doesnt exist');
+    fs.mkdirSync('./public/files/tickets/pdf');
+}
 
 
 // initialize psql if necessary
